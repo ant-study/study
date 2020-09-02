@@ -5,7 +5,7 @@
  - 본인 Package 생성
     - kr.co.ant.study 패키지 뒤에 자기 영문이름으로 패키지명 생성
         - ex) kr.co.ant.study.hankwangsu
- - Study 문제
+ - Study 주제
     - kr.co.ant.study.{공부할 패키지}
         - ex) kr.co.ant.study.reflect
 ---
