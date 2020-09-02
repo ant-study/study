@@ -10,7 +10,7 @@
     - kr.co.ant.study.{공부할 패키지}
         - ex) kr.co.ant.study.reflect
 ---
-### Java Reflection
+### Java Reflection (2020-09-02)
 
  - kr.co.ant.study.reflect.ReflectQuestion 클래스를 상속 받아서 아래 메소드 구현
     - getValue
