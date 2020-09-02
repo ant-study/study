@@ -18,3 +18,5 @@
         - copyProperties
     - 구현 클래스에서 main 메소드를 만들어서 testStart() 호출하여 결과 확인
         - ex) kr.co.ant.study.hankwangsu.Example 참고하여 개발
+        - 
+2. Anntation 생성 및 사용 그리고 Reflection을 활용한 제어(next study)
