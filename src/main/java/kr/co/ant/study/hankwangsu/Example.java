@@ -26,12 +26,11 @@ public class Example extends ReflectQuestion{
 		Field field = clazz.getDeclaredField(fieldName);
 		
 		//capitalize는 첫글자만 대문자로 변환 Apache Commons Lang에도 있음, 아니면 substring 0,1 해서 toUpperCase를 사용해서 변환
-		String methodName = "get"+StringUtils.capitalize(fieldName);
+		String methodName = "get"+StringUtils.capitalize(fieldName); //name => getName
 		
 		//Class의 메소드 조회
 		Method method = clazz.getMethod(methodName);
 		
-		//get Property는 인자가 없기때문에 Object만 넘겨서 Method 실행후 결과값 리턴
 		return method.invoke(vo);
 		
 	}
