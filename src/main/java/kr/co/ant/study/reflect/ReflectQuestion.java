@@ -110,9 +110,6 @@ public abstract class ReflectQuestion {
 		Member member = new Member();
 		copyProperties(orgi, member);
 		
-		/**/
-		log.info(member.toString());
-		
 		assertStringEquals(orgi.getId(), member.getId());
 		
 		assertStringEquals(orgi.getName(), member.getName());
