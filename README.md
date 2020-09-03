@@ -18,10 +18,10 @@
         - copyProperties
     - 구현 클래스에서 main 메소드를 만들어서 testStart() 호출하여 결과 확인
         - ex) kr.co.ant.study.hankwangsu.Example 참고하여 개발
-        - 
 2. Anntation 생성 및 사용 그리고 Reflection을 활용한 제어
     - kr.co.ant.study.reflect.annotation.AnnotationQuestion 상속 받아서 아래 메소드 구현
         - validate(Object o)throws Exception; //입력 받은 LengthVO에 대해 유효성 검사
+    - kr.co.ant.study.hankwangsu.AnnotationExample 참고
     - MaxLength, MinLength Annotation Class 구현
         - MaxLength(10) => 10자리 이상인 경우 오류
         - MinLength(5) => 5자리 이하인 경우 오류
