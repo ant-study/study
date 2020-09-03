@@ -23,3 +23,5 @@
     - kr.co.ant.study.reflect.annotation.AnnotationQuestion 상속 받아서 아래 메소드 구현
         - validate(Object o)throws Exception; //입력 받은 LengthVO에 대해 유효성 검사
     - MaxLength, MinLength Annotation Class 구현
+        - MaxLength(10) => 10자리 이상인 경우 오류
+        - MinLength(5) => 5자리 이하인 경우 오류
