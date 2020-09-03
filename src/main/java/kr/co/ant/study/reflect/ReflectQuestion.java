@@ -104,8 +104,7 @@ public abstract class ReflectQuestion {
 		assertNumberEquals(orgi.getAge(), age);
 
 		LocalDate brithday = (LocalDate) getValue(orgi, "birthday");
-		assertStringEquals(orgi.getBirthday().format(DateTimeFormatter.ofPattern("yyyyMMd")), brithday.format(DateTimeFormatter.ofPattern("yyyyMMd")));
-		
+		assertStringEquals(orgi.getBirthday().format(DateTimeFormatter.ofPattern("yyyyMMd")), brithday.format(DateTimeFormatter.ofPattern("yyyyMMd")));		
 		
 		/////////////// copyProperties Test ////////////////
 		Member member = new Member();
