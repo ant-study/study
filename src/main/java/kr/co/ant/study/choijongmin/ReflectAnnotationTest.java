@@ -63,8 +63,15 @@ public class ReflectAnnotationTest extends AnnotationQuestion {
 						log.debug(message);
 					}
 				}
-				
 			}
+			
+//			if ( field.isAnnotationPresent(MaxLength.class) ) {
+//				
+//			} else if ( field.isAnnotationPresent(MinLength.class) ) {
+//				
+//			} else {
+//				
+//			}
 		}
 		
 		// TODO Auto-generated method stub
