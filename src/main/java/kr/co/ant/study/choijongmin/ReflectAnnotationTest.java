@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import org.springframework.util.StringUtils;
 
 import kr.co.ant.study.reflect.annotation.AnnotationQuestion;
+import lombok.Value;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -40,10 +42,11 @@ public class ReflectAnnotationTest extends AnnotationQuestion {
 		for(Field field : fields) {
 			//Field에 선언된 Annotation 목록 조회 (address => MaxLength, phone => MinLength)
 			Annotation[] annotations = field.getAnnotations();
+			String value = (String) getValue(o, field.getName());
+			String message = field.getName() + "는 ";
+			
+			//1번?
 			for(Annotation anno : annotations ) {
-				String value = (String) getValue(o, field.getName());
-				String message = field.getName() + "는 ";
-				
 				int annoVal = 0;
 				if ( anno instanceof MaxLength ) {
 					MaxLength max = (MaxLength) anno;
@@ -65,13 +68,22 @@ public class ReflectAnnotationTest extends AnnotationQuestion {
 				}
 			}
 			
-//			if ( field.isAnnotationPresent(MaxLength.class) ) {
-//				
-//			} else if ( field.isAnnotationPresent(MinLength.class) ) {
-//				
-//			} else {
-//				
-//			}
+			//2번?
+			if ( field.isAnnotationPresent(MaxLength.class) ) {
+				MaxLength iValue = field.getAnnotation(MaxLength.class);
+				if ( value.length() > iValue.value() ) {
+					message = message + iValue.value() + "자 보다 클 수 없습니다.";
+					log.debug(message);
+				}
+			} else if ( field.isAnnotationPresent(MinLength.class) ) {
+				MinLength iValue = field.getAnnotation(MinLength.class);
+				if ( value.length() < iValue.value() ) {
+					message = message + iValue.value() + "자 보다 작을 수 없습니다.";
+					log.debug(message);
+				}
+			} else {
+				//다른거?
+			}
 		}
 		
 		// TODO Auto-generated method stub
