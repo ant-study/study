@@ -18,6 +18,7 @@
         - copyProperties
     - 구현 클래스에서 main 메소드를 만들어서 testStart() 호출하여 결과 확인
         - ex) kr.co.ant.study.hankwangsu.Example 참고하여 개발
+        - 
 2. Anntation 생성 및 사용 그리고 Reflection을 활용한 제어
     - kr.co.ant.study.reflect.annotation.AnnotationQuestion 상속 받아서 아래 메소드 구현
         - validate(Object o)throws Exception; //입력 받은 LengthVO에 대해 유효성 검사
@@ -25,3 +26,12 @@
     - MaxLength, MinLength Annotation Class 구현
         - MaxLength(10) => 10자리 이상인 경우 오류
         - MinLength(5) => 5자리 이하인 경우 오류
+        - 
+3. 마지막 Reflection & Annotation => Spring @RequestMapping Annotaion 활용한 Web 요청 흉내내기
+    - kr.co.ant.study.reflect.spring.SrpingCopy 클래스 상속 또는 자신 패키지로 복사하여 아래 메소드 구현, 상세 설명은 SrpingCopy 클래스내 주석 참고
+    - void createController(Class clazz)
+    - void initUrlMethod(Class clazz)
+    - Object toParameter(Request request, Class parameterType)
+    - Order Field에 Enum이 포함되어 있습니다.
+---
+    - 마지막이니 구글링해도 모르겠거나 궁금한건 저한테 바로 물어보세요
