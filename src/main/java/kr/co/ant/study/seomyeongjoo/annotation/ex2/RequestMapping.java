@@ -1,4 +1,4 @@
-package kr.co.ant.study.seomyeongjoo.annotation;
+package kr.co.ant.study.seomyeongjoo.annotation.ex2;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
-public @interface MinLength {
-    int value();
+@Target({ElementType.FIELD, ElementType.METHOD})
+public @interface RequestMapping {
+    String value();
 }

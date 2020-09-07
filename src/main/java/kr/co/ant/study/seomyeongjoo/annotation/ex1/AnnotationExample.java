@@ -1,15 +1,13 @@
-package kr.co.ant.study.seomyeongjoo.annotation;
+package kr.co.ant.study.seomyeongjoo.annotation.ex1;
 
 import kr.co.ant.study.reflect.annotation.AnnotationQuestion;
-import kr.co.ant.study.reflect.annotation.LengthVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Comparator;
-import java.util.Optional;
+
 @Slf4j
 public class AnnotationExample extends AnnotationQuestion {
 
