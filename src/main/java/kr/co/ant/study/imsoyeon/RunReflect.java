@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 		메서드 구현만 하면 됨
  */
 @Slf4j
-public class runReflect extends ReflectQuestion {
+public class RunReflect extends ReflectQuestion {
 
 	/*
 	 * java.lang.reflect 
@@ -79,7 +79,7 @@ public class runReflect extends ReflectQuestion {
 	public static void main(String[] args) throws Exception {
 
 //		sampleData : 홍길동 / 31 / 19890312 / A0001
-		runReflect run = new runReflect();
+		RunReflect run = new RunReflect();
 		run.startTest();
 	}
 
