@@ -26,13 +26,20 @@ public abstract class ReflectQuestion {
 	
 	@Getter
 	@Setter
-	@ToString
 	@EqualsAndHashCode
-	public static class MemberVO {
+	public static class MemberVO{
 		private String id;
 		private String name;
 		private int age;
 		private LocalDate birthday;
+	}
+	
+	@Getter
+	@Setter
+	@EqualsAndHashCode
+	public static class TestVO{
+		private String id;
+		private String name;
 	}
 	
 	
