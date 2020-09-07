@@ -1,9 +1,8 @@
 package kr.co.ant.study.seomyeongjoo;
 
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-
 import kr.co.ant.study.reflect.ReflectQuestion;
+
+import java.lang.reflect.Field;
 
 public class ExampleSMJ extends ReflectQuestion {
 
@@ -13,7 +12,7 @@ public class ExampleSMJ extends ReflectQuestion {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
 
-        return field.get(vo); 
+        return field.get(vo);
     }
 
     @Override
@@ -21,7 +20,7 @@ public class ExampleSMJ extends ReflectQuestion {
         Class clazz = vo.getClass();
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
-        
+
         field.set(vo, value);
     }
 
@@ -29,10 +28,10 @@ public class ExampleSMJ extends ReflectQuestion {
     public void copyProperties(Object orig, Object dest) throws Exception {
         Class clazz1 = orig.getClass();
         Class clazz2 = dest.getClass();
-        
+
         Field[] origF = clazz1.getDeclaredFields();
         Field[] destF = clazz2.getDeclaredFields();
-        
+
         for (Field field1 : origF) {
             for (Field field2 : destF) {
                 if(field2.getName().equals(field1.getName())) {
@@ -50,3 +49,4 @@ public class ExampleSMJ extends ReflectQuestion {
     }
 
 }
+
