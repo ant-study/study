@@ -8,12 +8,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import kr.co.ant.study.reflect.spring.OrderController;
 import kr.co.ant.study.reflect.spring.Request;
-import kr.co.ant.study.reflect.spring.SpringCopy;
-import kr.co.ant.study.seomyeongjoo.annotation.ex2.RequestMapping;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -44,7 +42,7 @@ public class VosSpringLike {
 		//controller = 객체생성
 		log.debug("create Controller class=["+clazz.getName()+"]and member controller's name=[]");
 		clazz.cast(controller);
-		//log.debug("created object controller ["+controller.getClass().getName()+"]");
+
 	}
 	
 	/**
@@ -61,16 +59,25 @@ public class VosSpringLike {
 		for(Method m : clazz.getDeclaredMethods()) 
 		{
 			//
+			// urlMethod는 리퀘스트만 따오는게 목적임. 다른 어노테이션은 무시함.
+			//
+			if(m.isAnnotationPresent(RequestMapping.class)) 
+				log.debug("레퀘스트매핑어노테이션임");
+			else 
+				break;
+			//
 			// 해당 메소드에 어노테이션이 지정되었을 경우 어노테이션들을 탐색.
 			// 
 			for(Annotation a :m.getAnnotations()) 
 			{
+				
 				//
 				// 리퀘스트매핑 어노테이션 내의 선언된 메소드들을 탐색.
 				//
 				for(Method ma : a.getClass().getMethods()) 
 				{
-					String url = "";
+					String url = ""; // 어노테이션이 달고있는 값. url
+					Object ob = null;// 어노테이션 인보크한 결과값. 
 					//
 					// 어노테이션의 선언된 메소드들을 인보크.
 					// 리퀘스트 uri를 찾는 방법은 정규식을 이용해도 되겄으나,
@@ -83,8 +90,7 @@ public class VosSpringLike {
 					// ㅇㅋ?
 					//
 					// log.debug("ma.names =["+ma.getName()+"]");
-					Object ob = null;
-
+					
 					try {
 						// invoke
 						ob = ma.invoke(a);
@@ -94,10 +100,10 @@ public class VosSpringLike {
 						
 						if(ob != null && ob.toString().length() > 0) 
 						{
-							log.debug("retruntype is ["+ma.getReturnType().toString()+"]");
+							// log.debug("retruntype is ["+ma.getReturnType().toString()+"]");
 							// 리절트 object가 array 체크하고 매핑해야하오나, 바쁘다.
 							String [] sarr = (String []) ob;
-							if (isUrl(sarr[0]))
+							if (ob.getClass().isArray() && isUrl(sarr[0]))
 							{
 								url = sarr[0];
 								// urlMethod 구성.
@@ -105,8 +111,6 @@ public class VosSpringLike {
 								log.debug("here's method Name=["+m.getName()+"],ano name=["+a.getClass().getName() + "].method["+ma.getName()+"].value["+url+"]");
 								break;
 							}
-							
-							
 						}
 					}
 				}
