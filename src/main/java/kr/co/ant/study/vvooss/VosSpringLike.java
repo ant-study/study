@@ -4,10 +4,13 @@
 package kr.co.ant.study.vvooss;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.ant.study.reflect.spring.OrderController;
@@ -15,12 +18,27 @@ import kr.co.ant.study.reflect.spring.Request;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 
+ * 솔직히 나 학교다닐때 자바 첫 수업때 교수님이 수업듣지말라고했음..
+ * 그게 자바 기초였는데, OOP 패러다임 쉬프트는 난 이미 끝났었거든..
+ * 
+ * 그래서 기초수업 안듣고 다음학기 자바 프로젝트 실습하는거 애플릿으로 만들라카데..
+ * 
+ * 남들은 채팅프로그램 같은거 만들었는데,
+ * 우리팀은 운전면허 시뮬 프로그램 만들었는데,
+ * 
+ *  동그란 핸들 오브젝트 만들다 끝났지 뭐야. 카트처럼 하면 간단했을텐데..
+ * 
+ * 그때 랩실에서 살았거던...숙제하면서 그때 기억남..
+ * 
  * @author dev
  *
  */
 @Slf4j
 public class VosSpringLike {
 
+	@Autowired
+	private VOSReflect vos;
 	
 	public static Map<String, Method> urlMethod;
 	
@@ -40,8 +58,30 @@ public class VosSpringLike {
 	 */
 	private void createController(Class clazz)throws Exception {
 		//controller = 객체생성
-		log.debug("create Controller class=["+clazz.getName()+"]and member controller's name=[]");
-		clazz.cast(controller);
+		
+		// 피곤함..
+		// casting 해주면 좋을 것같은데 자바는 자바스크립트가 아님..
+		// log.debug("create Controller class=["+clazz.getName()+"]and member controller's name=[]");
+		// clazz.cast(controller);
+		
+		
+		// 어떻게 생성하냐? 컨스트럭터 불러옴. 
+		// 보통한개이고 보통 파라미터없는데, 이상하게 필수파라미터 던져달라는 생성자들 있어.
+		// 그런 이상한 애들 친절하게 예외처리랑 다 받아주는건 나중에 방학때 하자..
+		// 빨래 다돌아가고익성.
+		// Constructor c = clazz.getConstructors();
+		
+		for (Constructor c : clazz.getConstructors()) {
+			log.debug("얘는 생성자몇개냠?   [ "+clazz.getConstructors().length +"  ] ");
+			this.controller = c.newInstance();
+			log.debug("컨트롤러 너 이름뭐냐  개명했냐?? [ " + controller.getClass().getName()+"]");
+		}
+		
+		// 끝났으면 좋겠다.. 확인해보자.
+		for (Method m : controller.getClass().getMethods())
+			log.debug("controller 정신차렷!!["+m.getName()+"]");
+		
+		log.debug("좋아. 끄덕끄덕. 이제 너의 타입은 그거야.");
 
 	}
 	
@@ -133,9 +173,9 @@ public class VosSpringLike {
 		//입력된 URL 별로 메소드를 호출 한다.
 		
 		Method method = urlMethod.get(request.getUrl());
-		
+		log.debug(method.getName());
 		Class parameterType = method.getParameterTypes()[0];
-		
+		log.debug(parameterType.toString());
 		Object argument = toParameter(request, parameterType);
 		
 		method.invoke(controller, argument);
@@ -144,15 +184,78 @@ public class VosSpringLike {
 	
 	/**
 	 * request에 파라미터 값을 넘겨받은 Class의 객체를 생성하여 값을 셋팅하여 리턴한다.
+	 * 
+	 * 한차장님은 집요하기도 하지.. 위에서 생성자로 생성하는거 했는데, set 하래..
+	 * set하는 거는 첫 숙제였자나.. 그거 또 해야해?....?? 
+	 * 아하 이넘이 익네?,,, 
+	 * 
+	 * 하,,, 맵이네? 아,,, 맵을 클래스로 바꾸라고...
+	 * 
 	 * @param request
 	 * @param parameterType
 	 * @return paraeterType 객체
 	 */
 	public Object toParameter(Request request, Class parameterType)throws Exception {
-		return null;
+		
+		Class prmType = parameterType;
+		// 생성자로 오브젝트 생성하자.
+		// 이정도 편법은 봐줘요 쌤.. 
+		Object yesItsMeHoney = parameterType.getConstructors()[0].newInstance();
+		log.debug("ddd"+yesItsMeHoney.getClass().getName());
+		
+		// request 에는 hashmap에 풋되어있다.
+		// map.get("key");
+		// key는 ? 
+		// parameterType의 필드명이다.
+		
+		for(Field pf : prmType.getDeclaredFields())
+		{
+			// field copy
+			this.copyFields(request, yesItsMeHoney, pf.getName());
+			// member copy
+			for (Class c : request.getClass().getDeclaredClasses())
+			{
+				this.copyFields(c, yesItsMeHoney, pf.getName());
+				if (c instanceof Map) {
+					
+				}
+			}
+			
+		}
+
+			
+			
+		
+		//log.debug(yesItsMeHoney.getGoods());
+		log.debug("aaa"+yesItsMeHoney.toString());
+		// 멤버도 끼워넣으셧으니 하나 만듦.
+		for (Class c : parameterType.getDeclaredClasses())
+			vos.setValue(yesItsMeHoney, request, c.getName());
+		
+		return yesItsMeHoney;
+		
 	}
 	
-	
+	// key로만 비교하여 같은 이름이면 카피한다.
+	void copyFields (Object targ, Object dest, String fieldNm) throws Exception{
+		
+		for (Field f : targ.getClass().getDeclaredFields())
+			//for (Field df : dest.getClass().getDeclaredFields())
+				if (f.getName().equals(fieldNm) && f.getType() == dest.getClass().getField(fieldNm).getType()) 
+					//matching 
+					vos.setValue(dest,vos.getValue(targ, f.getName()),f.getName());	
+			
+	}
+	// key로만 비교하여 같은 이름이면 카피한다.
+	void copyFields (Class targ, Object dest) throws Exception{
+		
+		for (Field f : targ.getDeclaredFields())
+			for (Field df : dest.getClass().getDeclaredFields())
+				if (f.getName().equals(df.getName())) 
+					//matching 
+					vos.setValue(dest,vos.getValue(targ, f.getName()),f.getName());	
+			
+	}
 	public static void main(String[] args)throws Exception {
 		
 		VosSpringLike s = new VosSpringLike(OrderController.class);
@@ -163,14 +266,14 @@ public class VosSpringLike {
 		req.put("goods", "컴퓨터");
 		req.put("qty", "2");
 		req.put("deleveryStatus", "READY");
-		/*
-		 * s.doService(req);
-		 * 
-		 * Request deleveryStatusRequest = new Request();
-		 * deleveryStatusRequest.setUrl("/order/deleveryStatus");
-		 * deleveryStatusRequest.put("num", "111"); s.doService(deleveryStatusRequest);
-		 * 
-		 * s.doService(deleveryStatusRequest);
-		 */
+		
+		  s.doService(req);
+		  
+		  Request deleveryStatusRequest = new Request();
+		  deleveryStatusRequest.setUrl("/order/deleveryStatus");
+		  deleveryStatusRequest.put("num", "111"); s.doService(deleveryStatusRequest);
+		  
+		  s.doService(deleveryStatusRequest);
+		 
 	}
 }
