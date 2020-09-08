@@ -1,10 +1,12 @@
 package kr.co.ant.study.moonjonghun;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.ant.study.reflect.spring.DeliveryStatus;
@@ -44,6 +46,8 @@ public class SpringCopy {
 	 */
 	private void createController(Class clazz)throws Exception {
 		//controller = 객체생성
+		//newInstance로 객체를 생성할때 클래스의 기본생성자를 호출한다.
+		//클래스에 기본생성자가 포함되어있지 않더라도 컴파일시 자동적으로 기본생성자를 생성해준다.
 		Object obj =  clazz.newInstance();
 		controller = obj;
 	}
@@ -94,50 +98,65 @@ public class SpringCopy {
 	 * @return paraeterType 객체
 	 */
 	public Object toParameter(Request request, Class parameterType)throws Exception {
-		Map<String, String> map = request.getParameters();
 		
-		log.info("class name : {}",parameterType.getName());
+		Class requestClazz = request.getClass();
+		Method[] requestMethods = requestClazz.getDeclaredMethods();
 		
-		//매개변수가 Order 라면
-		if(parameterType.equals(Order.class)) {
-			Order order = (Order) parameterType.newInstance();
-			
-			order.setNum(Integer.parseInt(map.get("num")));
-			order.setGoods(map.get("goods"));
-			order.setQty(Integer.parseInt(map.get("qty")));
-			order.setDeleveryStatus(DeliveryStatus.valueOf(map.get("deleveryStatus")));
-			return order;
-		}
-		
-		//매개변수가 int 라면
-		if(parameterType.equals(int.class)) {
-			int num = Integer.parseInt(map.get("num"));
-			return num;
+		for(Method reqMethod : requestMethods) {
+			if(reqMethod.getName() == "getParameters") {
+				//Map<String, String> map = request.getParameters();
+				Map<String, String> map =(Map<String, String>) reqMethod.invoke(request);
+				
+				log.info("class name : {}",parameterType.getName());
+				
+				//매개변수가 Order 라면
+				if(parameterType.equals(Order.class)) {
+					Order order = (Order) parameterType.newInstance();
+					
+					order.setNum(NumberUtils.parseNumber(map.get("num"), Integer.class));
+					order.setGoods(map.get("goods"));
+					order.setQty(NumberUtils.parseNumber(map.get("qty"), Integer.class));
+					order.setDeleveryStatus(DeliveryStatus.valueOf(map.get("deleveryStatus")));
+					return order;
+				}
+				
+				//매개변수가 int 라면
+				if(parameterType.equals(int.class)) {
+					int num = Integer.parseInt(map.get("num"));
+					return num;
+				}
+			}
 		}
 		
 		return null;
 	}
 	
 	
-	public static void main(String[] args)throws Exception {
-		
-		SpringCopy s = new SpringCopy(OrderController.class);
-		
-		Request req = new Request();
-		req.setUrl("/order");
-		req.put("num", "111");
-		req.put("goods", "컴퓨터");
-		req.put("qty", "2");
-		req.put("deleveryStatus", "READY");
-		
-		s.doService(req);
-		
-		Request deleveryStatusRequest = new Request();
-		deleveryStatusRequest.setUrl("/order/deliveryStatus");
-		deleveryStatusRequest.put("num", "111");
-		s.doService(deleveryStatusRequest);
-		
-		s.doService(deleveryStatusRequest);
-		
+	public static void main(String[] args) {
+		try {
+			SpringCopy s = new SpringCopy(OrderController.class);
+			
+			Request req = new Request();
+			req.setUrl("/order");
+			req.put("num", "111");
+			req.put("goods", "컴퓨터");
+			req.put("qty", "2");
+			req.put("deleveryStatus", "READY");
+			
+			s.doService(req);
+			
+			Request deleveryStatusRequest = new Request();
+			deleveryStatusRequest.setUrl("/order/deliveryStatus");
+			deleveryStatusRequest.put("num", "111");
+			s.doService(deleveryStatusRequest);
+			
+			s.doService(deleveryStatusRequest);
+		} catch(InvocationTargetException ie) {
+			if(ie.getCause().getClass().equals(NullPointerException.class)) {
+				log.debug("요청하신 주문번호에 대한 정보를 찾을 수 없습니다.");
+			};
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
