@@ -1,4 +1,4 @@
-package kr.co.ant.study.imsoyeon;
+package kr.co.ant.study.imsoyeon.second;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

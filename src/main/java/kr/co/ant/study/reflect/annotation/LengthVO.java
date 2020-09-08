@@ -1,5 +1,7 @@
 package kr.co.ant.study.reflect.annotation;
 
+import kr.co.ant.study.imsoyeon.second.MaxLength;
+import kr.co.ant.study.imsoyeon.second.MinLength;
 import lombok.Getter;
 import lombok.Setter;
 
