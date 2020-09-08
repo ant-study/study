@@ -13,6 +13,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.ant.study.reflect.spring.DeliveryStatus;
 import kr.co.ant.study.reflect.spring.OrderController;
 import kr.co.ant.study.reflect.spring.Request;
 import lombok.extern.slf4j.Slf4j;
@@ -233,6 +234,11 @@ public class VosSpringLike {
 	void copyFields (Object targ, Object dest, Field fld) throws Exception{
 		
 		VOSReflect vos = new VOSReflect();
+		
+		DeliveryStatus test;
+		
+		// DeliveryStatus.valueOf("DELIVERING");
+		log.debug(DeliveryStatus.valueOf("DELIVERING").getValue());
 		String fieldNm = fld.getName();
 		log.debug("copyFields fldNm=["+fld.getName()+"]");
 		if (!fld.isAccessible()) fld.setAccessible(true);
