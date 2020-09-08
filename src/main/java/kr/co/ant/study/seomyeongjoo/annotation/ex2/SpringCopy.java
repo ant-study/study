@@ -101,10 +101,15 @@ public class SpringCopy {
 				result = Integer.parseInt(value);
 			}else if("java.lang.String".equals(type)){
 				result = value;
-			}else{
+			}else if(f.getType().isEnum()){
 				Class clazz = Class.forName(type);
 				Object[] consts = clazz.getEnumConstants();
-				result = consts[0];
+				for(Object ob : consts){
+					if(value.equals(ob.toString())){
+						result = ob;
+					}
+				}
+
 			}
 			method.invoke(obj, result);
 		}
@@ -131,7 +136,7 @@ public class SpringCopy {
 		req2.setUrl("/goods/comment");
 		req2.put("num", "111");
 		req2.put("goods", "컴퓨터");
-		req2.put("grade", "HIGH");
+		req2.put("grade", "MIDDLE");
 		req2.put("comment", "어렵구로");
 		s.doService(req2);
 		
