@@ -1,9 +1,16 @@
 package kr.co.ant.study.seomyeongjoo.annotation.ex2;
 
-import kr.co.ant.study.reflect.spring.OrderController;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import kr.co.ant.study.reflect.spring.Request;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +23,7 @@ import java.util.Map;
  * @author hankk
  *
  */
+@Slf4j
 public class SpringCopy {
 
 	
@@ -37,6 +45,7 @@ public class SpringCopy {
 	 */
 	private void createController(Class clazz)throws Exception {
 		//controller = 객체생성
+		controller = clazz.newInstance();
 	}
 	
 	/**
@@ -46,7 +55,13 @@ public class SpringCopy {
 	 *   Map<String, Methdo> ===> ["/order",saveOrder(메소드객체)];
 	 */
 	private void initUrlMethod(Class clazz)throws Exception {
-		
+		Method[] methods = clazz.getDeclaredMethods();
+		int i = 0;
+		for (Method m: methods) {
+			RequestMapping rq = m.getAnnotation(RequestMapping.class);
+			urlMethod.put(rq.value()[0], m);
+		}
+
 	}
 
 	
@@ -70,7 +85,31 @@ public class SpringCopy {
 	 * @return paraeterType 객체
 	 */
 	public Object toParameter(Request request, Class parameterType)throws Exception {
-		return null;
+		//request를 order로
+		Map<String, String> parameters = request.getParameters();
+		Field[] fs = parameterType.getDeclaredFields();
+		Object obj = parameterType.newInstance();
+		for (Field f:fs) {
+			f.setAccessible(true);
+			String value = parameters.get(f.getName());
+			Object result = new Object();
+			String methodName = "set"+StringUtils.capitalize(f.getName());
+			Method method = parameterType.getMethod(methodName, f.getType());
+			Class<?> cls = f.getType();
+			String type = cls.getName();
+			if("int".equals(type)){
+				result = Integer.parseInt(value);
+			}else if("java.lang.String".equals(type)){
+				result = value;
+			}else{
+				Class clazz = Class.forName(type);
+				Object[] consts = clazz.getEnumConstants();
+				result = consts[0];
+			}
+			method.invoke(obj, result);
+		}
+
+		return obj;
 	}
 	
 	
@@ -78,21 +117,23 @@ public class SpringCopy {
 		
 		SpringCopy s = new SpringCopy(OrderController.class);
 		
-		Request req = new Request();
-		req.setUrl("/order");
-		req.put("num", "111");
-		req.put("goods", "컴퓨터");
-		req.put("qty", "2");
-		req.put("deleveryStatus", "READY");
+		Request req1 = new Request();
+		req1.setUrl("/order");
+		req1.put("num", "111");
+		req1.put("goods", "컴퓨터");
+		req1.put("qty", "2");
+		req1.put("deleveryStatus", "READY");
 		
-		s.doService(req);
+		s.doService(req1);
 		
-		Request deleveryStatusRequest = new Request();
-		deleveryStatusRequest.setUrl("/order/deleveryStatus");
-		deleveryStatusRequest.put("num", "111");
-		s.doService(deleveryStatusRequest);
+		Request req2 = new Request();
 		
-		s.doService(deleveryStatusRequest);
+		req2.setUrl("/goods/comment");
+		req2.put("num", "111");
+		req2.put("goods", "컴퓨터");
+		req2.put("grade", "HIGH");
+		req2.put("comment", "어렵구로");
+		s.doService(req2);
 		
 	}
 }
