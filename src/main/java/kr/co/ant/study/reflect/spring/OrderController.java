@@ -25,4 +25,9 @@ public class OrderController {
 		Order order = orders.get(num);
 		System.out.println(String.format("주문하신 [%s] 상품에 배송상태 [%s]", order.getGoods(), order.getDeleveryStatus().getValue()));
 	}
+	
+	@RequestMapping("/goods/comment")
+	public void writeGoodsComment(Comment comment) {
+		System.out.println(String.format("주문하신 [%s] 상품에 평가 등급 [%s] => [%s], ", comment.getGoods(), comment.getGrade(), comment.getComment()));
+	}
 }
