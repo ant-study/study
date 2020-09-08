@@ -1,12 +1,14 @@
 package kr.co.ant.study.moonjonghun;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.util.NumberUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.ant.study.reflect.spring.Comment;
@@ -23,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
  * OrderController 주문 Controller
  * Request 요청정보 VO
  * 
- * @author hankk
+ * @author 문종훈
  *
  */
 @Slf4j
@@ -112,34 +114,60 @@ public class SpringCopy {
 				log.info("class name : {}",parameterType.getName());
 				
 				//매개변수가 Order 라면
-				if(parameterType.equals(Order.class)) {
-					Order order = (Order) parameterType.newInstance();
+				if(parameterType.equals(Order.class) || parameterType.equals(Comment.class)) {
 					
-					order.setNum(NumberUtils.parseNumber(map.get("num"), Integer.class));
-					order.setGoods(map.get("goods"));
-					order.setQty(NumberUtils.parseNumber(map.get("qty"), Integer.class));
-					order.setDeleveryStatus(DeliveryStatus.valueOf(map.get("deleveryStatus")));
-					return order;
+					Object obj = null;
+					
+					if(parameterType.equals(Order.class)) {
+						obj = (Order) parameterType.newInstance();
+					}else {
+						obj = (Comment) parameterType.newInstance();
+					}
+					
+					//order의 Field[] 를 가져온다.
+					Field[] orderFields = parameterType.getDeclaredFields();
+					
+					for(Field fd : orderFields) {
+						Method getMethod = parameterType.getDeclaredMethod("set"+StringUtils.capitalize(fd.getName()), fd.getType());
+						if(fd.getType().equals(int.class)) {
+							int paramVal = (int) NumberUtils.parseNumber(map.get(fd.getName()), Integer.class);	
+							getMethod.invoke(obj, paramVal);
+						}else if(fd.getType().isEnum()){
+							if(parameterType.equals(Order.class)) {
+								DeliveryStatus paramVal = DeliveryStatus.valueOf(map.get(fd.getName()));
+								getMethod.invoke(obj, paramVal);
+							} else {
+								GoodsEvaluationGrade paramVal = GoodsEvaluationGrade.valueOf(map.get(fd.getName()));
+								getMethod.invoke(obj, paramVal);
+							}
+						} else {
+							String paramVal = map.get(fd.getName());
+							getMethod.invoke(obj, paramVal);
+						}
+					}
+					
+					return obj;
 				}
 				
 				//매개변수가 int 라면
 				if(parameterType.equals(int.class)) {
-					int num = Integer.parseInt(map.get("num"));
+					int num = NumberUtils.parseNumber(map.get("num"), Integer.class);
 					return num;
 				}
 				
-				if(parameterType.equals(Comment.class)) {
-					Comment comment = (Comment) parameterType.newInstance();
-					comment.setNum(NumberUtils.parseNumber(map.get("num"),Integer.class));
-					comment.setGrade(GoodsEvaluationGrade.valueOf(map.get("grade")));
-					comment.setGoods(map.get("goods"));
-					comment.setComment(map.get("comment"));
-					return comment;
-				}
+//				//매개변수가 Comment라면
+//				if(parameterType.equals(Comment.class)) {
+//					Comment comment = (Comment) parameterType.newInstance();
+//					comment.setNum(NumberUtils.parseNumber(map.get("num"),Integer.class));
+//					comment.setGrade(GoodsEvaluationGrade.valueOf(map.get("grade")));
+//					comment.setGoods(map.get("goods"));
+//					comment.setComment(map.get("comment"));
+//					return comment;
+//				}
 			}
 		}
 		
-		return null;
+		throw new Exception("오류");
 	}
 	
 	
