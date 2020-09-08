@@ -14,18 +14,19 @@ public class VOSReflect extends ReflectQuestion {
 
 		Field f = null;
 		Object retVal = null;
-		
-		if(this.isMember(vo)) f = vo.getClass().getDeclaredField(fldNm);
+		log.debug("getValue[] started");
+		//if(this.isMember(vo)) ;
+		f = vo.getClass().getDeclaredField(fldNm);
 		Method [] ms = vo.getClass().getMethods();
 		for (Method m : ms) 
 		{
 			String nm = m.getName().toLowerCase();
-			//log.debug("getter nmis["+nm+"]");
+			log.debug("getter nmis["+nm+"]");
 			if (nm.contains(fldNm) && nm.startsWith("get")) 
 			{
-				//log.debug("this is what i want getter ["+nm+"]");
+				log.debug("this is what i want getter ["+nm+"]");
 				retVal = m.invoke(vo);
-				//log.debug("this is retval of gettingFields ["+retVal.toString()+"]");
+				log.debug("this is retval of gettingFields ["+retVal.toString()+"]");
 				break;
 			}
 		}
@@ -36,21 +37,35 @@ public class VOSReflect extends ReflectQuestion {
 	}
 
 	@Override
-	public void setValue(Object vo, Object value, String filedName) throws Exception {
+	public void setValue(Object vo, Object value, String fieldName) throws Exception {
 		// TODO Auto-generated method stub
 		Field f = null;
-		Object retVal = null;
-		
-		if(this.isMember(vo)) ;
+		//if(this.isMember(vo)) ;
+		log.debug("setValue[] started fieldNm =["+fieldName+"]");
 		Method [] ms = vo.getClass().getMethods();
 		for (Method m : ms) 
 		{
 			String nm = m.getName().toLowerCase();
 			
-			if (nm.contains(filedName) && nm.startsWith("set")) 
+			
+			if (nm.contains(fieldName) && nm.startsWith("set")) 
 			{
-				//log.debug("this is what i want setter["+nm+"]");
-				m.invoke(vo,value);
+				log.debug("cls name=["+ m.getParameterTypes()[0]+"]");
+				log.debug("this is what i want setter["+nm+"]");
+				Class cls = m.getParameterTypes()[0];
+				Integer i = new Integer(10);
+				
+				if (cls.getTypeName().equals("int")) m.invoke(vo,Integer.parseInt(value.toString()));
+				else 
+					m.invoke(vo,  value);
+				
+
+				/*
+				m.invoke(vo, cls.cast(value.getClass()
+						                   .getMethod(cls.getName())
+						                   .invoke(value)
+						                   ));
+				*/
 				break;
 			}
 		}
@@ -60,12 +75,15 @@ public class VOSReflect extends ReflectQuestion {
 	@Override
 	public void copyProperties(Object orig, Object dest) throws Exception {
 		// TODO Auto-generated method stub
-		if(this.isMember(orig) && this.isMember(dest)) 
-		{
+		//if(this.isMember(orig) && this.isMember(dest)) 
+		//{
 			for (Field f : orig.getClass().getDeclaredFields()) 
+				
+			{
+				log.debug("DDDD"+f.getName());
 				this.setValue(dest, this.getValue(orig, f.getName()), f.getName());
-			
-		}
+			}
+		//}
 	}
 
 	public static void main(String[] args) throws Exception {

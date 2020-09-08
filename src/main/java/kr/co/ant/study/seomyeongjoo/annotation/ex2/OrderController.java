@@ -1,9 +1,9 @@
-package kr.co.ant.study.reflect.spring;
+package kr.co.ant.study.seomyeongjoo.annotation.ex2;
+
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.web.bind.annotation.RequestMapping;
 
 public class OrderController {
 	
@@ -24,10 +24,5 @@ public class OrderController {
 	public void searchDeleveryStatus(int num) {
 		Order order = orders.get(num);
 		System.out.println(String.format("주문하신 [%s] 상품에 배송상태 [%s]", order.getGoods(), order.getDeleveryStatus().getValue()));
-	}
-	
-	@RequestMapping("/goods/comment")
-	public void writeGoodsComment(Comment comment) {
-		System.out.println(String.format("주문하신 [%s] 상품에 평가 등급 [%s] => [%s], ", comment.getGoods(), comment.getGrade(), comment.getComment()));
 	}
 }

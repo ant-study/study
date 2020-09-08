@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 public class LengthVO {
 	//Annotation MaxLength 생성
-	@MaxLength(10)
+	@MaxLength(5)
 	private String address;
 	
 	//Annotation MinLength 생성
-	@MinLength(10)
+	@MinLength(5)
 	private String phoneNumber;
 
 }

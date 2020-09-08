@@ -1,10 +1,11 @@
-package kr.co.ant.study.reflect.spring;
+package kr.co.ant.study.seomyeongjoo.annotation.ex2;
+
+import kr.co.ant.study.reflect.spring.OrderController;
+import kr.co.ant.study.reflect.spring.Request;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.springframework.util.NumberUtils;
 
 /**
  * Order 주문정보 VO
@@ -91,15 +92,7 @@ public class SpringCopy {
 		deleveryStatusRequest.put("num", "111");
 		s.doService(deleveryStatusRequest);
 		
-		Request commentRequest = new Request();
-		commentRequest.setUrl("/goods/comment");
-		commentRequest.put("num", "111");
-		commentRequest.put("grade", "LOW");
-		commentRequest.put("goods", "컴퓨터");
-		commentRequest.put("comment", "컴퓨터가 안켜져요");
-		s.doService(commentRequest);
-		
+		s.doService(deleveryStatusRequest);
 		
 	}
-	
 }
