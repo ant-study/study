@@ -37,8 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class VosSpringLike {
 
-	@Autowired
-	private VOSReflect vos;
+
 	
 	public static Map<String, Method> urlMethod;
 	
@@ -148,6 +147,7 @@ public class VosSpringLike {
 								url = sarr[0];
 								// urlMethod 구성.
 								urlMethod.put(url, m);
+								log.debug("URLMEHTOD.GET=["+urlMethod.get(url));;
 								log.debug("here's method Name=["+m.getName()+"],ano name=["+a.getClass().getName() + "].method["+ma.getName()+"].value["+url+"]");
 								break;
 							}
@@ -171,11 +171,11 @@ public class VosSpringLike {
 	}
 	public void doService(Request request) throws Exception{
 		//입력된 URL 별로 메소드를 호출 한다.
-		
+		log.debug("doSERVICE strt!");
 		Method method = urlMethod.get(request.getUrl());
-		log.debug(method.getName());
+		log.debug("METHOD=["+method.getName());
 		Class parameterType = method.getParameterTypes()[0];
-		log.debug(parameterType.toString());
+		log.debug("ParamType=["+parameterType.getName());
 		Object argument = toParameter(request, parameterType);
 		
 		method.invoke(controller, argument);
@@ -198,10 +198,16 @@ public class VosSpringLike {
 	public Object toParameter(Request request, Class parameterType)throws Exception {
 		
 		Class prmType = parameterType;
+		//log.debug(prmType.isInstance(new Object()));
 		// 생성자로 오브젝트 생성하자.
 		// 이정도 편법은 봐줘요 쌤.. 
-		Object yesItsMeHoney = parameterType.getConstructors()[0].newInstance();
-		log.debug("ddd"+yesItsMeHoney.getClass().getName());
+		//if (parameterType instanceof Object)
+		Object yesItsMeHoney = null;
+		
+	
+		yesItsMeHoney = parameterType.newInstance();
+		
+		log.debug("ma honeys name ["+yesItsMeHoney.getClass().getName()+"]");
 		
 		// request 에는 hashmap에 풋되어있다.
 		// map.get("key");
@@ -211,51 +217,72 @@ public class VosSpringLike {
 		for(Field pf : prmType.getDeclaredFields())
 		{
 			// field copy
-			this.copyFields(request, yesItsMeHoney, pf.getName());
+			this.copyFields(request, yesItsMeHoney, pf);
 			// member copy
-			for (Class c : request.getClass().getDeclaredClasses())
-			{
-				this.copyFields(c, yesItsMeHoney, pf.getName());
-				if (c instanceof Map) {
-					
-				}
-			}
+			log.debug("class cnt=["+request.getClass().getDeclaredClasses().length+"]");
 			
 		}
-
-			
-			
 		
-		//log.debug(yesItsMeHoney.getGoods());
-		log.debug("aaa"+yesItsMeHoney.toString());
-		// 멤버도 끼워넣으셧으니 하나 만듦.
-		for (Class c : parameterType.getDeclaredClasses())
-			vos.setValue(yesItsMeHoney, request, c.getName());
-		
+	
 		return yesItsMeHoney;
+		
 		
 	}
 	
 	// key로만 비교하여 같은 이름이면 카피한다.
-	void copyFields (Object targ, Object dest, String fieldNm) throws Exception{
+	void copyFields (Object targ, Object dest, Field fld) throws Exception{
 		
-		for (Field f : targ.getClass().getDeclaredFields())
+		VOSReflect vos = new VOSReflect();
+		String fieldNm = fld.getName();
+		log.debug("copyFields fldNm=["+fld.getName()+"]");
+		if (!fld.isAccessible()) fld.setAccessible(true);
+		
+		for (Field f : targ.getClass().getDeclaredFields()) {
+		
+			log.debug("f field Name=["+f.getName()+"]");
 			//for (Field df : dest.getClass().getDeclaredFields())
-				if (f.getName().equals(fieldNm) && f.getType() == dest.getClass().getField(fieldNm).getType()) 
-					//matching 
-					vos.setValue(dest,vos.getValue(targ, f.getName()),f.getName());	
+			if (f.getName().equals(fieldNm) && f.getType() == dest.getClass().getField(fieldNm).getType())
+			{
+				//matching 
+				vos.setValue(dest,vos.getValue(targ, f.getName()),f.getName());
+				//log.debug(vos.getValue(dest, fieldNm).toString());
+			}
 			
-	}
-	// key로만 비교하여 같은 이름이면 카피한다.
-	void copyFields (Class targ, Object dest) throws Exception{
+			// 맵임?
+			f.setAccessible(true);
+			
+			
+			//Object oVal = vos.getValue(f.get(targ), f.getName());
+			
+			if (f.get(targ) != null && f.get(targ) instanceof Map) 
+			{
+				log.debug("checking"+f.get(targ));
+				Object mapVal="";;
+				for (Method cf : f.getType().getDeclaredMethods()) 
+				{
+					if (cf.getName().equals("get"))
+					{
+						try 
+						{
+							mapVal = cf.invoke(f.get(targ),fieldNm);
+						}
+						catch (Exception e) 
+						{
+							log.info("그런멤버없대["+fieldNm+"]");
+						}
+						
+						log.debug("dest name=["+dest.getClass().getName()+"],mapKey=["+fieldNm+"],mapValue=["+mapVal+"]");
+						//fld.set(dest, f.getType().cast(mapVal));
+						vos.setValue(dest,mapVal,fieldNm);
+					}
+				}
+			}
 		
-		for (Field f : targ.getDeclaredFields())
-			for (Field df : dest.getClass().getDeclaredFields())
-				if (f.getName().equals(df.getName())) 
-					//matching 
-					vos.setValue(dest,vos.getValue(targ, f.getName()),f.getName());	
+		}
 			
 	}
+
+	
 	public static void main(String[] args)throws Exception {
 		
 		VosSpringLike s = new VosSpringLike(OrderController.class);
@@ -267,13 +294,15 @@ public class VosSpringLike {
 		req.put("qty", "2");
 		req.put("deleveryStatus", "READY");
 		
-		  s.doService(req);
-		  
-		  Request deleveryStatusRequest = new Request();
-		  deleveryStatusRequest.setUrl("/order/deleveryStatus");
-		  deleveryStatusRequest.put("num", "111"); s.doService(deleveryStatusRequest);
-		  
-		  s.doService(deleveryStatusRequest);
+		s.doService(req);
+		/*
+		 * Request deleveryStatusRequest = new Request();
+		 * deleveryStatusRequest.setUrl("/order/deliveryStatus");
+		 * deleveryStatusRequest.put("num", "111");
+		 * log.debug("CHK"+deleveryStatusRequest.getUrl());
+		 * s.doService(deleveryStatusRequest);
+		 */
+		  //s.doService(deleveryStatusRequest);
 		 
 	}
 }
