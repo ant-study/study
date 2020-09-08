@@ -61,13 +61,15 @@ public class SpringCopy {
 		//메소드에 붙어있는 어노테이션 정보 가져온다. List
 		for(Method method : methods) {
 			Annotation anno = method.getAnnotation(RequestMapping.class);
-			if(anno instanceof RequestMapping) {
-				String[] paths =((RequestMapping) anno).value();	
-				
-				urlMethod.put(paths[0], method);
-				log.info("path Value : {}", paths);
-			}
+			String[] paths =((RequestMapping) anno).value();	
+
+			log.info("path Value : {}", paths);
+			
+			//request요청 경로가 여러개일수 있지만 첫번째 경로만 가져오도록 한다.
+			urlMethod.put(paths[0], method);
 		}
+		
+		//request path와 method명을 매치시켰다!
 		
 	}
 
@@ -96,6 +98,7 @@ public class SpringCopy {
 		
 		log.info("class name : {}",parameterType.getName());
 		
+		//매개변수가 Order 라면
 		if(parameterType.equals(Order.class)) {
 			Order order = (Order) parameterType.newInstance();
 			
@@ -106,6 +109,7 @@ public class SpringCopy {
 			return order;
 		}
 		
+		//매개변수가 int 라면
 		if(parameterType.equals(int.class)) {
 			int num = Integer.parseInt(map.get("num"));
 			return num;
