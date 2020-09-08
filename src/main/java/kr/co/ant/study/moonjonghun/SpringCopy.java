@@ -9,7 +9,9 @@ import java.util.Map;
 import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.ant.study.reflect.spring.Comment;
 import kr.co.ant.study.reflect.spring.DeliveryStatus;
+import kr.co.ant.study.reflect.spring.GoodsEvaluationGrade;
 import kr.co.ant.study.reflect.spring.Order;
 import kr.co.ant.study.reflect.spring.OrderController;
 import kr.co.ant.study.reflect.spring.Request;
@@ -125,6 +127,15 @@ public class SpringCopy {
 					int num = Integer.parseInt(map.get("num"));
 					return num;
 				}
+				
+				if(parameterType.equals(Comment.class)) {
+					Comment comment = (Comment) parameterType.newInstance();
+					comment.setNum(NumberUtils.parseNumber(map.get("num"),Integer.class));
+					comment.setGrade(GoodsEvaluationGrade.valueOf(map.get("grade")));
+					comment.setGoods(map.get("goods"));
+					comment.setComment(map.get("comment"));
+					return comment;
+				}
 			}
 		}
 		
@@ -150,7 +161,13 @@ public class SpringCopy {
 			deleveryStatusRequest.put("num", "111");
 			s.doService(deleveryStatusRequest);
 			
-			s.doService(deleveryStatusRequest);
+			Request commentRequest = new Request();
+			commentRequest.setUrl("/goods/comment");
+			commentRequest.put("num", "111");
+			commentRequest.put("grade", "LOW");
+			commentRequest.put("goods", "컴퓨터");
+			commentRequest.put("comment", "컴퓨터가 안켜져요");
+			s.doService(commentRequest);
 		} catch(InvocationTargetException ie) {
 			if(ie.getCause().getClass().equals(NullPointerException.class)) {
 				log.debug("요청하신 주문번호에 대한 정보를 찾을 수 없습니다.");
