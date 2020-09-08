@@ -98,48 +98,70 @@ public static Map<String, Method> urlMethod;
 //		request data → VO data
 		
 //		1.Get Request's parameter(type Map)
-		Class req = request.getClass();
-		Field[] reqFields = req.getDeclaredFields();
-		Method reqMethod = null;
-		for (Field reqField : reqFields) {
-			reqField.setAccessible(true);
-			if ("parameters".equals(reqField.getName())) {
-				String methodName = "get"+StringUtils.capitalize(reqField.getName());
-				reqMethod = req.getMethod(methodName);				
-			}			
-		}
 //		parameters값만 넣음
-		Map<String, String> map = (Map<String, String>) reqMethod.invoke(request);		
+		Map<String, String> map = (Map<String, String>) getReqParam(request);		
 		
 //		2.Set MappingMethod's parameter
+		Object obj = setParameter(parameterType, map);
 		
+		return obj;
+	}
+	
+	/**
+	 * Request의 Parameter 가져오기
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public Object getReqParam(Object request) throws Exception {
+		
+		Class clazz = request.getClass();
+		Field[] fields = clazz.getDeclaredFields();
+		
+		String methodNm = null;
+		for (Field field : fields) {
+			field.setAccessible(true);
+			
+			if ("parameters".equals(field.getName())) {		//다른 방법 없어?
+				methodNm = "get" + StringUtils.capitalize(field.getName());				
+			}
+		}
+		Method method = clazz.getMethod(methodNm);
+		
+		return method.invoke(request);
+	}
+	
+	/**
+	 * 매핑메소드의 Parameter 세팅
+	 * 
+	 * @param vo
+	 * @param req
+	 * @return
+	 * @throws Exception
+	 */
+	public Object setParameter(Class vo, Map<String, String> req) throws Exception {
 //		Class 말고 Object 써야지
-		Object obj = parameterType.newInstance();
+		Object obj = vo.newInstance();
 		
-		Field[] paramFields = parameterType.getDeclaredFields();
-		Class<?> paramType = null;
-		for (Field paramField : paramFields) {
-			paramField.setAccessible(true);
+		Field[] fields = vo.getDeclaredFields();
+		for (Field field : fields) {
+			String methodNm = "set" + StringUtils.capitalize(field.getName());
+			String fieldNm = field.getName();
 			
-			String key = paramField.getName();
-			String paramStr = "set" + StringUtils.capitalize(key);
-			paramType = paramField.getType();
+			Method method = vo.getMethod(methodNm, field.getType());
 			
-			Method paramMethod = parameterType.getMethod(paramStr, paramType);			
-			
-			//			casting 어떻게 할까		paramType.cast(value) 이거 안먹혀			
-			if (paramType.getName() == "int") {		//이 방법밖에 없나
-				paramMethod.invoke(obj, NumberUtils.parseNumber(map.get(key), Integer.class));
+//			casting 어떻게 할까		paramType.cast(value) 이거 안먹혀		
+			if (field.getType().getName() == "int") {	//이 방법밖에 없나
+				method.invoke(obj, NumberUtils.parseNumber(req.get(fieldNm), Integer.class));
 			} else {
-				
-				//				enum을 뭘로 구분할까?
-				if (paramType.isEnum()) {	//	enum 
-					paramMethod.invoke(obj, Enum.valueOf((Class<Enum>) paramType, map.get(key)));
-					
+//				enum을 뭘로 구분할까?
+				if (field.getType().isEnum()) {	//	enum 
+					method.invoke(obj, Enum.valueOf((Class<Enum>) field.getType(), req.get(fieldNm)));
 				} else {	//not enum
-					paramMethod.invoke(obj, map.get(key));					
+					method.invoke(obj, req.get(fieldNm));
 				}
-			}			
+			}
 		}
 		
 		return obj;
