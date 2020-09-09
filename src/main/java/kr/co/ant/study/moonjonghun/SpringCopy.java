@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.ClassUtils;
 import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -107,8 +108,11 @@ public class SpringCopy {
 				
 				log.info("class name : {}",parameterType.getName());
 				
+				Class paramClsTyp = ClassUtils.resolvePrimitiveIfNecessary(parameterType);
+				
+				
 				//매개변수가 Order 혹은  Comment 라면
-				if(parameterType.equals(Order.class) || parameterType.equals(Comment.class)) {
+				if(Order.class.isAssignableFrom(paramClsTyp) || Comment.class.isAssignableFrom(paramClsTyp)) {
 					
 					Object obj = null;
 					
@@ -144,7 +148,7 @@ public class SpringCopy {
 				}
 				
 				//매개변수가 int 라면
-				if(parameterType.equals(int.class)) {
+				if(Number.class.isAssignableFrom(paramClsTyp)) {
 					int num = NumberUtils.parseNumber(map.get("num"), Integer.class);
 					return num;
 				}
