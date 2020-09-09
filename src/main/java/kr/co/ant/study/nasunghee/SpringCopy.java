@@ -59,8 +59,8 @@ public class SpringCopy {
 		Constructor[] cs = clazz.getConstructors(); //SpringCopy(){}
 		for (int i = 0; i < cs.length; i++) {
 			
-			controller =cs[i]; //OrderController() 
-			//controller = cs[i].newInstance();  //OrderController()
+//			controller =cs[i]; //OrderController() 
+			controller = cs[i].newInstance();  //OrderController()
 
 		}
 		
@@ -73,7 +73,7 @@ public class SpringCopy {
 	 *   Map<String, Methdo> ===> ["/order",saveOrder(메소드객체)];
 	 */
 	private void initUrlMethod(Class clazz)throws Exception {
-		System.out.println(controller); //OrderController()
+//		System.out.println(controller); //OrderController()
 		Method[] methods = clazz.getMethods();
 		for (Method method : methods) {
 			Annotation[] annotations = method.getDeclaredAnnotations();
@@ -125,11 +125,11 @@ public class SpringCopy {
 		
 		//paramMap의 key는 Order의 field,
 		//paramMap의 value는 string값의 field값 >> num - int, goods - string, qty - int, deleverystatus - DeliveryStatus(Enum)
-		Object setParam = null;
+		Object setParam = new Object();
 		for (Field field : fields) {
 			String methodName = "set"+StringUtils.capitalize(field.getName());
 			Method method = o.getClass().getMethod(methodName, field.getType());
-			System.out.println(field.getType());
+
 			if(field.getType() == int.class) {
 				Integer param = NumberUtils.parseNumber(paramMap.get(field.getName()), Integer.class);
 				setParam = param;
@@ -137,34 +137,21 @@ public class SpringCopy {
 				setParam = paramMap.get(field.getName());
 			}else if(field.getType().isEnum()) {
 				//Class clzz = field.getType().getSuperclass().getClass();
-				Class clzz = Class.forName("kr.co.ant.study.reflect.spring.DeliveryStatus");
+//				Class clzz = Class.forName(field.getType().getName());
 				//clzz.newInstance();		// >> 추상클래스 혹은 인터페이스는 newInstance생성 못하는데
-				Method m = clzz.getDeclaredMethod("getValue");
-
+//				Method m = clzz.getDeclaredMethod("getValue"); >> 사실 DelivertStatus의 getValue를 가지고 오려고 했으나....
+				
 				Object[] enos = field.getType().getEnumConstants(); //Object는 DeliveryStatus여야..
 				for (Object eno : enos) {
-//					System.out.println(eno);
 					if(eno.toString().equals(paramMap.get(field.getName()))) {
-						Object obj = m.invoke(eno);		// >> 인보크 안됨...object is not an instance of declaring class
-						
-						setParam = obj;  		//>>> 실행시 java.lang.IllegalArgumentException: argument type mismatch
-						System.out.println("::::::"+setParam);
-						
+						setParam = eno;
 					}
 				}
-
 			}
 			method.invoke(o, setParam);
-			//if( field.getType() instanceof String)
 			
 		}
-
-		
-		 
-		
-		
-		
-		return null; 
+		return o;
 	}
 	
 	
@@ -181,7 +168,7 @@ public class SpringCopy {
 		
 		s.doService(req);
 		
-		Request deleveryStatusRequest = new Request();
+//		Request deleveryStatusRequest = new Request();
 //		deleveryStatusRequest.setUrl("/order/deleveryStatus");
 //		deleveryStatusRequest.put("num", "111");
 //		s.doService(deleveryStatusRequest);
@@ -192,7 +179,7 @@ public class SpringCopy {
 		commentRequest.put("grade", "LOW");
 		commentRequest.put("goods", "컴퓨터");
 		commentRequest.put("comment", "컴퓨터가 안켜져요");
-		s.doService(deleveryStatusRequest);
+		s.doService(commentRequest);
 		
 	}
 }
