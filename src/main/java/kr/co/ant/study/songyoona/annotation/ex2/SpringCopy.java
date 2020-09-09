@@ -1,4 +1,4 @@
-package kr.co.ant.study.songyoona;
+package kr.co.ant.study.songyoona.annotation.ex2;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -67,7 +67,6 @@ public class SpringCopy {
 
 	        for(Annotation a : m.getAnnotations()) {
 	            if (a.annotationType()== RequestMapping.class) {
-	                log.debug("Annotation a: "+a.toString());
 
 	                RequestMapping re = (RequestMapping) a;
 	                String[] urls = re.value();
@@ -87,9 +86,9 @@ public class SpringCopy {
 		Method method = urlMethod.get(request.getUrl());
 
 		Class parameterType = method.getParameterTypes()[0];
-		// parameterType(Order)
-		Object argument = toParameter(request, parameterType);
+		// parameterType = Order.class
 
+		Object argument = toParameter(request, parameterType);
 		method.invoke(controller, argument);
 
 	}
@@ -102,26 +101,23 @@ public class SpringCopy {
 	 * 숫자형은 NumberUtils.parseNumber 사용
 	 */
 	public Object toParameter(Request request, Class parameterType)throws Exception {
-	    //Class obj = parameterType.getClass();
 	    Object obj = parameterType.newInstance();
 
-	    //request가 form에서 받아온 데이터들 이라고 생각.
-	    String nm = "";
+	    //request는  form에서 받아온 데이터들 이라고 생각.
 	    //Map<String, String> order = request.getParameters();
 
 	    Field[] rf = request.getClass().getDeclaredFields();
-	    Method reqMethod = null;
 	    for(Field rfield : rf) {
             log.debug("필드이름: "+ rfield.getName() + " type: "+ rfield.getType());
+            // request field가 Map일때
             if(rfield.getType() == Map.class) {
                 log.debug("map이다");
-                if ("parameters".equals(rfield.getName())) {
-                    String methodName = "get"+StringUtils.capitalize(rfield.getName());
-                    reqMethod = request.getClass().getMethod(methodName);
-                }
-
+                String methodNm= "get"+StringUtils.capitalize(rfield.getName());
+                Method reqMethod = request.getClass().getMethod(methodNm);
+                // request Map 값을 가져오는 method : map 에 담아둠
                 Map<String, String> map = (Map<String, String>) reqMethod.invoke(request);
 
+                // parameterType field에 set작업
                 Field[] pf = parameterType.getDeclaredFields();
                 for(Field paramf : pf) {
                     log.debug("param 필드이름: "+ paramf.getName() + " type: "+ paramf.getType());
@@ -146,7 +142,6 @@ public class SpringCopy {
             }
 
         }
-
 	    return obj;
 	}
 
@@ -164,7 +159,7 @@ public class SpringCopy {
 
         s.doService(req);
 
-//        Request deleveryStatusRequest = new Request();
+        Request deleveryStatusRequest = new Request();
 //        deleveryStatusRequest.setUrl("/order/deleveryStatus");
 //        deleveryStatusRequest.put("num", "111");
 //        s.doService(deleveryStatusRequest);

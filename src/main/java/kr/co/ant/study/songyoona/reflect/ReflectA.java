@@ -2,7 +2,7 @@
  * Author : yooS
  * Create Date : 2020. 9. 2.
  */
-package kr.co.ant.study.songyoona;
+package kr.co.ant.study.songyoona.reflect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

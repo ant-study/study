@@ -2,7 +2,7 @@
  * Author : yooS
  * Create Date : 2020. 9. 3.
  */
-package kr.co.ant.study.songyoona;
+package kr.co.ant.study.songyoona.annotation.ex1;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
