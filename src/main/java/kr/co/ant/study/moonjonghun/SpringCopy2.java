@@ -16,7 +16,6 @@ import kr.co.ant.study.reflect.spring.DeliveryStatus;
 import kr.co.ant.study.reflect.spring.GoodsEvaluationGrade;
 import kr.co.ant.study.reflect.spring.Order;
 import kr.co.ant.study.reflect.spring.OrderController;
-import kr.co.ant.study.reflect.spring.Request;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,14 +28,14 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class SpringCopy {
+public class SpringCopy2 {
 
 	
 	public static Map<String, Method> urlMethod;
 	
 	public static Object controller;
 	
-	public SpringCopy(Class clazz)throws Exception {
+	public SpringCopy2(Class clazz)throws Exception {
 		urlMethod = new HashMap<>();
 		createController(clazz);
 		initUrlMethod(clazz);
@@ -52,8 +51,7 @@ public class SpringCopy {
 		//controller = 객체생성
 		//newInstance로 객체를 생성할때 클래스의 기본생성자를 호출한다.
 		//클래스에 기본생성자가 포함되어있지 않더라도 컴파일시 자동적으로 기본생성자를 생성해준다.
-		Object obj =  clazz.newInstance();
-		controller = obj;
+		controller = clazz.newInstance();
 	}
 	
 	/**
@@ -63,9 +61,11 @@ public class SpringCopy {
 	 *   Map<String, Methdo> ===> ["/order",saveOrder(메소드객체)];
 	 */
 	private void initUrlMethod(Class clazz)throws Exception {
-		Method[] methods = clazz.getDeclaredMethods();
+		//클래스에서 메소드를 모두 가져오고 List
+//		Method[] methods = ;
 		
-		for(Method method : methods) {
+		//메소드에 붙어있는 어노테이션 정보 가져온다. List
+		for(Method method : clazz.getDeclaredMethods()) {
 			Annotation anno = method.getAnnotation(RequestMapping.class);
 			String[] paths =((RequestMapping) anno).value();	
 
@@ -74,6 +74,9 @@ public class SpringCopy {
 			//request요청 경로가 여러개일수 있지만 첫번째 경로만 가져오도록 한다.
 			urlMethod.put(paths[0], method);
 		}
+		
+		//request path와 method명을 매치시켰다!
+		
 	}
 
 	
@@ -98,12 +101,9 @@ public class SpringCopy {
 	 */
 	public Object toParameter(Request request, Class parameterType)throws Exception {
 		
-		Class requestClazz = request.getClass();
-		Method[] requestMethods = requestClazz.getDeclaredMethods();
-		
-		for(Method reqMethod : requestMethods) {
+		for(Method reqMethod : request.getClass().getDeclaredMethods()) {
 			if(reqMethod.getName() == "getParameters") {
-				Map<String, String> map =(Map<String, String>) reqMethod.invoke(request);
+				Map<?, ? > map =(Map<?, ?>) reqMethod.invoke(request);
 				
 				log.info("class name : {}",parameterType.getName());
 				
@@ -124,18 +124,18 @@ public class SpringCopy {
 					for(Field fd : orderFields) {
 						Method getMethod = parameterType.getDeclaredMethod("set"+StringUtils.capitalize(fd.getName()), fd.getType());
 						if(fd.getType().equals(int.class)) {
-							int paramVal = (int) NumberUtils.parseNumber(map.get(fd.getName()), Integer.class);	
+							int paramVal = (int) map.get(fd.getName());	
 							getMethod.invoke(obj, paramVal);
 						} else if(fd.getType().isEnum()){
 							if(parameterType.equals(Order.class)) {
-								DeliveryStatus paramVal = DeliveryStatus.valueOf(map.get(fd.getName()));
+								DeliveryStatus paramVal = DeliveryStatus.valueOf((String) map.get(fd.getName()));
 								getMethod.invoke(obj, paramVal);
 							} else {
-								GoodsEvaluationGrade paramVal = GoodsEvaluationGrade.valueOf(map.get(fd.getName()));
+								GoodsEvaluationGrade paramVal = GoodsEvaluationGrade.valueOf((String) map.get(fd.getName()));
 								getMethod.invoke(obj, paramVal);
 							}
 						} else {
-							String paramVal = map.get(fd.getName());
+							String paramVal =(String) map.get(fd.getName());
 							getMethod.invoke(obj, paramVal);
 						}
 					}
@@ -145,38 +145,37 @@ public class SpringCopy {
 				
 				//매개변수가 int 라면
 				if(parameterType.equals(int.class)) {
-					int num = NumberUtils.parseNumber(map.get("num"), Integer.class);
+					int num = (int) map.get("num");
 					return num;
 				}
-				
 			}
 		}
 		
-		throw new Exception("오류");
+		return null;
 	}
 	
 	
 	public static void main(String[] args) {
 		try {
-			SpringCopy s = new SpringCopy(OrderController.class);
+			SpringCopy2 s = new SpringCopy2(OrderController.class);
 			
 			Request req = new Request();
 			req.setUrl("/order");
-			req.put("num", "111");
+			req.put("num", 111);
 			req.put("goods", "컴퓨터");
-			req.put("qty", "2");
+			req.put("qty", 2);
 			req.put("deleveryStatus", "READY");
 			
 			s.doService(req);
 			
 			Request deleveryStatusRequest = new Request();
 			deleveryStatusRequest.setUrl("/order/deliveryStatus");
-			deleveryStatusRequest.put("num", "111");
+			deleveryStatusRequest.put("num", 111);
 			s.doService(deleveryStatusRequest);
 			
 			Request commentRequest = new Request();
 			commentRequest.setUrl("/goods/comment");
-			commentRequest.put("num", "111");
+			commentRequest.put("num", 111);
 			commentRequest.put("grade", "LOW");
 			commentRequest.put("goods", "컴퓨터");
 			commentRequest.put("comment", "컴퓨터가 안켜져요");
