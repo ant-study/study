@@ -116,6 +116,8 @@ public static Map<String, Method> urlMethod;
 	 */
 	public Object getReqParam(Object request) throws Exception {
 		
+//		request.getParameters 역할을 하려던 건데 if ("parameters".equals(field.getName())) {} 을 사용하면(field명을 고정해두겠다는건데), 이 방식은 비효율적 아닌가?
+//		HandlerMapping은 여길 어떻게 호출할까 궁금궁금
 		Class clazz = request.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		
@@ -123,7 +125,7 @@ public static Map<String, Method> urlMethod;
 		for (Field field : fields) {
 			field.setAccessible(true);
 			
-			if ("parameters".equals(field.getName())) {		//다른 방법 없어?
+			if ("parameters".equals(field.getName())) {
 				methodNm = "get" + StringUtils.capitalize(field.getName());				
 			}
 		}
@@ -151,7 +153,7 @@ public static Map<String, Method> urlMethod;
 			
 			Method method = vo.getMethod(methodNm, field.getType());
 			
-//			casting 어떻게 할까		paramType.cast(value) 이거 안먹혀		
+//			casting 어떻게 할까		paramType.cast(value) 이거 안먹혀
 			if (field.getType().getName() == "int") {	//이 방법밖에 없나
 				method.invoke(obj, NumberUtils.parseNumber(req.get(fieldNm), Integer.class));
 			} else {
