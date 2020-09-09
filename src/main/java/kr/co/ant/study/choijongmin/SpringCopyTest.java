@@ -86,7 +86,7 @@ public class SpringCopyTest {
 		if ( fields.length > 0 ) {
 			vo = parameterType.newInstance();
 		} else {
-			vo = request.getParameters();
+
 		}
 		 
 		for (Field field : fields) {
@@ -107,8 +107,8 @@ public class SpringCopyTest {
 					} else {
 						Object[] objs = fieldType.getEnumConstants();
 						for( int i=0; i<objs.length; i++) {
-							Field enumField = objs[i].getClass().getField(fieldValue);
-							if ( enumField.getName().equals(fieldValue) ) {
+							String enumName = objs[i].toString();
+							if ( enumName.equals(fieldValue) ) {
 								setMethod.invoke(vo, objs[i]);
 							}
 						}
@@ -130,15 +130,20 @@ public class SpringCopyTest {
 		req.put("goods", "컴퓨터");
 		req.put("qty", "2");
 		req.put("deleveryStatus", "READY");
-
 		s.doService(req);
 
-		Request deleveryStatusRequest = new Request();
-		deleveryStatusRequest.setUrl("/order/deliveryStatus");
-		deleveryStatusRequest.put("num", "111");
-		s.doService(deleveryStatusRequest);
+//		Request deleveryStatusRequest = new Request();
+//		deleveryStatusRequest.setUrl("/order/deliveryStatus");
+//		deleveryStatusRequest.put("num", "111");
+//		s.doService(deleveryStatusRequest);
 
-		s.doService(deleveryStatusRequest);
+		Request commentRequest = new Request();
+		commentRequest.setUrl("/goods/comment");
+		commentRequest.put("num", "111");
+		commentRequest.put("grade", "LOW");
+		commentRequest.put("goods", "컴퓨터");
+		commentRequest.put("comment", "컴퓨터가 안켜져요");
+		s.doService(commentRequest);
 
 	}
 }
