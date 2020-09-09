@@ -140,7 +140,7 @@ public class SpringCopyTest {
 		Request commentRequest = new Request();
 		commentRequest.setUrl("/goods/comment");
 		commentRequest.put("num", "111");
-		commentRequest.put("grade", "LOW");
+		commentRequest.put("grade", "MIDDLE");
 		commentRequest.put("goods", "컴퓨터");
 		commentRequest.put("comment", "컴퓨터가 안켜져요");
 		s.doService(commentRequest);

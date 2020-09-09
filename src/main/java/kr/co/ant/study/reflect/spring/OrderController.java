@@ -16,7 +16,7 @@ public class OrderController {
 	@RequestMapping("/order")
 	public void saveOrder(Order order) {
 		orders.put(order.getNum(), order);
-		System.out.println(String.format("주문하신 [%s] 상품에 수량 [%s] 대해 주문이 접수 되었습니다. => 주문번호 [%s]", order.getGoods(), order.getQty(), order.getNum()));
+		System.out.println(String.format("주문하신 [%s] 상품에 수량 [%s] 대해 주문이 접수 되었습니다. => 주문번호 [%s], 배송상태 [%s]", order.getGoods(), order.getQty(), order.getNum(), order.getDeleveryStatus()));
 	}
 	
 	
