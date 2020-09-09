@@ -6,10 +6,12 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.ClassUtils;
 import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kr.co.ant.study.reflect.spring.DeliveryStatus;
 import kr.co.ant.study.reflect.spring.OrderController;
 import kr.co.ant.study.reflect.spring.Request;
 
@@ -151,7 +153,16 @@ public static Map<String, Method> urlMethod;
 			String methodNm = "set" + StringUtils.capitalize(field.getName());
 			String fieldNm = field.getName();
 			
-			Method method = vo.getMethod(methodNm, field.getType());
+			Method method = vo.getMethod(methodNm, field.getType());			
+			
+			/*
+			Class wrapperClass =ClassUtils.resolvePrimitiveIfNecessary(field.getType());
+			
+			wrapperClass.isAssignableFrom(Number.class);
+			
+			if(Number.class.isAssignableFrom(wrapperClass)) {
+				NumberUtils.parseNumber(req.get(fieldNm), wrapperClass);
+			 */
 			
 //			casting 어떻게 할까		paramType.cast(value) 이거 안먹혀
 			if (field.getType().getName() == "int") {	//이 방법밖에 없나
@@ -164,6 +175,7 @@ public static Map<String, Method> urlMethod;
 					method.invoke(obj, req.get(fieldNm));
 				}
 			}
+				
 		}
 		
 		return obj;

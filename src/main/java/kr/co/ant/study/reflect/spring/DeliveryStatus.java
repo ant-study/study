@@ -6,7 +6,6 @@ public enum DeliveryStatus {
 	DELIVERED("배송완료");
 	
 	private String value;
-	
 	private DeliveryStatus(String value) {
 		this.value = value;
 	}

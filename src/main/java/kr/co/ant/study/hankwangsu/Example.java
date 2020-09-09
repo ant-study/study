@@ -4,9 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.stream.Stream;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 
 import kr.co.ant.study.reflect.ReflectQuestion;
+import kr.co.ant.study.reflect.annotation.LengthVO;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -30,6 +32,18 @@ public class Example extends ReflectQuestion{
 		
 		//Class의 메소드 조회
 		Method method = clazz.getMethod(methodName);
+		
+		
+		
+		MemberVO s = new MemberVO();
+		s.setName("김");
+		String name = (String) method.invoke(s); //MemberVO에 있는 getName 메소드
+		System.out.println("s의 네임 :: "+name);
+		
+		MemberVO a = new MemberVO();
+		a.setName("홍");
+		name = (String) method.invoke(s); //MemberVO에 있는 getName 메소드
+		System.out.println("a의 네임 :: "+name);
 		
 		return method.invoke(vo);
 		
@@ -75,9 +89,15 @@ public class Example extends ReflectQuestion{
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		
+		LengthVO a = new LengthVO();
+		LengthVO b = new LengthVO();
+		System.out.println(a);
+		System.out.println(b);
 		Example e = new Example();
-		e.startTest();
+		MemberVO c = new MemberVO();
+		MemberVO d = new MemberVO();
+		System.out.println(c.equals(d));
+		System.out.println(d);
 		
 	}
 	
