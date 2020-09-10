@@ -11,7 +11,6 @@ import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.co.ant.study.reflect.spring.DeliveryStatus;
 import kr.co.ant.study.reflect.spring.OrderController;
 import kr.co.ant.study.reflect.spring.Request;
 
@@ -153,17 +152,10 @@ public static Map<String, Method> urlMethod;
 			String methodNm = "set" + StringUtils.capitalize(field.getName());
 			String fieldNm = field.getName();
 			
-			Method method = vo.getMethod(methodNm, field.getType());			
+			Method method = vo.getMethod(methodNm, field.getType());
 			
-			/*
-			Class wrapperClass =ClassUtils.resolvePrimitiveIfNecessary(field.getType());
-			
-			wrapperClass.isAssignableFrom(Number.class);
-			
-			if(Number.class.isAssignableFrom(wrapperClass)) {
-				NumberUtils.parseNumber(req.get(fieldNm), wrapperClass);
-			 */
-			
+			/* 방법 1.  parameter type별 처리
+			 * 
 //			casting 어떻게 할까		paramType.cast(value) 이거 안먹혀
 			if (field.getType().getName() == "int") {	//이 방법밖에 없나
 				method.invoke(obj, NumberUtils.parseNumber(req.get(fieldNm), Integer.class));
@@ -175,7 +167,31 @@ public static Map<String, Method> urlMethod;
 					method.invoke(obj, req.get(fieldNm));
 				}
 			}
+			 */
+			
+//			방법 2. parameter type별 처리
+			boolean isInt = false;
+//			primitive type (기본 type) 이야?
+			if (field.getType().isPrimitive()) {	//isPrimitive()는 여기서 안해도OK. resolvePrimitiveIfNecessary() 여기 안에 있음
+//				primitive type이면 그 type Class 뱉어내
+				Class wrapperClass = ClassUtils.resolvePrimitiveIfNecessary(field.getType());
 				
+//				wrapperClass와 걸러내고 싶은 type 클래스 Number를 비교하면 되겠지?
+//				근데 instanceof는 Object만 핸들링하는거고 Class는 안됨
+//				public final class Integer extends Number 
+				isInt = Number.class.isAssignableFrom(wrapperClass);
+			}
+			if (isInt) {	//	if (field.getType().getName() == "int") {
+				method.invoke(obj, NumberUtils.parseNumber(req.get(fieldNm), Integer.class));
+			} else {
+//					enum을 뭘로 구분할까?
+				if (field.getType().isEnum()) {	//	enum 
+					method.invoke(obj, Enum.valueOf((Class<Enum>) field.getType(), req.get(fieldNm)));
+				} else {	//not enum
+					method.invoke(obj, req.get(fieldNm));
+				}
+			}
+			
 		}
 		
 		return obj;
