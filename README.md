@@ -34,3 +34,8 @@
 ---
     - 마지막이니 구글링해도 모르겠거나 궁금한건 저한테 바로 물어보세요
     - 언제까입니까? (휴가인데 숙제라니?)(송정우)
+4. Generic 기초
+    - kr.co.ant.study.generic.Convertor 클래스를 자기 패키지로 복사해서 구현
+    - toVO 메소드는 Map을 JavaBean으로 변환하는 메소드다
+    - 현재 Convertor 클래스는 Generic을 1도 안써서 형변환이 덕지덕지 붙어있음 toVO, main 메소드를 Generic을 사용하여 형변환 없이 구현
+    
