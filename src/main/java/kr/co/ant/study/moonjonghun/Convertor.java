@@ -28,11 +28,9 @@ public class Convertor {
 	 * @throws Exception
 	 */
 	public static <T, K extends String, V> T toVO(Map<K,V> map, Class<T> clazz) throws Exception{
-		Iterator s = map.keySet().iterator(); //k
 		T o = clazz.newInstance();
-		while(s.hasNext()) {
-			//key가 무슨형이지
-			String key = s.next().toString();
+		
+		for(K key : map.keySet()) {
 			BeanUtils.setProperty(o, key, map.get(key));
 		}
 		return o;
