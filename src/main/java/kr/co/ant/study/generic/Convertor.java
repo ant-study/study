@@ -48,7 +48,6 @@ public class Convertor {
 		m2.put("num", "111");
 		m2.put("goods", "goods");
 		m2.put("comment", "2");
-		m2.put("grade", "MIDDLE");
 		
 		Comment c = (Comment) toVO(m2, Comment.class);
 		System.out.println(c.getGoods()+", "+c.getNum()+", "+c.getComment());
