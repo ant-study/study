@@ -28,11 +28,11 @@ public class Convertor {
 	 * @throws Exception
 	 */
 	public static <T extends Object,K extends String,V> T toVO(Map<K,V> map,  Class<T> clazz) throws Exception{
-		Iterator s = map.keySet().iterator();
+		Iterator<K> s = map.keySet().iterator();
 		T o = clazz.newInstance();
 
 		while(s.hasNext()) {
-			K key = (K) s.next();
+			K key = s.next();
 			BeanUtils.setProperty(o, key, map.get(key));
 		}
 		return o;
@@ -42,7 +42,7 @@ public class Convertor {
 		Map m = new HashMap();
 		m.put("num", "111");
 		m.put("goods", "goods");
-		m.put("qty", "2");
+		m.put("qty", 2);
 		
 		Order o =  toVO(m, Order.class);
 		System.out.println(o.getGoods()+", "+o.getNum()+", "+o.getQty());
