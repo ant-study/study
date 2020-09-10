@@ -27,12 +27,13 @@ public class Convertor {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T> T toVO(Map map, Class<T> clazz) throws Exception{
-		Iterator s = map.keySet().iterator();
+	public static <T, K extends String, V> T toVO(Map<K,V> map, Class<T> clazz) throws Exception{
+		Iterator s = map.keySet().iterator(); //k
 		T o = clazz.newInstance();
 		while(s.hasNext()) {
-			Object key = s.next();
-			BeanUtils.setProperty(o, (String)key, map.get(key));
+			//key가 무슨형이지
+			String key = s.next().toString();
+			BeanUtils.setProperty(o, key, map.get(key));
 		}
 		return o;
 	}
