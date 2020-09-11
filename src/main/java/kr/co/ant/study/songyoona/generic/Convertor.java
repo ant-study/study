@@ -15,25 +15,19 @@ import kr.co.ant.study.reflect.spring.Order;
  * @author hankk
  *
  */
-public class Convertor<Object> {
+public class Convertor {
 
 	/**
 	 * Map을 받아서 Map을 JavaBean으로 변환(VO, DTO)
-	 * @param <E>
 	 * @param map
 	 * @param clazz
 	 * @return
-	 * @return
-	 * @return
 	 * @throws Exception
 	 */
-    //public static Object toVO(Map map, Class clazz) throws Exception{
-	public static <Object> Object toVO(Map map, Class<Object> clazz) throws Exception{
-//        Iterator s = map.keySet().iterator();
+	public static <T> T toVO(Map<String, ?> map, Class<T> clazz) throws Exception{
         Iterator<String> s = map.keySet().iterator();
-        Object o = clazz.newInstance();
+        T o = clazz.newInstance();
         while(s.hasNext()) {
-
             String key = s.next();
             BeanUtils.setProperty(o, key, map.get(key));
         }
@@ -44,7 +38,7 @@ public class Convertor<Object> {
 		//Convertor<Order> conOrder = new Convertor<Order>();
 		//Convertor<Comment> conComment = new Convertor<Comment>();
 
-	    Map m = new HashMap();
+	    Map<String,Object> m = new HashMap<>();
 		m.put("num", "111");
 		m.put("goods", "goods");
 		m.put("qty", "2");
@@ -52,7 +46,7 @@ public class Convertor<Object> {
 		System.out.println(o.getGoods()+", "+o.getNum()+", "+o.getQty());
 
 
-		Map m2 = new HashMap();
+		Map<String,Object> m2 = new HashMap<>();
 		m2.put("num", "222");
 		m2.put("goods", "goods");
 		m2.put("comment", "haha");
