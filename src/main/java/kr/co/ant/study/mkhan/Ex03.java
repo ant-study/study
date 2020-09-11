@@ -175,6 +175,8 @@ public class Ex03 {
 							objMethod.invoke(clazzParameterType, map.get(objField.getName()));
 						}else if(int.class.isAssignableFrom(objFieldType)) {
 							objMethod.invoke(clazzParameterType, NumberUtils.parseNumber(map.get(objField.getName()), Integer.class));
+							 
+							//objFieldType.isAssignableFrom(Enum.class) 할 경우 false로 떨어짐. 
 						}else if(Enum.class.isAssignableFrom(objFieldType)) { 
 							objMethod.invoke(clazzParameterType, Enum.valueOf((Class<Enum>) objField.getType(), map.get(objField.getName())));
 						}else {
