@@ -4,6 +4,17 @@ public class Parent {
 	
 	private boolean printed;
 	
+	private String name;
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public void init(String s) {
 		System.out.println("초기화 작업중 ::: "+s);
 	}

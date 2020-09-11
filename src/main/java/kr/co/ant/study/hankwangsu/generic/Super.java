@@ -4,4 +4,5 @@ public class Super {
 	public void printSuper() {
 		System.out.println("parent");
 	}
+	
 }
