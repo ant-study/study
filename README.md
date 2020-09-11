@@ -79,7 +79,7 @@
             "product_id" : "P0001",
             "product_name" : "컴퓨터",
             "amount" : 4000000,
-            "payment_type" : "CARD",
+            "payment_type" : "MOBILE",
             "mobile_info" :{
                 "mobile_no" : "01011112222",
                 "user_name" : "홍길동",
@@ -102,7 +102,7 @@
             "product_id" : "P0001",
             "product_name" : "컴퓨터",
             "amount" : 4000000,
-            "payment_type" : "CARD",
+            "payment_type" : "BANK",
             "bank_account_info" :{
                 "account_no" : "22222111113333344444",
                 "bank_code" : "102",
