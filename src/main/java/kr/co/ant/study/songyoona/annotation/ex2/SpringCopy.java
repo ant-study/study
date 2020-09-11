@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.util.ClassUtils;
 import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,15 +93,75 @@ public class SpringCopy {
 		method.invoke(controller, argument);
 
 	}
+	public Map<String, String> requestParams (Request request) throws Exception {
+	    Map<String, String> returnMap = null;
+	    Field[] rf = request.getClass().getDeclaredFields();
+	    Class<?> rType = null;
+	    for(Field f : rf) {
+	        if(f.getType() == Map.class) {
+	            String methodNm = "get"+ StringUtils.capitalize(f.getName());
+	            Method method = request.getClass().getMethod(methodNm);
+	                                                            //rType = method.getReturnType();
+	            returnMap = (Map<String, String>) method.invoke(request);
+	        }
+	    }
 
-	/**
+	    return returnMap;
+	}
+
+	public Object setParams(Class param, Map<String,String> map) throws Exception {
+	    // return시킬 객체(obj)생성
+	    Object obj = param.newInstance();
+
+	    Field[] p = param.getClass().getDeclaredFields();
+	    Field[] pf = param.getDeclaredFields();
+	    for(Field f : pf) {
+	        String methodNm = "set" + StringUtils.capitalize(f.getName());
+	        Method method = param.getMethod(methodNm, f.getType());
+
+	        // param Type 따라 분류
+	        boolean isNum = false;     // 숫자타입 판별
+	        // resolvePrimitiveIfNecessary : primitive type이면 그 type Class return
+	        Class wrapperClass = ClassUtils.resolvePrimitiveIfNecessary(f.getType());
+	        // Number Type일때 ( int, long, float, double ..)
+	        isNum = Number.class.isAssignableFrom(wrapperClass);
+
+	        if(isNum) {    // if(f.getType().getName()=="int")
+	            method.invoke(obj, NumberUtils.parseNumber( map.get(f.getName()), Integer.class));
+	        }else {
+	           // enum 구분
+	           if(f.getType().isEnum()) {
+	               method.invoke(obj, Enum.valueOf( (Class<Enum>)f.getType(), map.get(f.getName()) ));
+	           }else {
+	               method.invoke(obj, map.get(f.getName()));
+	           }
+	        }
+	    }
+
+
+	    return obj;
+	}
+
+	public Object toParameter(Request request, Class parameterType)throws Exception {
+	    // return 할 객체 ( 여기선 Order 객체 )
+	    Object obj = parameterType.newInstance();
+
+	    // 객체의 필드 이름값을 쓰기위해 선언
+	    Map<String, String> map = requestParams(request);
+
+	    // parameter 객체 에 request 값 담아서  return
+	    obj = setParams(parameterType, map);
+
+	    return obj;
+    }
+	    /**
 	 * request에 파라미터 값을 넘겨받은 Class의 객체를 생성하여 값을 셋팅하여 리턴한다.
 	 * @param request
 	 * @param parameterType
 	 * @return paraeterType 객체
 	 * 숫자형은 NumberUtils.parseNumber 사용
 	 */
-	public Object toParameter(Request request, Class parameterType)throws Exception {
+	public Object toParameter2(Request request, Class parameterType)throws Exception {
 	    Object obj = parameterType.newInstance();
 
 	    //request는  form에서 받아온 데이터들 이라고 생각.
