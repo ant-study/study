@@ -41,4 +41,96 @@
     - kr.co.ant.study.generic.Convertor 클래스를 자기 패키지로 복사해서 구현
     - toVO 메소드는 Map을 JavaBean으로 변환하는 메소드다
     - 현재 Convertor 클래스는 Generic을 1도 안써서 형변환이 덕지덕지 붙어있음 toVO, main 메소드를 Generic을 사용하여 형변환 없이 구현
+---
+### OOP
+1. 결제 처리 업무를 객체지향 적으로 만들어 보자
+    - 기본 Package 경로 kr.co.ant.study.oop
+    - Test 방법
+        - Controller 생성후 해당 Controller 소스내 클래스 명 클릭후 Ctrl+1 눌러서 Junit Test Class 생성
+        - 나머지는 이 소스 참고 : kr.co.ant.study.oop.controller.PaymentControllerTest
+    - PG사 API Interface
+        - 카드결제
+        ```java
+        {
+            "product_id" : "P0001",
+            "product_name" : "컴퓨터",
+            "amount" : 4000000,
+            "payment_type" : "CARD",
+            "card_info" :{
+                "card_no" : "2222444455556666",
+                "card_code" : "003",
+                "expire_date" : "092021"
+            }
+        }
+        
+         Response
+        {
+            "success" : true,
+            "receipt" : {
+                생각중
+            }
+        }
+        ```
+        - 휴대폰 결제
+        ```java
+        Request
+        
+        {
+            "product_id" : "P0001",
+            "product_name" : "컴퓨터",
+            "amount" : 4000000,
+            "payment_type" : "CARD",
+            "mobile_info" :{
+                "mobile_no" : "01011112222",
+                "user_name" : "홍길동",
+                "brithday" : "19900120"
+            }
+        }
+        
+         Response
+        {
+            "success" : true,
+            "receipt" : {
+               생각중 
+            }
+        }
+        ```
+        - 계좌이체
+        ```java
+        Request
+        {
+            "product_id" : "P0001",
+            "product_name" : "컴퓨터",
+            "amount" : 4000000,
+            "payment_type" : "CARD",
+            "bank_account_info" :{
+                "account_no" : "22222111113333344444",
+                "bank_code" : "102",
+                "account_pw" : "1234"
+            }
+        }
+        
+        Response
+        {
+            "success" : true,
+            "receipt" : {
+                생각중
+            }
+        }
+        ```
+    - 1차목표
+        1. Controller를 생성 하자
+        2. 각 결제수단별로 Url을 달리 할지 하나의 Url로 처리할지 결정하자.
+        3. PG사 API를 보고 업무클래스를 만들어 보자(VO)
+          ex) CardInfo, MobileInfo....
+    - 2차 목표 **(현재 참고만 하세요)**
+        1. 결제 전 각 결제수단별 유효성 체크를 해야 한다.
+            - 카드 : 카드번호 16자리
+            - 휴대폰 : 10자리
+            - 계좌번호 : 20자리
+        2. 결제전 어느 결제수단이 얼마 결제 되었다는 로그를 남긴다.
+        3. 결제후 응답 값의 결제성공 값은 결제수단별로 다를수도 같을 수도 있다.(이건 추후 정하겠음)
+        4. 결제후 응답 포멧은 공통 부분이 있고 각 결제수단별로 다른 부분이 있다.(이건 추후 정하겠음)
+            
+    
     
