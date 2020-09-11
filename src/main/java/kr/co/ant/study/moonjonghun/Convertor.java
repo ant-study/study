@@ -1,15 +1,11 @@
 package kr.co.ant.study.moonjonghun;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
 
 import kr.co.ant.study.reflect.spring.Comment;
-import kr.co.ant.study.reflect.spring.DeliveryStatus;
-import kr.co.ant.study.reflect.spring.GoodsEvaluationGrade;
 import kr.co.ant.study.reflect.spring.Order;
 
 /**
@@ -27,17 +23,16 @@ public class Convertor {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T, K extends String, V> T toVO(Map<K,V> map, Class<T> clazz) throws Exception{
+	public static <T> T toVO(Map<String, ?> map, Class<T> clazz) throws Exception{
 		T o = clazz.newInstance();
-		
-		for(K key : map.keySet()) {
+		for(String key : map.keySet()) {
 			BeanUtils.setProperty(o, key, map.get(key));
 		}
 		return o;
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Map m = new HashMap();
+		Map<String, Object> m =  new HashMap<>();
 		m.put("num", "111");
 		m.put("goods", "goods");
 		m.put("qty", "2");
@@ -45,14 +40,12 @@ public class Convertor {
 		Order o = toVO(m, Order.class);
 		System.out.println(o.getGoods()+", "+o.getNum()+", "+o.getQty());
 		
-		
-		Map m2 = new HashMap();
-		m2.put("num", "111");
+		Map<String, Object> m2 = new HashMap<>();
+		m2.put("num", 111);
 		m2.put("goods", "goodssssssss");
 		m2.put("comment", "2333333");
 		
 		Comment c =  toVO(m2, Comment.class);
-		
 		System.out.println(c.getGoods()+", "+c.getNum()+", "+c.getComment());
 	}
 	
