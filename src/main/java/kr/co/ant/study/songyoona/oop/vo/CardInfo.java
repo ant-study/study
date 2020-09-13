@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CardInfo extends CommonInfo{
+public class CardInfo{
     // 카드번호:card_no, 카드사:card_code, 유효일자:expire_date
     // 카드명의자, 비밀번호,
     private String cardNo;          // 카드번호

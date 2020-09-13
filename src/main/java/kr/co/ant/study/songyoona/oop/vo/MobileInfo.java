@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MobileInfo extends CommonInfo{
+public class MobileInfo{
     // 핸드폰번호:mobile_no, 명의자:user_name, 생년월일:biRth_day
     private String mobileNo;        // 핸드폰번호
     private String userName;        // 명의자
