@@ -27,8 +27,8 @@ public class Convertor {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T extends Object,K extends String,V> T toVO(Map<K,V> map,  Class<T> clazz) throws Exception{
-		Iterator<K> s = map.keySet().iterator();
+	public static <T,V,K extends String> T toVO(Map<K,V> map,  Class<T> clazz) throws Exception{
+		Iterator <K> s = map.keySet().iterator();
 		T o = clazz.newInstance();
 
 		while(s.hasNext()) {
@@ -39,7 +39,7 @@ public class Convertor {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Map m = new HashMap();
+		Map <String,Object> m = new HashMap<String,Object>();
 		m.put("num", "111");
 		m.put("goods", "goods");
 		m.put("qty", 2);
