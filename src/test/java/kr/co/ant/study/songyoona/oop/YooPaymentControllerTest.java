@@ -34,6 +34,11 @@ class YooPaymentControllerTest {
                 .param("productId", "P0001")
                 .param("paySubModule.name", "subsub"))
         .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mock.perform(MockMvcRequestBuilders.post("/yoos/test")
+                .param("productId", "P0002")
+                .param("paySubModule.name", "BANK"))
+        .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }
