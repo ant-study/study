@@ -37,7 +37,9 @@ class YooPaymentControllerTest {
                 .param("productId", "P0002")
                 .param("amount", "50000")
                 .param("paymentType", "Card")
-                .param("CardInfo.cardCode", "001"))
+                .param("CardInfo.cardNo", "1111222233334444")
+                .param("CardInfo.cardCode", "001")
+                .param("CardInfo.expireDate", "202411"))
         .andExpect(MockMvcResultMatchers.status().isOk());
 
         mock.perform(MockMvcRequestBuilders.post("/yoos/test")
@@ -45,7 +47,7 @@ class YooPaymentControllerTest {
                 .param("productName", "컴퓨터")
                 .param("amount", "4000000")
                 .param("paymentType", "Bank")
-                .param("BankInfo.accountNo", "2222444455556666")
+                .param("BankInfo.accountNo", "22224444555566666")
                 .param("BankInfo.bankCode", "003")
                 .param("BankInfo.accountPw", "092021")
             )
