@@ -62,16 +62,37 @@ public class PgController {
 		// req의 paymentType에 해당하는 ENUM 생성. payType;
 		//
 		PaymentType payType = PaymentType.valueOf(req.getPaymentType().toUpperCase());
-		log.debug("payType's classNm={},class={},obj={}",payType.getClassNm(),payType.getClazz().getName(),payType.getObj().toString());
+		//log.info("payType's classNm={},class={},obj={}",payType.getClassNm(),payType.getClazz().getName(),payType.getObj().toString());
 		
 		//
 		// payType별 classNm 혹은 Class 혹은
 		//
-		Class <?> cls = Class.forName(payType.getClassNm()).getClass();
-		Class <?> clazz = payType.getClazz();
 		// class 혹은 classname으로 생성한 class.getclass로 제네릭클래스의 타입매개변수로 못씀?
-		// PGApiVO <clazz> pgInfo = new PGApiVO<cls>();
-		PGApiVO <CardInfo> cardInfo = new PGApiVO<>();
+		// PGApiVO <clazz> pgInfo = new PGApiVO<cls>(); 
+		PGApiVO <?> pgInfo = new PGApiVO<>();
+		
+		pgInfo.setSettleInfo(payType.getObj());
+		// log.info("here=["+pgInfo.toString()+"]");
+		
+		
+		/*
+		 * 하드코딩.
+		switch (payType) 
+		{
+			case CARD:
+				PGApiVO <CardInfo> cardInfo = new PGApiVO<>();
+				break;
+			case MOBILE:
+				PGApiVO <MobileInfo> mobileInfo = new PGApiVO<>();
+				break;
+			case BANK:
+				PGApiVO <BankAccountInfo> bankInfo = new PGApiVO<>();
+				break;
+			default :
+				break;
+		}
+		
+		*/
 		
 	}
 }
