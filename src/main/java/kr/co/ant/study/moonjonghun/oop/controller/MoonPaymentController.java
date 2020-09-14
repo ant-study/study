@@ -3,11 +3,12 @@ package kr.co.ant.study.moonjonghun.oop.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.co.ant.study.moonjonghun.oop.domain.MoonPayDTO;
 import kr.co.ant.study.moonjonghun.oop.pg.MoonPGClient;
-import kr.co.ant.study.oop.domain.PaySample;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,12 +21,39 @@ public class MoonPaymentController {
 	@Autowired
 	ObjectMapper mapper;
 	
-	@RequestMapping("/moon/test")
-	public String test(PaySample info) throws Exception{
-		//MoonPGClient Service class를 사용해서 결제정보를 처리해보자
+	@RequestMapping("/moon/card")
+	@ResponseBody
+	public Object getPayInfoByCard(MoonPayDTO info) throws Exception{
+		//카드결제정보를 가지고 결제처리
 		log.info("PaymentInfo ::: {}", info);
-		client.doPayment(mapper.writeValueAsString(info));
-		return "ok";
+		Object obj = client.doPayment(mapper.writeValueAsString(info));
+		
+		return obj;
 	} 
+	
+	@RequestMapping("/moon/mobile")
+	@ResponseBody
+	public Object getPayInfoByMobile(MoonPayDTO info) throws Exception{
+		//휴대폰결제정보를 가지고 결제처리
+		log.info("PaymentInfo ::: {}", info);
+		Object obj = client.doPayment(mapper.writeValueAsString(info));
+		return obj;
+	};
+	
+	@RequestMapping("/moon/bank")
+	@ResponseBody
+	public Object getPayInfoByBankAccount(MoonPayDTO info) throws Exception{
+		//계좌이체결제정보를 가지고 결제처리
+		log.info("PaymentInfo ::: {}", info);
+		Object obj = client.doPayment(mapper.writeValueAsString(info));
+		return obj;
+	}
+	
+	@RequestMapping("/moon/AllInOnePay")
+	@ResponseBody
+	public Object getPayInfoAllInOne(MoonPayDTO info) throws Exception{
+		
+		return null;
+	}
 	
 }

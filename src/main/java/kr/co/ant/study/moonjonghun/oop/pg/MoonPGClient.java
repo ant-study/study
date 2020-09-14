@@ -11,7 +11,8 @@ public class MoonPGClient {
 	@Autowired
 	ObjectMapper mapper;
 
-	public void doPayment(Object obj) {
+	public Object doPayment(Object obj) {
 		
+		return null;
 	}
 }
