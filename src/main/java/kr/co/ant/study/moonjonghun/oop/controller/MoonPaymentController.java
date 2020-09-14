@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-public class PaymentController {
+public class MoonPaymentController {
 	
 	@Autowired
 	MoonPGClient client;
@@ -20,7 +20,7 @@ public class PaymentController {
 	@Autowired
 	ObjectMapper mapper;
 	
-	@RequestMapping("/test")
+	@RequestMapping("/moon/test")
 	public String test(PaySample info) throws Exception{
 		//MoonPGClient Service class를 사용해서 결제정보를 처리해보자
 		log.info("PaymentInfo ::: {}", info);
