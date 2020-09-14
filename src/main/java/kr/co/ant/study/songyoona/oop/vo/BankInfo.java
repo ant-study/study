@@ -16,7 +16,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BankInfo{
+public class BankInfo {
 
     //  계좌번호:ACCOUNT_NO, 은행코드:BANK_CODE, 통장비번:ACCOUNT_PW
     //  적요(보낸사람명)

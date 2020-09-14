@@ -10,20 +10,32 @@ package kr.co.ant.study.songyoona.oop.vo;
  * @createDate : 2020. 9. 13.
  */
 public enum YooPaySubModule {
-    CARD(CardInfo.class),
-    BANK(BankInfo.class),
-    Mobile(MobileInfo.class);
+    CARD("card",CardInfo.class),
+    BANK("bank",BankInfo.class),
+    Mobile("mobile",MobileInfo.class);
 
-    private Class value;
+//    private Class value;
+//
+//    /**
+//     * @param value
+//     */
+//    private YooPaySubModule(Class value) {
+//        this.value = value;
+//    }
 
-    /**
-     * @param value
-     */
-    private YooPaySubModule(Class value) {
-        this.value = value;
+    private String type;
+    private Class typeC;
+
+    YooPaySubModule(String type, Class typeC){
+        this.type = type;
+        this.typeC= typeC;
     }
 
-
-
+    public String getType() {
+        return type;
+    }
+    public Class isTypeC(String type) {
+        return typeC;
+    }
 
 }

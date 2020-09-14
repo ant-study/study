@@ -1,6 +1,8 @@
 package kr.co.ant.study.songyoona.oop;
 
-import kr.co.ant.study.oop.domain.PaySubModule;
+import kr.co.ant.study.songyoona.oop.vo.BankInfo;
+import kr.co.ant.study.songyoona.oop.vo.CardInfo;
+import kr.co.ant.study.songyoona.oop.vo.MobileInfo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +18,7 @@ public class PaySample {
 
 	private String paymentType;
 
-	private PaySubModule paySubModule;
-
+	private CardInfo cardInfo;
+	private BankInfo bankInfo;
+	private MobileInfo mobileInfo;
 }

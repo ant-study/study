@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.ant.study.oop.pg.ANTPGClient;
 import kr.co.ant.study.songyoona.oop.vo.CommonInfo;
+import kr.co.ant.study.songyoona.oop.vo.YooPaySubModule;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -34,16 +35,20 @@ public class YooPaymentController {
 
     @ResponseBody
     @RequestMapping("/yoos/test")
-    public String test(PaySample info) throws JsonProcessingException{
+    public String test(PaySample info) throws Exception{
         log.info("yooS  PaymentInfo ::: {}", info);
 
         String type = info.getPaymentType();
 
+        // type에 따른 객체 생성
         CommonInfo c = new CommonInfo();
-        Object e = c.setPaySubModule(type);
+        //c.setTypeO(info);
 
+        c.setPaySubModule(info);
+        //c.setTypeO(c.setPaySubModule(type));
+        // info 객체에 담기
 
-        client.doPayment(mapper.writeValueAsString(info));
+        client.doPayment(mapper.writeValueAsString(c.getTypeO()));
         return "ok";
     }
 

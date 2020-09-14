@@ -19,26 +19,36 @@ import lombok.ToString;
 public class CommonInfo<T>{
     private String productId;
     private String productName;
-    private double amount;
     private String paymentType;
+    private double amount;
     private String tranDate;
 
-    //private PaySubModule paySubModule;  // 제네릭으로 뭐가오든 받을수있게..
     private YooPaySubModule PaySubModule;
+    // 제네릭으로 뭐가오든 받을수있게..
+    private T typeO;
 
-    private T t;
     /**
-     *
+     * paymentType 에 맞는 class Object return
      * @createDate : 2020. 9. 13.
      * @param type
      * @modifiedHistory :
      */
-    public T setPaySubModule(String type) {
-        //Class c = YooPaySubModule.valueOf(type);
-       // this.t = YooPaySubModule.valueOf(type).getClass().newInstance();
-        return t;
+    public T setPaySubModule(T t) throws Exception {
+//        CommonInfo c = new CommonInfo();
+//        YooPaySubModule m = YooPaySubModule.valueOf(type);
+//        c.setT(m.isTypeC(type).newInstance());
+        //this.typeO = (T)m.isTypeC(type).newInstance();
+        this.typeO = t;
+        return typeO;
     }
 
+    public void setTypeO(T t) {
+        this.typeO = t;
+    }
+
+    public T getTypeO() {
+        return typeO;
+    }
 
 
 
