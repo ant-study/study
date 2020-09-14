@@ -21,4 +21,10 @@ public class  PGApiVO <T extends SettleInfo> {
 	private PaymentType paymentType;
 	private T settleInfo;
 	
+	public void setSettleInfo(T t) {
+		this.settleInfo = t;
+	}
+	public T getSettleInfo() {
+		return settleInfo;
+	}
 }

@@ -6,4 +6,5 @@ spring:
       fail-on-empty-beans: false
       indent-output: true
     default-property-inclusion: non-null
+    property-naming-strategy: SNAKE_CASE
       
