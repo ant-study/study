@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MoonMobileInfo {
+public class MoonMobileInfoVO {
 	
 	private String mobileNo;
 	private String userName;

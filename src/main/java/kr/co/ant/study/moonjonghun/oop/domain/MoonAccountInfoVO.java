@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MoonAccountInfo {
+public class MoonAccountInfoVO {
 	
 	private String accountNo;
 	private String bankCode;

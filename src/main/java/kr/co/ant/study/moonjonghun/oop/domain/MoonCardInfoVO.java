@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MoonCardInfo {
+public class MoonCardInfoVO {
 
 	private String cardNo;
 	private String cardCode;
