@@ -30,20 +30,32 @@ public class PaymentService {
 	private ObjectMapper mapper;
 	
 	public void paymentCard(PaymentInfoVO infoVO) throws Exception{
+		
 		CardPayInfoVO vo = infoVO.getCardPayInfo();
+		//Validate 체크
 		fixedLengthValidate(vo.getCardNo(), 16);
+		//Logging
 		log.info("카드결제 정보 ::: {}", vo);
 		
+		//PG사로 보낼 VO 생성
 		ANTCardPaymentInfo info = new ANTCardPaymentInfo();
+		//화면에서 넘어온 값을 PG사로 보낼 VO에 값 복사
 		PropertyUtils.copyProperties(info, infoVO);
+		
+		//PG사로 보낼 카드정보
 		CardInfo cardInfo = new CardInfo();
+		
+		//PG사로 보낼 값 복사
 		PropertyUtils.copyProperties(cardInfo, vo);
 		
+		//카드정보 셋팅 및 결제타입 정의
 		info.setCardInfo(cardInfo);
 		info.setPaymentType("CARD");
 		
+		//Json 변환
 		String json = mapper.writeValueAsString(info);
 		
+		//결제 요청
 		client.doPayment(json);
 		
 	}
