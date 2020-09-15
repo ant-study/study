@@ -3,8 +3,8 @@ package kr.co.ant.study.moonjonghun.oop.domain;
 public enum MoonPaymentType {
 	
 	Card("CARD"),
-	Phone("PHONE"),
-	BankAccount("BANK");
+	Mobile("Mobile"),
+	Bank("BANK");
 	
 	private String value;
 	private MoonPaymentType (String value) {
