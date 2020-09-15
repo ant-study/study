@@ -1,4 +1,4 @@
-package kr.co.ant.study.imsoyeon.d_oop.domain;
+package kr.co.ant.study.imsoyeon.d_oop.pg.vo;
 
 import lombok.Getter;
 import lombok.Setter;

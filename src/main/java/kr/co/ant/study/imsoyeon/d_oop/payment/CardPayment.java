@@ -1,6 +1,6 @@
 package kr.co.ant.study.imsoyeon.d_oop.payment;
 
-import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
+import kr.co.ant.study.imsoyeon.d_oop.pg.vo.RequestPayInfo;
 
 public class CardPayment implements Payment {
 

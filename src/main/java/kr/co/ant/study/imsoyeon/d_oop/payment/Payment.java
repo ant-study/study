@@ -1,6 +1,6 @@
 package kr.co.ant.study.imsoyeon.d_oop.payment;
 
-import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
+import kr.co.ant.study.imsoyeon.d_oop.pg.vo.RequestPayInfo;
 
 /**
  * 결제수단별로 동일한 행위는 여기다가 정의 하자
@@ -18,15 +18,12 @@ public interface Payment {
 	 */
 	
 //	1) 유효성 검사 : 자릿수 (카드 16 폰 11 계좌 15)
-//	public void fixLengthValidate();
-	
-//	public void minLengthValidate();
+//	public void validate();
 	
 //	2) Request → VO for transfer
 	public Object convertVO(RequestPayInfo request) throws Exception;
 	
 //	3) 결제 후 오류인지 아닌지 판단?
-//	public void callPgClient();
 	
 //	4) 결과 값 Data 변환?
 }
