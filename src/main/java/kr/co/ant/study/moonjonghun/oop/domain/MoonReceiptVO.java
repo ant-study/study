@@ -1,5 +1,5 @@
 package kr.co.ant.study.moonjonghun.oop.domain;
 
-public class MoonReceipt {
+public class MoonReceiptVO {
 
 }

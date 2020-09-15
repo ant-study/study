@@ -40,7 +40,7 @@ class MoonPaymentControllerTest {
 //		fail("Not yet implemented");
 	}
 
-//	@Test
+	@Test
 	void testGetPayInfoByMobile() throws Exception{
 		mock.perform(
 			MockMvcRequestBuilders.post("/moon/mobile")
@@ -55,10 +55,10 @@ class MoonPaymentControllerTest {
 		fail("Not yet implemented");
 	}
 
-//	@Test
+	@Test
 	void testGetPayInfoByBankAccount() throws Exception{
 		mock.perform(
-				MockMvcRequestBuilders.post("/moon/mobile")
+				MockMvcRequestBuilders.post("/moon/bank")
 				.param("productId", "P0001")
 				.param("productName", "부품")
 				.param("amount", "30")
