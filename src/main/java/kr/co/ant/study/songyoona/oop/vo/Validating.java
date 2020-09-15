@@ -10,7 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * @description :
+ * @description : 유효성검사 class
  * @author : yooS
  * @createDate : 2020. 9. 14.
  */
@@ -19,25 +19,19 @@ import lombok.ToString;
 @ToString
 public class Validating {
 
-    private ValidateStrategy validateStrategy;
+    private ValidateStrategy validateStrategy;  // 유효성검사 전략패턴
+
 
     public void validate(String text, int length) throws Exception {
-        validateStrategy.validate(text, length);
+        // 자리수 길이 체크
+        validateStrategy.validateLength(text, length);
     }
 
     public void setValidate(ValidateStrategy validate) {
         this.validateStrategy = validate;
     }
 
-//    // 정해진 자릿수
-//    public void fixLengthValidate(ValidateStrategy validateStrategy) {
-//        this.validateStrategy = validateStrategy;
-//    }
-//
-//    // 자릿수 이상
-//    public void moreLengthValidate(ValidateStrategy validateStrategy) {
-//        this.validateStrategy = validateStrategy;
-//    }
+
 
 
 }

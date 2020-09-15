@@ -11,6 +11,6 @@ package kr.co.ant.study.songyoona.oop.strategy;
  */
 public interface ValidateStrategy {
 
-    public void validate(String text, int length) throws Exception;
+    public void validateLength(String text, int length) throws Exception;
 
 }

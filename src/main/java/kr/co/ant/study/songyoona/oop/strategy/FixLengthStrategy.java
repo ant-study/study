@@ -18,7 +18,7 @@ public class FixLengthStrategy implements ValidateStrategy{
      * @see kr.co.ant.study.songyoona.oop.strategy.ValidateStrategy#validate()
      */
     @Override
-    public void validate(String text, int length) throws Exception {
+    public void validateLength(String text, int length) throws Exception {
         log.info("고정된 FixLength 자리수입니다");
         if(text.length() != length) {
             throw new Exception(length+"자리로 자리수 맞춰주세요~~~");

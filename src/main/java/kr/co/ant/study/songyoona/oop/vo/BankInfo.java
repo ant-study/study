@@ -34,8 +34,9 @@ public class BankInfo extends Validating{
 
         Validating v = new BankInfo();
 
+        // 자리수 이상(up) 체크 전략
         v.setValidate(new MoreLengthStrategy());
-        v.validate(this.accountNo, 15);
+        v.validate(accountNo, 15);
         this.accountNo = accountNo;
 
     }

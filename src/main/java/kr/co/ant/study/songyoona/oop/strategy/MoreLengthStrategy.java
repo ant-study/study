@@ -18,7 +18,7 @@ public class MoreLengthStrategy implements ValidateStrategy{
      * @see kr.co.ant.study.songyoona.oop.strategy.ValidateStrategy#validate()
      */
     @Override
-    public void validate(String text, int length) throws Exception {
+    public void validateLength(String text, int length) throws Exception {
         log.info("자리수 MoreLength입니당");
         if(text.length() < length) {
             throw new Exception("자리수 "+length+"이상으로 입력해주세요");

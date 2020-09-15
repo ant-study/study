@@ -8,6 +8,7 @@ import kr.co.ant.study.songyoona.oop.strategy.FixLengthStrategy;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @description :
@@ -17,6 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Slf4j
 public class CardInfo extends Validating{
     // 카드번호:card_no, 카드사:card_code, 유효일자:expire_date
     // 카드명의자, 비밀번호,
@@ -33,9 +35,9 @@ public class CardInfo extends Validating{
     public void setCardNo(String cardNo) throws Exception {
 
         Validating v = new CardInfo();
-
+        // 자리수 (fix) 체크 전략
         v.setValidate(new FixLengthStrategy());
-        v.validate(this.cardNo, 16);
+        v.validate(cardNo, 16);
         this.cardNo = cardNo;
 
     }

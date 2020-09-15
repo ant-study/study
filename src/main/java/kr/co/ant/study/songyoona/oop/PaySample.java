@@ -5,9 +5,11 @@ import kr.co.ant.study.songyoona.oop.vo.CardInfo;
 import kr.co.ant.study.songyoona.oop.vo.MobileInfo;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class PaySample {
 
 	private String productId;

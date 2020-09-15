@@ -18,7 +18,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class MobileInfo extends Validating{
-    // 핸드폰번호:mobile_no, 명의자:user_name, 생년월일:biRth_day
+    // 핸드폰번호:mobile_no, 명의자:user_name, 생년월일:birth_day
     private String mobileNo;        // 핸드폰번호
 
     private String userName;        // 명의자
@@ -30,9 +30,9 @@ public class MobileInfo extends Validating{
     public void setMobileNo(String mobileNo) throws Exception {
 
         Validating v = new CardInfo();
-
+        // 자리수 (fix) 체크 전략
         v.setValidate(new FixLengthStrategy());
-        v.validate(this.mobileNo, 11);
+        v.validate(mobileNo, 11);
         this.mobileNo = mobileNo;
 
     }
