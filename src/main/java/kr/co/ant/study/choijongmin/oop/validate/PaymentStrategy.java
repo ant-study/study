@@ -9,6 +9,9 @@
  */
 package kr.co.ant.study.choijongmin.oop.validate;
 
-public interface ValidationStrategy {
-	public void validate(String s, int len);
+import kr.co.ant.study.oop.service.ValidateException;
+
+public interface PaymentStrategy {
+	public void validate() throws ValidateException;
+	public abstract void paymentLogging();
 }

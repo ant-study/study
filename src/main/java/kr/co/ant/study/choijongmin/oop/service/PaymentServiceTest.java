@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import kr.co.ant.study.choijongmin.oop.validate.PaymentStrategy;
 import kr.co.ant.study.choijongmin.oop.validate.PaymentType;
+import kr.co.ant.study.choijongmin.oop.vo.InCardInfo;
 import kr.co.ant.study.choijongmin.oop.vo.PaymentInfo;
 import kr.co.ant.study.oop.pg.ANTPGClient;
 
@@ -32,6 +34,13 @@ public class PaymentServiceTest {
 				PropertyUtils.copyProperties(o, field.get(info));
 			}
 		}
+		
+		PaymentFacadeTest paymentFacadeTest = new PaymentFacadeTest();
+		PaymentStrategy paymentStrategy = null;
+		paymentStrategy = (PaymentStrategy) o;
+		
+		paymentFacadeTest.doPayment(paymentStrategy);
+		
 		
 		String jsonData = client.doPayment(mapper.writeValueAsString(o));
 		
