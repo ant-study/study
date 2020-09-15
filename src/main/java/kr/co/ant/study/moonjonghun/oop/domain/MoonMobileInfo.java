@@ -11,6 +11,6 @@ public class MoonMobileInfo {
 	
 	private String mobileNo;
 	private String userName;
-	private String brithday;
+	private String birthday;
 	
 }

@@ -13,7 +13,8 @@ public class MoonPayDTO {
 	private String productId; 				//상품번호
 	private String productName;				//상품명
 	private int amount;						//수량
-	private MoonPaymentType paymentType;	//결제타입
+	private String paymentType;
+//	private MoonPaymentType paymentType;	//결제타입
 	
 	private MoonCardInfo cardInfo;			//카드정보
 	private MoonMobileInfo mobileInfo;		//휴대폰정보

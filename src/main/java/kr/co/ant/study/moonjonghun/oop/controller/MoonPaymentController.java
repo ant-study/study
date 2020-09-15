@@ -23,12 +23,17 @@ public class MoonPaymentController {
 	
 	@RequestMapping("/moon/card")
 	@ResponseBody
-	public Object getPayInfoByCard(MoonPayDTO info) throws Exception{
-		//카드결제정보를 가지고 결제처리
-		log.info("PaymentInfo ::: {}", info);
-		Object obj = client.doPayment(mapper.writeValueAsString(info));
-		
-		return obj;
+	public Object getPayInfoByCard(MoonPayDTO info){
+		try {
+			//카드결제정보를 가지고 결제처리
+			log.info("PaymentInfo ::: {}", info);
+			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
+			
+			return obj;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	} 
 	
 	@RequestMapping("/moon/mobile")
@@ -36,7 +41,7 @@ public class MoonPaymentController {
 	public Object getPayInfoByMobile(MoonPayDTO info) throws Exception{
 		//휴대폰결제정보를 가지고 결제처리
 		log.info("PaymentInfo ::: {}", info);
-		Object obj = client.doPayment(mapper.writeValueAsString(info));
+		Object obj = client.doPayment(mapper.writeValueAsString(info), info);
 		return obj;
 	};
 	
@@ -45,7 +50,7 @@ public class MoonPaymentController {
 	public Object getPayInfoByBankAccount(MoonPayDTO info) throws Exception{
 		//계좌이체결제정보를 가지고 결제처리
 		log.info("PaymentInfo ::: {}", info);
-		Object obj = client.doPayment(mapper.writeValueAsString(info));
+		Object obj = client.doPayment(mapper.writeValueAsString(info), info);
 		return obj;
 	}
 	
