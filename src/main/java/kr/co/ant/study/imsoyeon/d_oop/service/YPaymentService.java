@@ -18,25 +18,22 @@ public class YPaymentService {
 	
 	public void doCardPay(CardInfoVO request) throws Exception {
 		
-//		facade 호출
-//		facade.doPayment(p);
 	}
 	
 	public void doAccountPay(AccountInfoVO request) throws Exception {
 		CardPayment a= new CardPayment();
 		
-		a.va
-		a.co\
-		cl.pa(ss)
+		//validate등등 set해주고 PaymentFacade 호출
+		
+//		a.va
+//		a.co\
+//		cl.pa(ss)
 		
 	}
 	
 	public void doMobilePay(MobileInfoVO request) throws Exception {
 		CardPayment a= new CardPayment();
 		
-		a.va
-		a.co\
-		cl.pa(ss)
 		
 	}
 	
