@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.ant.study.hankwangsu.oop.service.AnswerPaymentService;
 import kr.co.ant.study.oop.domain.PaymentInfoVO;
-import kr.co.ant.study.oop.service.OopPaymentService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
