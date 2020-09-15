@@ -1,4 +1,4 @@
-package kr.co.ant.study.imsoyeon.d_oop.vo;
+package kr.co.ant.study.imsoyeon.d_oop.payment;
 
 /**
  * convertVO를 여기에서

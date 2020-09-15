@@ -1,4 +1,6 @@
-package kr.co.ant.study.imsoyeon.d_oop.vo;
+package kr.co.ant.study.imsoyeon.d_oop.payment;
+
+import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
 
 /**
  * 결제수단별로 동일한 행위는 여기다가 정의 하자

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.imsoyeon.d_oop.service.YPaymentService;
-import kr.co.ant.study.imsoyeon.d_oop.vo.RequestPayInfo;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -20,6 +20,9 @@ public class YPayController2 {
 	@RequestMapping(value = "/testPgApiY")
 	public String requestApi(RequestPayInfo request) throws Exception {
 		log.info("PaymentInfo ::: {}", request);
+		
+		//Service 호출
+		service.doPay(request);
 		
 		return "ok";
 	}

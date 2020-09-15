@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.ant.study.imsoyeon.c_oop.domain.CommonInfo;
 import kr.co.ant.study.imsoyeon.c_oop.domain.DetailsInfo;
-import kr.co.ant.study.imsoyeon.c_oop.domain.Payment;
 import kr.co.ant.study.imsoyeon.c_oop.domain.RequestPaySample;
 import kr.co.ant.study.oop.pg.ANTPGClient;
 import lombok.extern.slf4j.Slf4j;
