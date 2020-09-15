@@ -1,8 +1,5 @@
-package kr.co.ant.study.songyoona.oop;
+package kr.co.ant.study.songyoona.oop.vo;
 
-import kr.co.ant.study.songyoona.oop.vo.BankInfo;
-import kr.co.ant.study.songyoona.oop.vo.CardInfo;
-import kr.co.ant.study.songyoona.oop.vo.MobileInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PaySample {
+public class YooPaymentInfoVo {
 
 	private String productId;
 

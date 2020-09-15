@@ -2,7 +2,7 @@
  * Author : yooS
  * Create Date : 2020. 9. 11.
  */
-package kr.co.ant.study.songyoona.oop;
+package kr.co.ant.study.songyoona.oop.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import kr.co.ant.study.songyoona.oop.strategy.MoreLengthStrategy;
 import kr.co.ant.study.songyoona.oop.vo.BankInfo;
 import kr.co.ant.study.songyoona.oop.vo.CommonInfo;
 import kr.co.ant.study.songyoona.oop.vo.Validating;
+import kr.co.ant.study.songyoona.oop.vo.YooPaymentInfoVo;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -36,30 +37,23 @@ public class YooPaymentController {
     ObjectMapper mapper;
 
 
-    //<T> T toVO(Map<String, ?> map, Class<T> clazz)
     @ResponseBody
     @RequestMapping("/yoos/test")
 //    public <T>String test(DataGroup<?> info) throws Exception{
-    public String test(PaySample info) throws Exception{
+    public <T> String test(YooPaymentInfoVo info) throws Exception{
         log.info("yooS  PaymentInfo ::: {}", info);
-//        T t = (T) new PaySample();
 
         String type = info.getPaymentType();
+        // type에 따른 info객체 생성은  tobe... enum YooPaySubModule 참고해서 나중에..
 
-        //bank.setValidate(new MoreLengthStrategy());
-        // type에 따른 객체 생성
+
+        // PG사로 보낼 VO 생성 : info 객체에 담기
         CommonInfo c = new CommonInfo();
-        //c.setTypeO(info);
+        //PG사로 보낼 정보 : c.getTypeO()
+        c.setTypeObj(info);
 
-        c.setPaySubModule(info);
-        //c.setTypeO(c.setPaySubModule(type));
-        // info 객체에 담기
-
-
-        // 숫자 자리수 체크
-
-
-        client.doPayment(mapper.writeValueAsString(c.getTypeO()));
+        //Json 변환 : mapper.writeValueAsString
+        client.doPayment(mapper.writeValueAsString(c.getTypeObj()));
         return "ok";
     }
 
