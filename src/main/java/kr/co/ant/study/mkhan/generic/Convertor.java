@@ -40,7 +40,7 @@ public class Convertor {
 	 * V : 값 (Value)
 	 * S, U, V : 두번째, 세번째, 네번째에 선언된 타입
 	 **/
-	public static <T> T toVO(Map map, Class<T> clazz) throws Exception{
+	public static <T> T toVO(Map <String, ?>map, Class<T> clazz) throws Exception{
 		
 		/** iterator
 		 * . 정의
@@ -81,7 +81,7 @@ public class Convertor {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Map m = new HashMap();
+		Map<String, Object> m = new HashMap<>();
 		m.put("num", "111");
 		m.put("goods", "goods");
 		m.put("qty", "2");
@@ -90,7 +90,7 @@ public class Convertor {
 		System.out.println(o.getGoods()+", "+o.getNum()+", "+o.getQty());
 		
 		
-		Map m2 = new HashMap();
+		Map<String, Object> m2 = new HashMap<>();
 		m2.put("num", "111");
 		m2.put("goods", "goods");
 		m2.put("comment", "2");
