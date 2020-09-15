@@ -37,7 +37,7 @@ class YooPaymentControllerTest {
                 .param("productId", "P0002")
                 .param("amount", "50000")
                 .param("paymentType", "Card")
-                .param("CardInfo.cardNo", "111122223333444")
+                .param("CardInfo.cardNo", "1111222233334444")
                 .param("CardInfo.cardCode", "001")
                 .param("CardInfo.expireDate", "202411"))
         .andExpect(MockMvcResultMatchers.status().isOk());

@@ -23,35 +23,15 @@ public class CommonInfo<T>{
     private double amount;
     private String tranDate;
 
+    // enum 으로 객체 받아오는건 tobe....
     private YooPaySubModule PaySubModule;
+//  CommonInfo c = new CommonInfo();
+//  YooPaySubModule m = YooPaySubModule.valueOf(type);
+//  c.setT(m.isTypeC(type).newInstance());
+  //this.typeO = (T)m.isTypeC(type).newInstance();
+
+
     // 제네릭으로 뭐가오든 받을수있게..
-    private T typeO;
-
-    /**
-     * paymentType 에 맞는 class Object return
-     * @createDate : 2020. 9. 13.
-     * @param type
-     * @modifiedHistory :
-     */
-    public T setPaySubModule(T t) throws Exception {
-//        CommonInfo c = new CommonInfo();
-//        YooPaySubModule m = YooPaySubModule.valueOf(type);
-//        c.setT(m.isTypeC(type).newInstance());
-        //this.typeO = (T)m.isTypeC(type).newInstance();
-        this.typeO = t;
-        return typeO;
-    }
-
-    public void setTypeO(T t) {
-        this.typeO = t;
-    }
-
-    public T getTypeO() {
-        return typeO;
-    }
-
-
-
-
+    private T typeObj;
 
 }
