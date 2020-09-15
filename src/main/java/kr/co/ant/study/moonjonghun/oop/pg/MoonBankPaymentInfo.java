@@ -1,6 +1,5 @@
 package kr.co.ant.study.moonjonghun.oop.pg;
 
-import kr.co.ant.study.moonjonghun.oop.domain.MoonAccountInfoVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +10,7 @@ public class MoonBankPaymentInfo {
 	private String productId;
 	private String productName;
 	private int amount;
+	private String paymentType;
 	
-	private MoonAccountInfoVO accountInfo;
+	private BankAccountInfo accountInfo;
 }

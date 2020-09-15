@@ -31,9 +31,9 @@ class MoonPaymentControllerTest {
 			.param("productName", "컴퓨터")
 			.param("amount", "10")
 			.param("paymentType", MoonPaymentType.Card.getValue())
-			.param("cardInfo.cardNo", "2222444455556666")
-			.param("cardInfo.cardCode", "003")
-			.param("cardInfo.expireDate", "092021")
+			.param("cardPayInfo.cardNo", "2222444455556666")
+			.param("cardPayInfo.cardCode", "003")
+			.param("cardPayInfo.expireDate", "092021")
 		).andExpect(MockMvcResultMatchers.status().isOk());
 		log.info("getPayInfoByCard Method Test");
 		
@@ -48,9 +48,9 @@ class MoonPaymentControllerTest {
 			.param("productName", "핸드폰")
 			.param("amount", "20")
 			.param("paymentType", MoonPaymentType.Mobile.getValue())
-			.param("mobileInfo.mobileNo", "01011112222")
-			.param("mobileInfo.userName", "홍길동")
-			.param("mobileInfo.birthday","19900120")
+			.param("mobilePayInfo.mobileNo", "01011112222")
+			.param("mobilePayInfo.userName", "홍길동")
+			.param("mobilePayInfo.birthday","19900120")
 		).andExpect(MockMvcResultMatchers.status().isOk());
 		fail("Not yet implemented");
 	}
@@ -63,9 +63,9 @@ class MoonPaymentControllerTest {
 				.param("productName", "부품")
 				.param("amount", "30")
 				.param("paymentType", MoonPaymentType.Bank.getValue())
-				.param("accountInfo.accountNo", "22222111113333344444")
-				.param("accountInfo.bankCode", "102")
-				.param("accountInfo.accountPw", "1234")
+				.param("accountPayInfo.accountNo", "22222111113333344444")
+				.param("accountPayInfo.bankCode", "102")
+				.param("accountPayInfo.accountPw", "1234")
 			).andExpect(MockMvcResultMatchers.status().isOk());
 		fail("Not yet implemented");
 	}

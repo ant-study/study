@@ -1,6 +1,5 @@
 package kr.co.ant.study.moonjonghun.oop.pg;
 
-import kr.co.ant.study.moonjonghun.oop.domain.MoonMobileInfoVO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +10,8 @@ public class MoonMobilePaymentInfo {
 	private String productId;
 	private String productName;
 	private int amount;
+	private String paymentType;
 	
-	private MoonMobileInfoVO mobileInfo;
+	private MobileInfo mobileInfo;
 	
 }

@@ -15,9 +15,9 @@ public class MoonPaymentVO {
 	private int amount;						//결제금액
 	private String paymentType;				//결제타입
 	
-	private MoonCardInfoVO cardInfo;			//카드정보
-	private MoonMobileInfoVO mobileInfo;		//휴대폰정보
-	private MoonAccountInfoVO accountInfo;	//계좌정보
+	private MoonCardInfoVO cardPayInfo;			//카드정보
+	private MoonMobileInfoVO mobilePayInfo;		//휴대폰정보
+	private MoonAccountInfoVO accountPayInfo;	//계좌정보
 	
 	//Response
 	private Boolean success;				//결제결과
