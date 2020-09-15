@@ -19,8 +19,8 @@ public class RequestPaySample {
 	private String expireDate;
 	private String mobileNo;
 	private String userName;
-	private String birthDay;
-	private String accoutNo;
+	private String birthday;
+	private String accountNo;
 	private String bankCode;
 	private String accountPw;
 	
