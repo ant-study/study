@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MobileInfo {
+public class InMobileInfo {
 
 	private String mobileNo;
 	private String userName;

@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class CardInfo {
+public class InCardInfo {
 	
 	private String cardNo;
 	private String cardCode;

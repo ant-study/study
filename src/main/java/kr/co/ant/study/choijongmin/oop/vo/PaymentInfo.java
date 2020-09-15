@@ -11,8 +11,8 @@ public class PaymentInfo {
 	private String productName;
 	private Long amount;
 	private String paymentType;
-	private CardInfo cardInfo;
-	private BankAccountInfo bankAccountInfo;
-	private MobileInfo mobileInfo;
 	
+	public InCardInfo inCardInfo;
+	public InBankAccountInfo inBankAccountInfo;
+	public InMobileInfo inMobileInfo;
 }
