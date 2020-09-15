@@ -4,8 +4,6 @@
  */
 package kr.co.ant.study.songyoona.oop;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,14 +28,29 @@ class YooPaymentControllerTest {
 
     @Test
     void testTest() throws Exception {
-        mock.perform(MockMvcRequestBuilders.post("/yoos/test")
-                .param("productId", "P0001")
-                .param("paySubModule.name", "subsub"))
-        .andExpect(MockMvcResultMatchers.status().isOk());
+//        mock.perform(MockMvcRequestBuilders.post("/yoos/test")
+//                .param("productId", "P0001")
+//                .param("paySubModule.name", "subsub"))
+//        .andExpect(MockMvcResultMatchers.status().isOk());
 
         mock.perform(MockMvcRequestBuilders.post("/yoos/test")
                 .param("productId", "P0002")
-                .param("paySubModule.name", "BANK"))
+                .param("amount", "50000")
+                .param("paymentType", "Card")
+                .param("CardInfo.cardNo", "1111222233334444")
+                .param("CardInfo.cardCode", "001")
+                .param("CardInfo.expireDate", "202411"))
+        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        mock.perform(MockMvcRequestBuilders.post("/yoos/test")
+                .param("productId", "P0001")
+                .param("productName", "컴퓨터")
+                .param("amount", "4000000")
+                .param("paymentType", "Bank")
+                .param("BankInfo.accountNo", "22224444555566666")
+                .param("BankInfo.bankCode", "003")
+                .param("BankInfo.accountPw", "092021")
+            )
         .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
