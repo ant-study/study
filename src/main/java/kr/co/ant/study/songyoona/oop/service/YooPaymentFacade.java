@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class PaymentFacade {
+public class YooPaymentFacade {
 
 	/**
 	 * 공통작업 처리
