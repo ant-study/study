@@ -20,29 +20,47 @@ public class CommonInfo <T extends DetailsInfo> {
 	private String productName;
 	private String amount;
 	
-	private RequestPaySample req;
 	private T detailsInfo;
+	
 	private CardInfo cardInfo;
 	private AccountInfo accountInfo;
 	private MobileInfo mobileInfo;
 	
 	public void setDetailsInfo(String type, RequestPaySample req) {
-		T obj = null;
+		Object obj = null;
 		try {
 			
 			for(InfoTypeEnum classType : InfoTypeEnum.values()) {
 				if (classType.name().equals(type)) {
 //					참고해서 바꿔. 일단 casting해서 하고
 //					https://stackoverflow.com/questions/27688267/how-to-make-a-generic-enum-which-could-hold-a-classt
-					obj = (T) classType.getInfoClass().newInstance();
+					obj = classType.getInfoClass().newInstance();
 				}
 			}
 			
 			PropertyUtils.copyProperties(obj, req);
+//		this.detailsInfo = obj;
+			
+//		근데 switch로 분기해서해야해?
+		switch (type) {
+		case "CARD":
+			this.cardInfo = (CardInfo) obj;
+			break;
+
+		case "ACCOUNT":
+			this.accountInfo = (AccountInfo) obj;
+			break;
+		
+		case "MOBILE":
+			this.mobileInfo = (MobileInfo) obj;
+			break;
+			
+		default:
+			break;
+		}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.detailsInfo = obj;
 	}
 }
