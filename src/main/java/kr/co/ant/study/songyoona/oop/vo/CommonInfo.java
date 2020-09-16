@@ -34,4 +34,20 @@ public class CommonInfo<T>{
     // 제네릭으로 뭐가오든 받을수있게..
     private T typeObj;
 
+    /**
+     * paymentType 에 맞는 class Object return
+     * @createDate : 2020. 9. 13.
+     * @param type
+     * @modifiedHistory :
+     */
+    public T setObject(CommonInfo t) throws Exception {
+        this.typeObj = (T) t.getTypeObj();
+        return typeObj;
+    }
+
+
+
+
+
+
 }
