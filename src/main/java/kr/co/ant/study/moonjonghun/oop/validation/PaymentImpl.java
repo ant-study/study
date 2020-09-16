@@ -1,14 +1,12 @@
 package kr.co.ant.study.moonjonghun.oop.validation;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.springframework.stereotype.Component;
 
 import kr.co.ant.study.moonjonghun.oop.domain.MoonPaymentVO;
 import kr.co.ant.study.moonjonghun.oop.domain.Payment;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
 public abstract class PaymentImpl implements Payment{
 	
 	protected MoonPaymentVO paymentVO;
