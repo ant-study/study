@@ -1,13 +1,9 @@
 package kr.co.ant.study.imsoyeon.d_oop.payment;
 
-import kr.co.ant.study.imsoyeon.d_oop.pg.vo.RequestPayInfo;
+import kr.co.ant.study.imsoyeon.d_oop.validate.PGValidator;
 
-public class MobilePayment implements Payment {
+public class MobilePayment {	// extends AbstractPayment 
 
-	@Override
-	public Object convertVO(RequestPayInfo request) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	private PGValidator validator;	
 }

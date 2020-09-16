@@ -7,8 +7,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CardInfoVO {
-
+/**
+ * PG사에 넘겨줄 카드 결제수단 데이터 위한 vo
+ * */
+public class PGCardInfo {
+	
+//	private String productId;
+//	private String productName;
+//	private String amount;
+	
 	private String cardNo;
 	private String cardCode;
 	private String expireDate;

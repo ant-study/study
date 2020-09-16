@@ -1,6 +1,7 @@
 package kr.co.ant.study.imsoyeon.d_oop.payment;
 
-import kr.co.ant.study.imsoyeon.d_oop.pg.vo.RequestPayInfo;
+import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
+import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PGPaymentInfo;
 
 /**
  * 결제수단별로 동일한 행위는 여기다가 정의 하자
@@ -11,19 +12,50 @@ import kr.co.ant.study.imsoyeon.d_oop.pg.vo.RequestPayInfo;
  * 3) 결제 후 오류인지 아닌지 판단
  * 4) 결과 값 Data 변환 
  */
-public interface Payment {	
-
+public interface Payment {
+	
 	/*
 	 strategy pattern 참고
 	 */
 	
+	/**
+	 * <pre>
+	 * Comment : 전처리 메서드 호출
+	 * </pre>
+	 * @throws Exception
+	 */
+	public void beforeAPI() throws Exception;
+	
 //	1) 유효성 검사 : 자릿수 (카드 16 폰 11 계좌 15)
-//	public void validate();
+	/**
+	 * <pre>
+	 * Comment : 전처리 - Validation 수행
+	 * </pre>
+	 * @throws Exception
+	 */
+	public void validate() throws Exception;
 	
-//	2) Request → VO for transfer
-	public Object convertVO(RequestPayInfo request) throws Exception;
+	/**
+	 * <pre>
+	 * Comment : 전처리 - Request로 들어온 데이터를 API용 VO로 변환
+	 * </pre>
+	 * 
+	 * @param payment
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public PGPaymentInfo convertToPaymentVO() throws Exception;
 	
-//	3) 결제 후 오류인지 아닌지 판단?
+	/**
+	 * <pre>
+	 * Comment : PG사 API 호출
+	 * </pre>
+	 * @return
+	 * @throws Exception
+	 */
+	public Object requestPGAPI() throws Exception;
 	
-//	4) 결과 값 Data 변환?
+//	3) 결제 후 오류인지 아닌지 판단? 위에서 하면 되지않아?
+	
 }
