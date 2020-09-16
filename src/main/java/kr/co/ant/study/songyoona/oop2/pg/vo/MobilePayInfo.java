@@ -1,13 +1,14 @@
-package kr.co.ant.study.moonjonghun.oop.pg;
+package kr.co.ant.study.songyoona.oop2.pg.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-public class MobileInfo implements MoonPayInfo{
+@ToString
+public class MobilePayInfo implements ANTPayInfo{
 	private String mobileNo;
 	private String userName;
 	private String brithDay;
 }
-

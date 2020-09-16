@@ -31,30 +31,10 @@ public class PaymentControllerTest {
 	@ResponseBody
 	@RequestMapping("/paymentControllerTest")
 	public String testCard(PaymentInfo info) throws Exception{
-		log.info("PaymentInfo ::: {}", info);
-		
 		paymentServiceTest.paymentTypeClassification(info);
 		
 		String jsonData = client.doPayment(mapper.writeValueAsString(info));
 		return "ok";
 	}
-	
-//	@ResponseBody
-//	@RequestMapping("/paymentControllerBankTest")
-//	public String testBank(BankAccountInfo info) throws JsonProcessingException{
-//		info.getClass().getDeclaredFields();
-//		log.info("PaymentInfo ::: {}", info);
-//		String jsonData = client.doPayment(mapper.writeValueAsString(info));
-//		return "ok";
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping("/paymentControllerMobileTest")
-//	public String testMobile(MobileInfo info) throws JsonProcessingException{
-//		info.getClass().getDeclaredFields();
-//		log.info("PaymentInfo ::: {}", info);
-//		String jsonData = client.doPayment(mapper.writeValueAsString(info));
-//		return "ok";
-//	}
 	
 }

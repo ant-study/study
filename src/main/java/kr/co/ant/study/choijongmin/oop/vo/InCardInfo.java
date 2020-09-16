@@ -3,7 +3,7 @@
  */
 package kr.co.ant.study.choijongmin.oop.vo;
 
-import kr.co.ant.study.choijongmin.oop.validate.PaymentStrategy;
+import kr.co.ant.study.choijongmin.oop.service.PaymentAbs;
 import kr.co.ant.study.oop.service.ValidateException;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public abstract class InCardInfo implements PaymentStrategy {
+public class InCardInfo extends PaymentAbs {
 	
 	private String cardNo;
 	private String cardCode;
@@ -26,5 +26,5 @@ public abstract class InCardInfo implements PaymentStrategy {
 			throw new ValidateException("16자리~");
 		}
 	}
-	
+
 }

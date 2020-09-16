@@ -5,13 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PaymentInfo {
-	
-	private String productId;
-	private String productName;
-	private Long amount;
-	private String paymentType;
-	
+public class PaymentInfo extends CommonPaymentInfoTest{
 	public InCardInfo inCardInfo;
 	public InBankAccountInfo inBankAccountInfo;
 	public InMobileInfo inMobileInfo;

@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.ant.study.oop.pg.ANTPGClient;
-import kr.co.ant.study.songyoona.oop.strategy.FixLengthStrategy;
-import kr.co.ant.study.songyoona.oop.strategy.MoreLengthStrategy;
-import kr.co.ant.study.songyoona.oop.vo.BankInfo;
 import kr.co.ant.study.songyoona.oop.vo.CommonInfo;
-import kr.co.ant.study.songyoona.oop.vo.Validating;
 import kr.co.ant.study.songyoona.oop.vo.YooPaymentInfoVo;
+import kr.co.ant.study.songyoona.oop2.service.YooPaymentFacade;
+import kr.co.ant.study.songyoona.oop2.service.YooPaymentService;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -37,10 +35,13 @@ public class YooPaymentController {
     ObjectMapper mapper;
 
 
+    @Autowired
+    YooPaymentService service;
+
     @ResponseBody
-    @RequestMapping("/yoos/test")
+    @RequestMapping("/yoos/test1")
 //    public <T>String test(DataGroup<?> info) throws Exception{
-    public <T> String test(YooPaymentInfoVo info) throws Exception{
+    public <T> String test1(YooPaymentInfoVo info) throws Exception{
         log.info("yooS  PaymentInfo ::: {}", info);
 
         String type = info.getPaymentType();
@@ -53,8 +54,9 @@ public class YooPaymentController {
         c.setTypeObj(info);
 
         //Json 변환 : mapper.writeValueAsString
-        client.doPayment(mapper.writeValueAsString(c.getTypeObj()));
+        client.doPayment(mapper.writeValueAsString(c));
         return "ok";
     }
+
 
 }
