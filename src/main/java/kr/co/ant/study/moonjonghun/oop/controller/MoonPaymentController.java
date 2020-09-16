@@ -30,7 +30,8 @@ public class MoonPaymentController {
 		try {
 			//카드결제정보를 가지고 결제처리
 			log.info("PaymentInfo ::: {}", info);
-			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
+//			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
+			Object obj = client.cardPayment(info);
 			
 			return obj;
 		} catch (Exception e) {
@@ -45,7 +46,9 @@ public class MoonPaymentController {
 		try {
 			//휴대폰결제정보를 가지고 결제처리
 			log.info("PaymentInfo ::: {}", info);
-			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
+//			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
+			Object obj = client.mobilePayment(info);
+			
 			return obj;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,7 +62,9 @@ public class MoonPaymentController {
 		try {
 			//계좌이체결제정보를 가지고 결제처리
 			log.info("PaymentInfo ::: {}", info);
-			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
+//			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
+			Object obj = client.bankAccountPayment(info);
+			
 			return obj;
 		} catch (Exception e) {
 			e.printStackTrace();

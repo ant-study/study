@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BankAccountInfo {
+public class BankAccountInfo implements MoonPayInfo{
 	private String accountNo;
 	private String bankCode;
 	private String accountPw;
