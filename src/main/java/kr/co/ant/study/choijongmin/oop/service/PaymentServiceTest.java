@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.ant.study.choijongmin.oop.validate.PaymentStrategy;
 import kr.co.ant.study.choijongmin.oop.validate.PaymentType;
-import kr.co.ant.study.choijongmin.oop.vo.InCardInfo;
 import kr.co.ant.study.choijongmin.oop.vo.PaymentInfo;
+import kr.co.ant.study.choijongmin.oop.vo.PgPaymentInfo;
 import kr.co.ant.study.oop.pg.ANTPGClient;
 
 @Service
@@ -31,28 +31,16 @@ public class PaymentServiceTest {
 		Field[] fields = info.getClass().getDeclaredFields();
 		for (Field field : fields) {
 			if ( clazz == field.getType() ) {
-				PropertyUtils.copyProperties(o, field.get(info));
+				Object fObj = field.get(info);				
+				PropertyUtils.copyProperties(o, fObj);
 			}
 		}
 		
-		PaymentFacadeTest paymentFacadeTest = new PaymentFacadeTest();
 		PaymentStrategy paymentStrategy = null;
 		paymentStrategy = (PaymentStrategy) o;
 		
-		paymentFacadeTest.doPayment(paymentStrategy);
-		
-		
-		String jsonData = client.doPayment(mapper.writeValueAsString(o));
-		
-//		Object obj = info.getClass();
-//		
-//		Field[] fields = clazz.getDeclaredFields();
-//		for (Field field : fields) {
-//			System.out.println(getValue(obj, field.getName()));
-//		}
-//		
-//		ResultPaymentInfo resultPaymentInfo = new ResultPaymentInfo();
-//		resultPaymentInfo.setExtClass(clazz);
+		PaymentFacadeTest paymentFacadeTest = new PaymentFacadeTest();
+		paymentFacadeTest.doPayment(paymentStrategy, info);
 		
 	}
 	

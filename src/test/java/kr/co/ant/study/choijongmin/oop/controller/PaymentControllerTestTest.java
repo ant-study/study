@@ -31,33 +31,33 @@ class PaymentControllerTestTest {
 		.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
-//	@Test
-//	void testBank() throws Exception {
-//		mock.perform(MockMvcRequestBuilders.post("/paymentControllerTest")
-//				.param("productId", "P0001")
-//				.param("productName", "컴퓨터")
-//				.param("amount", "4000000")
-//				.param("paymentType", "Bank")
-//				.param("BankAccountInfo.accountNo", "2222444455556666")
-//				.param("BankAccountInfo.bankCode", "003")
-//				.param("BankAccountInfo.accountPw", "092021")
-//			)
-//		.andExpect(MockMvcResultMatchers.status().isOk());
-//	}
-//	
-//	@Test
-//	void testMobile() throws Exception {
-//		mock.perform(MockMvcRequestBuilders.post("/paymentControllerTest")
-//				.param("productId", "P0001")
-//				.param("productName", "컴퓨터")
-//				.param("amount", "4000000")
-//				.param("paymentType", "Mobile")
-//				.param("MobileInfo.mobileNo", "0101111222")
-//				.param("MobileInfo.userName", "홍길동")
-//				.param("MobileInfo.birthday", "19900120")
-//			)
-//		.andExpect(MockMvcResultMatchers.status().isOk());
-//	}
+	@Test
+	void testBank() throws Exception {
+		mock.perform(MockMvcRequestBuilders.post("/paymentControllerTest")
+				.param("productId", "P0001")
+				.param("productName", "컴퓨터")
+				.param("amount", "4000000")
+				.param("paymentType", "BANK")
+				.param("InBankAccountInfo.accountNo", "2222444455556666")
+				.param("InBankAccountInfo.bankCode", "003")
+				.param("InBankAccountInfo.accountPw", "092021")
+			)
+		.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	void testMobile() throws Exception {
+		mock.perform(MockMvcRequestBuilders.post("/paymentControllerTest")
+				.param("productId", "P0001")
+				.param("productName", "컴퓨터")
+				.param("amount", "4000000")
+				.param("paymentType", "MOBILE")
+				.param("InMobileInfo.mobileNo", "0101111222")
+				.param("InMobileInfo.userName", "홍길동")
+				.param("InMobileInfo.birthday", "19900120")
+			)
+		.andExpect(MockMvcResultMatchers.status().isOk());
+	}
 
 }
 

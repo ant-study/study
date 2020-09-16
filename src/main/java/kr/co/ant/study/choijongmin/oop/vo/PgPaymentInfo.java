@@ -14,7 +14,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ResultPaymentInfo {
-	private String success;
+public class PgPaymentInfo extends CommonPaymentInfoTest {
 	private Class<?> extClass;
 }
