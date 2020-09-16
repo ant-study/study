@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MobileInfo {
+public class MobileInfo implements MoonPayInfo{
 	private String mobileNo;
 	private String userName;
 	private String brithDay;

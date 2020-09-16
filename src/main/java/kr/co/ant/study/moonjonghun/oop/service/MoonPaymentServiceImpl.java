@@ -11,12 +11,18 @@ import kr.co.ant.study.moonjonghun.oop.domain.MoonAccountInfoVO;
 import kr.co.ant.study.moonjonghun.oop.domain.MoonCardInfoVO;
 import kr.co.ant.study.moonjonghun.oop.domain.MoonMobileInfoVO;
 import kr.co.ant.study.moonjonghun.oop.domain.MoonPaymentVO;
+import kr.co.ant.study.moonjonghun.oop.domain.MoonReceiptVO;
+import kr.co.ant.study.moonjonghun.oop.payment.BankPayment;
+import kr.co.ant.study.moonjonghun.oop.payment.CardPayment;
+import kr.co.ant.study.moonjonghun.oop.payment.MobilePayment;
 import kr.co.ant.study.moonjonghun.oop.pg.BankAccountInfo;
 import kr.co.ant.study.moonjonghun.oop.pg.CardInfo;
 import kr.co.ant.study.moonjonghun.oop.pg.MobileInfo;
 import kr.co.ant.study.moonjonghun.oop.pg.MoonBankPaymentInfo;
 import kr.co.ant.study.moonjonghun.oop.pg.MoonCardPaymentInfo;
 import kr.co.ant.study.moonjonghun.oop.pg.MoonMobilePaymentInfo;
+import kr.co.ant.study.moonjonghun.oop.validation.FixedLengthValidation;
+import kr.co.ant.study.moonjonghun.oop.validation.MinlengthValidation;
 import kr.co.ant.study.moonjonghun.oop.validation.PaymentImpl;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +33,17 @@ public class MoonPaymentServiceImpl implements MoonPaymentService{
 	@Autowired
 	PaymentImpl payment;
 	
+	@Autowired
+	MoonPaymentFacadeService facadeService;
+	
+	@Autowired
+	FixedLengthValidation fixedLengthValid;
+	
+	@Autowired
+	MinlengthValidation MinLengthValid;
+	
+	
+	//이건 너무 재사용성이 떨어진다.
 	public <T extends MoonPaymentVO> Object doPayment(String json, T obj) throws Exception{
 
 		//결제용 DTO를 통해 들어온게 아님
@@ -53,7 +70,7 @@ public class MoonPaymentServiceImpl implements MoonPaymentService{
 					MoonCardInfoVO cardInfoVo = (MoonCardInfoVO) getCardInfo.invoke(obj);
 					
 //					payment.validate(cardInfo); //확장성 부족
-					payment.fixedLengthValidate(cardInfoVo.getCardNo(), 16);
+					fixedLengthValid.validate(cardInfoVo.getCardNo(), 16);
 					
 					//PG사로 넘겨야할 VO로 변환
 					MoonCardPaymentInfo cardPaymentInfo = new MoonCardPaymentInfo();
@@ -72,7 +89,7 @@ public class MoonPaymentServiceImpl implements MoonPaymentService{
 					MoonMobileInfoVO mobileInfoVo = (MoonMobileInfoVO) getMobileInfo.invoke(obj);
 					
 //					payment.validate(mobileInfo); //확장성 부족
-					payment.minLengthValidate(mobileInfoVo.getMobileNo(), 10);
+					MinLengthValid.validate(mobileInfoVo.getMobileNo(), 10);
 					
 					//PG사로 넘겨야할 VO로 변환
 					MoonMobilePaymentInfo mobilePaymentInfo = new MoonMobilePaymentInfo();
@@ -92,7 +109,7 @@ public class MoonPaymentServiceImpl implements MoonPaymentService{
 					MoonAccountInfoVO accountInfo = (MoonAccountInfoVO) getBankInfo.invoke(obj);
 					
 //					payment.validate(accountInfo); //확장성 부족
-					payment.fixedLengthValidate(accountInfo.getAccountNo(), 20);
+					fixedLengthValid.validate(accountInfo.getAccountNo(), 20);
 					
 					//PG사로 넘겨야할 VO로 변환
 					MoonBankPaymentInfo bankPaymentInfo = new MoonBankPaymentInfo();
@@ -114,6 +131,28 @@ public class MoonPaymentServiceImpl implements MoonPaymentService{
 		
 		
 		return null;
+	}
+
+	@Override
+	public MoonReceiptVO cardPayment(MoonPaymentVO vo) {
+		// TODO Auto-generated method stub
+		CardPayment cardPayment = new CardPayment(vo, new FixedLengthValidation());
+		MoonReceiptVO paymentResponse = facadeService.doPayment(cardPayment);
+		return paymentResponse;
+	}
+
+	@Override
+	public MoonReceiptVO bankAccountPayment(MoonPaymentVO vo) { 
+		BankPayment bankPayment = new BankPayment(vo, new FixedLengthValidation());
+		MoonReceiptVO paymentResponse = facadeService.doPayment(bankPayment);
+		return paymentResponse;
+	}
+
+	@Override
+	public MoonReceiptVO mobilePayment(MoonPaymentVO vo) {
+		MobilePayment mobilePayment = new MobilePayment(vo, new MinlengthValidation());
+		MoonReceiptVO paymentResponse = facadeService.doPayment(mobilePayment);
+		return paymentResponse;
 	} 
 	
 
