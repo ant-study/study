@@ -28,7 +28,7 @@ public class ConvertorTest {
 	 * @return
 	 * @throws Exception
 	 */
-	public static <T extends Object> T toVO(Map map, Class<T> clazz) throws Exception{
+	public static <T extends Object> T toVO(Map<String, ?> map, Class<T> clazz) throws Exception{
 		Iterator<String> s = map.keySet().iterator();
 		T o = clazz.newInstance();
 		while(s.hasNext()) {
@@ -39,7 +39,7 @@ public class ConvertorTest {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Map m = new HashMap();
+		Map<String, Object> m = new HashMap<String, Object>();
 		m.put("num", "111");
 		m.put("goods", "goods");
 		m.put("qty", "2");
@@ -48,7 +48,7 @@ public class ConvertorTest {
 		System.out.println(o.getGoods()+", "+o.getNum()+", "+o.getQty());
 		
 		
-		Map m2 = new HashMap();
+		Map<String, Object> m2 = new HashMap<String, Object>();
 		m2.put("num", "111");
 		m2.put("goods", "nogoods");
 		m2.put("comment", "2");

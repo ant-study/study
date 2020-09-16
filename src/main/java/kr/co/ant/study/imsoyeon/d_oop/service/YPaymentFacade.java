@@ -2,7 +2,7 @@ package kr.co.ant.study.imsoyeon.d_oop.service;
 
 import org.springframework.stereotype.Component;
 
-import kr.co.ant.study.oop.domain.Payment;
+import kr.co.ant.study.imsoyeon.d_oop.payment.Payment;
 import lombok.extern.slf4j.Slf4j;
 
 @Component

@@ -1,8 +1,5 @@
-package kr.co.ant.study.imsoyeon.d_oop.vo;
+package kr.co.ant.study.imsoyeon.d_oop.pg.vo;
 
-import kr.co.ant.study.imsoyeon.d_oop.domain.AccountInfoVO;
-import kr.co.ant.study.imsoyeon.d_oop.domain.CardInfoVO;
-import kr.co.ant.study.imsoyeon.d_oop.domain.MobileInfoVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -1,21 +1,19 @@
-/**
- * 
- */
-package kr.co.ant.study.choijongmin.oop.vo;
+package kr.co.ant.study.mkhan.oop.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-/**
- * @author crono
- *
- */
 @Getter
 @Setter
+@ToString
 public class CardInfo {
 	
 	private String cardNo;
-	private String cardCode;
+	
+	private String cardCode; 
+	
 	private String expireDate;
 	
 }
+

@@ -14,7 +14,7 @@ import kr.co.ant.study.AntStudyApplication;
 
 @SpringBootTest(classes = {AntStudyApplication.class})
 @AutoConfigureMockMvc
-class YPayController2Test {
+class PaymentControllerYTest {
 
 	@Autowired
 	MockMvc mock;
@@ -23,7 +23,7 @@ class YPayController2Test {
 	void testPayCard(){
 		try {
 //		mock.perform(post("/yRequestApiTest"))	→ import 필요
-			mock.perform(MockMvcRequestBuilders.post("/testPgApiY")
+			mock.perform(MockMvcRequestBuilders.post("/payCard")
 					.param("productId", "P001")
 					.param("productName", "컴퓨터")
 					.param("amount", "1000000")
@@ -43,7 +43,7 @@ class YPayController2Test {
 	@Test
 	void testPayAccount(){
 		try {
-			mock.perform(MockMvcRequestBuilders.post("/testPgApiY")
+			mock.perform(MockMvcRequestBuilders.post("/payAccount")
 					.param("productId", "P001")
 					.param("productName", "컴퓨터")
 					.param("amount", "1000000")
@@ -62,7 +62,7 @@ class YPayController2Test {
 	@Test
 	void testPayMobile(){
 		try {
-			mock.perform(MockMvcRequestBuilders.post("/testPgApiY")
+			mock.perform(MockMvcRequestBuilders.post("/payMobile")
 					.param("productId", "P001")
 					.param("productName", "컴퓨터")
 					.param("amount", "1000000")

@@ -1,14 +1,19 @@
-package kr.co.ant.study.choijongmin.oop.vo;
+package kr.co.ant.study.mkhan.oop.vo;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-public class BankAccountInfo {
-
+@ToString
+public class BankInfo {
+	
 	private String accountNo;
+	
 	private String bankCode;
+	
 	private String accountPw;
+
 	
 }
