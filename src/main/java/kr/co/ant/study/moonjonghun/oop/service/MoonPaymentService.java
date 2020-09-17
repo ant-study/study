@@ -12,5 +12,5 @@ public interface MoonPaymentService{
 	
 	public MoonReceiptVO mobilePayment(MoonPaymentVO vo); // 모바일결제
 	
-	public MoonReceiptVO compositePayment(MoonPaymentVO vo, String paymentType) throws Exception;
+	public MoonReceiptVO compositePayment(MoonPaymentVO vo) throws Exception;
 }

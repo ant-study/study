@@ -7,12 +7,12 @@ import kr.co.ant.study.moonjonghun.oop.domain.Payment;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class PaymentImpl implements Payment{
+public abstract class AbstractPayment implements Payment{
 	
 	protected MoonPaymentVO paymentVO;
 	protected Validation valid;
 	
-	public PaymentImpl(MoonPaymentVO vo, Validation v) {
+	public AbstractPayment(MoonPaymentVO vo, Validation v) {
 		this.paymentVO = vo;
 		this.valid = v;
 	}

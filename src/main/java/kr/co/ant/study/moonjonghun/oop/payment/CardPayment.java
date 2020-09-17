@@ -6,10 +6,10 @@ import kr.co.ant.study.moonjonghun.oop.domain.MoonPaymentVO;
 import kr.co.ant.study.moonjonghun.oop.exception.ValidateException;
 import kr.co.ant.study.moonjonghun.oop.pg.CardInfo;
 import kr.co.ant.study.moonjonghun.oop.pg.MoonPaymentInfo;
-import kr.co.ant.study.moonjonghun.oop.validation.PaymentImpl;
+import kr.co.ant.study.moonjonghun.oop.validation.AbstractPayment;
 import kr.co.ant.study.moonjonghun.oop.validation.Validation;
 
-public class CardPayment extends PaymentImpl{
+public class CardPayment extends AbstractPayment{
 	
 	public CardPayment(MoonPaymentVO vo, Validation v) {
 		super(vo, v);
