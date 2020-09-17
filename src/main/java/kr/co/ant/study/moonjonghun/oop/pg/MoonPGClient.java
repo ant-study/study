@@ -1,25 +1,23 @@
 package kr.co.ant.study.moonjonghun.oop.pg;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import kr.co.ant.study.moonjonghun.oop.domain.MoonReceiptVO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
 public class MoonPGClient {
 	
-//
-//	public <T extends MoonPaymentVO> Object doPayment(String json, T obj) throws Exception{
-//		
-//		
-//		
-//		return null;
-//	}
+	@Autowired
+	ObjectMapper mapper;
 	
-	public MoonReceiptVO doPayment(MoonPaymentInfo patmentInfo) {
-		
+	public String doPayment(String json) {
+		//pg결제 프로세스
+//		String mapper.readValue(json, Object.class);
 		
 		return null;
 	};
