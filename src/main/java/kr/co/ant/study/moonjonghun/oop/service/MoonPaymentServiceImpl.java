@@ -47,10 +47,12 @@ public class MoonPaymentServiceImpl implements MoonPaymentService{
 		return paymentResponse;
 	}
 	
+	@Override
 	public MoonReceiptVO compositePayment(MoonPaymentVO vo) throws Exception{
 		//팩토리 생성에는 
-		PaymentFactory factory = new PaymentFactory(vo, vo.getPaymentType());
-		MoonReceiptVO paymentResponse = facadeService.doPayment(factory.getPayment());
+		PaymentFactory factory = new PaymentFactory();
+		Payment payment = factory.getPayment(vo, vo.getPaymentType());
+		MoonReceiptVO paymentResponse = facadeService.doPayment(payment);
 		return paymentResponse;
 	}
 

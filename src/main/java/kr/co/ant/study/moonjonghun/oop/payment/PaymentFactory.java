@@ -13,24 +13,18 @@ import kr.co.ant.study.moonjonghun.oop.validation.Validation;
 
 public class PaymentFactory {
 	
-	public MoonPaymentVO data;
-	public String paymentType;
-	public Validation valid;
-	
-	public PaymentFactory(MoonPaymentVO vo, String type){
-		this.data = vo;
-		this.paymentType = type;
-		if("Mobile".equals(paymentType)) {
-			this.valid = new MinlengthValidation();
-		}else {
-			this.valid = new FixedLengthValidation();
-		}
-	}
-	
 	/**
 	 * 생성된 payment를 가져오는 메소드
 	 * */
-	public Payment getPayment() throws Exception{
+	public <T extends Payment> Payment getPayment(MoonPaymentVO vo, String type) throws Exception{
+		
+		Validation valid = null;
+		
+		if("MOBILE".equals(type.toUpperCase())) {
+			valid = new MinlengthValidation();
+		}else {
+			valid = new FixedLengthValidation();
+		}
 		
 		//1. type을 모두 소문자로 바꾼다.
 		//2. capitalize한다.
@@ -38,12 +32,12 @@ public class PaymentFactory {
 		//4. constructor instance 생성
 		//5. 객체를 생성하고 Payment로 upCasting
 		
-		paymentType = paymentType.toLowerCase();
-		String capType = StringUtils.capitalize(paymentType);
-		Class clazz = MoonPaymentType.valueOf(capType).getClazz();
-		Constructor paymentConst = clazz.getConstructor(MoonPaymentVO.class, Validation.class);
 		
-		return (Payment) paymentConst.newInstance(data, valid);
+		String sCapType =  StringUtils.capitalize(type.toLowerCase());
+		Class clazz = MoonPaymentType.valueOf(sCapType).getClazz();
+		Constructor<T> paymentConst = clazz.getConstructor(MoonPaymentVO.class, Validation.class);
+		
+		return paymentConst.newInstance(vo, valid);
 		
 	}
 	
