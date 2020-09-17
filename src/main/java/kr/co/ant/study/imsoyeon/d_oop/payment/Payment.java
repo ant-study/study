@@ -1,6 +1,5 @@
 package kr.co.ant.study.imsoyeon.d_oop.payment;
 
-import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PGPaymentInfo;
 
 /**
@@ -35,6 +34,14 @@ public interface Payment {
 	 */
 	public void validate() throws Exception;
 	
+	/**	 
+	 * * <pre>
+	 * Comment : log
+	 * </pre>
+	 * @throws Exception
+	 */
+	public void logging() throws Exception;
+	
 	/**
 	 * <pre>
 	 * Comment : 전처리 - Request로 들어온 데이터를 API용 VO로 변환
@@ -54,7 +61,7 @@ public interface Payment {
 	 * @return
 	 * @throws Exception
 	 */
-	public Object requestPGAPI() throws Exception;
+	public void requestPGAPI(PGPaymentInfo payment) throws Exception;
 	
 //	3) 결제 후 오류인지 아닌지 판단? 위에서 하면 되지않아?
 	

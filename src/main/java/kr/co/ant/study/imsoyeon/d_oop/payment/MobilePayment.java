@@ -1,9 +1,9 @@
 package kr.co.ant.study.imsoyeon.d_oop.payment;
 
-import kr.co.ant.study.imsoyeon.d_oop.validate.PGValidator;
+import kr.co.ant.study.imsoyeon.d_oop.validate.PGValidatorY;
 
 public class MobilePayment {	// extends AbstractPayment 
 
 	
-	private PGValidator validator;	
+	private PGValidatorY validator;	
 }

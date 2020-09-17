@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.imsoyeon.d_oop.payment.CardPayment;
-import kr.co.ant.study.imsoyeon.d_oop.validate.AccountValidator;
-import kr.co.ant.study.imsoyeon.d_oop.validate.CardValidator;
-import kr.co.ant.study.imsoyeon.d_oop.validate.MobileValidator;
+import kr.co.ant.study.imsoyeon.d_oop.validate.FixLengthValidatiorY;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,17 +15,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class PaymentServiceY {
-	
-//	이렇게 하고싶지 않은데
-	private CardValidator cardValidator;
-	private AccountValidator accountValidator;
-	private MobileValidator mobileValidator;
 
 	@Autowired
 	private PaymentFacadeY facade;
 	
 	public void doCardPay(RequestPayInfo inputVO) throws Exception {
-		CardPayment card = new CardPayment(inputVO, cardValidator);
+		CardPayment card = new CardPayment(inputVO, new FixLengthValidatiorY());
 		
 		facade.doPayment(card);
 	}

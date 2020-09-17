@@ -13,7 +13,7 @@ public class PGPaymentInfo {
 	private String productName;
 	private String amount;
 	
-	private PGCardInfo cardInfo;
-	private PGAccountInfo accountInfo;
-	private PGMobileInfo mobileInfo;
+	private PGCardInfo pgCardInfo;
+	private PGAccountInfo pgAccountInfo;
+	private PGMobileInfo pgMobileInfo;
 }
