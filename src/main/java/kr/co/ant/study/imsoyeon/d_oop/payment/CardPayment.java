@@ -5,8 +5,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PGCardInfo;
 import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PGPaymentInfo;
-import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PaymentFactoryY;
-import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PaymentTypeY;
 import kr.co.ant.study.imsoyeon.d_oop.validate.PGValidatorY;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,9 +37,7 @@ public class CardPayment extends AbstractPayment {
 //		common data
 		PGPaymentInfo payment = super.convertToPaymentVO();
 //		card data
-		PaymentFactoryY factory = new PaymentFactoryY();
-		PGCardInfo card = (PGCardInfo) factory.specifyPayment(PaymentTypeY.CARD);
-		
+		PGCardInfo card = new PGCardInfo();
 		PropertyUtils.copyProperties(card, super.getInputVO().getCardInfo());
 		
 		payment.setPaymentDetails(card);

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 
 import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.imsoyeon.d_oop.payment.CardPayment;
-import kr.co.ant.study.imsoyeon.d_oop.validate.FixLengthValidatiorY;
+import kr.co.ant.study.imsoyeon.d_oop.payment.Payment;
+import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PaymentFactoryY;
+import kr.co.ant.study.imsoyeon.d_oop.validate.FixLengthValidatorY;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,7 +22,7 @@ public class PaymentServiceY {
 	private PaymentFacadeY facade;
 	
 	public void doCardPay(RequestPayInfo inputVO) throws Exception {
-		CardPayment card = new CardPayment(inputVO, new FixLengthValidatiorY());
+		CardPayment card = new CardPayment(inputVO, new FixLengthValidatorY());
 		
 		facade.doPayment(card);
 	}
@@ -32,6 +34,13 @@ public class PaymentServiceY {
 	public void doMobilePay(RequestPayInfo inputVO) throws Exception {
 		
 		
+	}
+	
+	public void compositePayment(RequestPayInfo inputVO) throws Exception {
+		
+		Payment payment = PaymentFactoryY.specifyPayment(inputVO);
+		
+		facade.doPayment(payment);
 	}
 	
 		

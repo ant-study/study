@@ -3,7 +3,11 @@ package kr.co.ant.study.imsoyeon.d_oop.pg.vo;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
+import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
+import kr.co.ant.study.imsoyeon.d_oop.payment.CardPayment;
+import kr.co.ant.study.imsoyeon.d_oop.payment.Payment;
+import kr.co.ant.study.imsoyeon.d_oop.validate.FixLengthValidatorY;
+import kr.co.ant.study.imsoyeon.d_oop.validate.MinLengthValidatorY;
 
 /**
  * 결제를 한다.
@@ -13,14 +17,14 @@ import org.springframework.stereotype.Component;
  * */
 public class PaymentFactoryY {
 	
-	private static Map<PaymentTypeY, Object> map = new HashMap<PaymentTypeY, Object>();
+	private static Map<String, Object> map = new HashMap<String, Object>();
 	
 	static {
-		map.put(PaymentTypeY.CARD, new PGCardInfo());
-//		map.put("ACCOUNT", PGCardInfo:: new);	→ Functional Interface ?
-		map.put(PaymentTypeY.ACCOUNT, new PGAccountInfo());
-		map.put(PaymentTypeY.MOBILE, new PGMobileInfo());
-	}	
+//		이렇게 하면 안돼. inputInfo가 null로 들어가잖아
+//		map.put("CARD", PaymentTypeY.CARD);
+//		map.put("ACCOUNT", PaymentTypeY.ACCOUNT);
+//		map.put("MOBILE", PaymentTypeY.MOBILE);
+	}
 	
 	/**
 	 * <pre>
@@ -28,11 +32,15 @@ public class PaymentFactoryY {
 	 * </pre>
 	 * @param type
 	 * @return
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public Object specifyPayment(PaymentTypeY type) {
-//		Supplier라는게 있다는데?
-//		return Object......?
-		return map.get(type);
+	public static Payment specifyPayment(RequestPayInfo inputVO) throws Exception {
+		
+		 map.put("CARD", new CardPayment(inputVO, new FixLengthValidatorY()));
+		 map.put("ACCOUNT", new CardPayment(inputVO, new MinLengthValidatorY()));
+		 map.put("MOBILE", new CardPayment(inputVO, new FixLengthValidatorY()));
+		return (Payment) map.get(inputVO.getType());
 	}
 
 	/**
