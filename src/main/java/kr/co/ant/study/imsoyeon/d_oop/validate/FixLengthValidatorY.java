@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class FixLengthValidatiorY implements PGValidatorY {
+public class FixLengthValidatorY implements PGValidatorY {
 	
 	@Override
 	public void validate(String value, int length) throws Exception {
