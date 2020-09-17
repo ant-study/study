@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
-import kr.co.ant.study.imsoyeon.d_oop.payment.AbstractPayment;
 import kr.co.ant.study.imsoyeon.d_oop.payment.Payment;
 import kr.co.ant.study.imsoyeon.d_oop.validate.FixLengthValidatorY;
 import kr.co.ant.study.imsoyeon.d_oop.validate.MinLengthValidatorY;
@@ -31,12 +30,11 @@ public class PaymentFactoryY {
 	 * <pre>
 	 * Comment : PGPaymentDetailsY Factory
 	 * </pre>
-	 * @param type
+	 * @param inputVO
 	 * @return
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws Exception
 	 */
-	public static Payment specifyPayment(RequestPayInfo inputVO) throws Exception {
+	public static Payment createPayment(RequestPayInfo inputVO) throws Exception {
 		
 		Class clazz = null;
 		
@@ -47,6 +45,7 @@ public class PaymentFactoryY {
 		}		
 		Constructor constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
 		
+//		캐스팅 할 수 밖에 없을까 enum에서 제네릭 어렵..
 		return (Payment) constructor.newInstance(inputVO, map.get(inputVO.getType()));
 	}
 
