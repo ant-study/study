@@ -51,9 +51,9 @@ public abstract class AbstractPayment implements Payment {
 
 	@Override
 	public void requestPGAPI(PGPaymentInfo payment) throws Exception {
-		String json = mapper.writeValueAsString(payment);
-		ANTPGClientY client = new ANTPGClientY();
-		client.doPayment(json);
+//		String json = mapper.writeValueAsString(payment);
+//		ANTPGClientY client = new ANTPGClientY();
+//		client.doPayment(json);
 	}
 	
 }

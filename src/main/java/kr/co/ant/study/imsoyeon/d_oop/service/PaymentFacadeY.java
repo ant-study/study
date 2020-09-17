@@ -1,14 +1,19 @@
 package kr.co.ant.study.imsoyeon.d_oop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import kr.co.ant.study.imsoyeon.d_oop.payment.Payment;
+import kr.co.ant.study.imsoyeon.d_oop.pg.ANTPGClientY;
 import kr.co.ant.study.imsoyeon.d_oop.pg.vo.PGPaymentInfo;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 public class PaymentFacadeY {
+	
+	@Autowired
+	ANTPGClientY client;
 
 	/**
 	 * 공통작업 처리
@@ -31,9 +36,12 @@ public class PaymentFacadeY {
 		Payment 호출 용 메서드를 하나 만들면 될것같음		
 		 */
 		PGPaymentInfo vo = payment.convertToPaymentVO();
+		log.info("VO : {}", vo.toString());
+		
+//		json 바꿔줘야하는구나 여기서
 		
 //		4. call API method
-		payment.requestPGAPI(vo);
+//		client.doPayment(vo);
 		
 //		5. manager response
 		

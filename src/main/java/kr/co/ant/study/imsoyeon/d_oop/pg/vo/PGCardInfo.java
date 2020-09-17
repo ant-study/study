@@ -10,7 +10,7 @@ import lombok.ToString;
 /**
  * PG사에 넘겨줄 카드 결제수단 데이터 위한 vo
  * */
-public class PGCardInfo {
+public class PGCardInfo implements PGPaymentDetailsY {
 	
 //	private String productId;
 //	private String productName;

@@ -1,5 +1,7 @@
 package kr.co.ant.study.imsoyeon.d_oop.pg.vo;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +15,6 @@ public class PGPaymentInfo {
 	private String productName;
 	private String amount;
 	
-	private PGCardInfo pgCardInfo;
-	private PGAccountInfo pgAccountInfo;
-	private PGMobileInfo pgMobileInfo;
+	private PGPaymentDetailsY paymentDetails;
+	
 }
