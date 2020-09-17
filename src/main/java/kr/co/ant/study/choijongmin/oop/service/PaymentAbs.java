@@ -22,9 +22,20 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class PaymentAbs implements PaymentStrategy{
 	
 	@Override
-	public PgPaymentInfo paymentConvert(PaymentInfo info) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+	public PgPaymentInfo paymentConvert(PaymentInfo info) {
 		PgPaymentInfo pgPaymentInfo = new PgPaymentInfo();
-		PropertyUtils.copyProperties(pgPaymentInfo, info);
+		try {
+			PropertyUtils.copyProperties(pgPaymentInfo, info);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return pgPaymentInfo;
 	}
 }

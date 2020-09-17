@@ -9,8 +9,6 @@
  */
 package kr.co.ant.study.choijongmin.oop.validate;
 
-import java.lang.reflect.InvocationTargetException;
-
 import kr.co.ant.study.choijongmin.oop.vo.PaymentInfo;
 import kr.co.ant.study.choijongmin.oop.vo.PgPaymentInfo;
 import kr.co.ant.study.oop.service.ValidateException;
@@ -23,6 +21,6 @@ public interface PaymentStrategy {
 	 **/
 	public void validate() throws ValidateException;
 	
-	public PgPaymentInfo paymentConvert(PaymentInfo info) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException;
+	public PgPaymentInfo paymentConvert(PaymentInfo info);
 	
 }

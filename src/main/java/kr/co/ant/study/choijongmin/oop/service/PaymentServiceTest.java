@@ -24,23 +24,25 @@ public class PaymentServiceTest {
 	ObjectMapper mapper;
 	
 	public void paymentTypeClassification(PaymentInfo info) throws Exception {
+		PgPaymentInfo pgPaymentInfo = new PgPaymentInfo();
+		PropertyUtils.copyProperties(pgPaymentInfo, info);
 		
 		Class clazz = PaymentType.valueOf(info.getPaymentType()).getPaymentClass();
 		Object o = clazz.newInstance();
 		
 		Field[] fields = info.getClass().getDeclaredFields();
 		for (Field field : fields) {
-			if ( clazz == field.getType() ) {
-				Object fObj = field.get(info);				
-				PropertyUtils.copyProperties(o, fObj);
+			if ( clazz.isAssignableFrom(field.getType()) ) {
+				Object fObj = field.get(info);
+				pgPaymentInfo.setExtClass(fObj);
 			}
 		}
 		
 		PaymentStrategy paymentStrategy = null;
-		paymentStrategy = (PaymentStrategy) o;
+		paymentStrategy = (PaymentStrategy) pgPaymentInfo.getExtClass();
 		
 		PaymentFacadeTest paymentFacadeTest = new PaymentFacadeTest();
-		paymentFacadeTest.doPayment(paymentStrategy, info);
+		paymentFacadeTest.doPayment(paymentStrategy, pgPaymentInfo);
 		
 	}
 	

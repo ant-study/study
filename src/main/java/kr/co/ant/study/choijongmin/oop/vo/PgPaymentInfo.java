@@ -10,10 +10,11 @@ import lombok.Setter;
 /**
  * @description : 
  * @author : jmChoi
- * @createDate : 2020. 9. 15.
+ * @createDate : 2020. 9. 16.
+ * @param <T>
  */
 @Getter
 @Setter
 public class PgPaymentInfo extends CommonPaymentInfoTest {
-	private Class<?> extClass;
+	private Object extClass;
 }
