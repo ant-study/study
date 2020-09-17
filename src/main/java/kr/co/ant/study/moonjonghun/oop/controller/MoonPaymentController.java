@@ -32,7 +32,7 @@ public class MoonPaymentController {
 			log.info("PaymentInfo ::: {}", info);
 //			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
 //			Object obj = client.cardPayment(info);
-			Object obj = client.compositePayment(info, "CARD");
+			Object obj = client.compositePayment(info);
 			
 			return obj;
 		} catch (Exception e) {
@@ -49,7 +49,7 @@ public class MoonPaymentController {
 			log.info("PaymentInfo ::: {}", info);
 //			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
 //			Object obj = client.mobilePayment(info);
-			Object obj = client.compositePayment(info, "MOBILE");
+			Object obj = client.compositePayment(info);
 			
 			return obj;
 		} catch (Exception e) {
@@ -66,7 +66,7 @@ public class MoonPaymentController {
 			log.info("PaymentInfo ::: {}", info);
 //			Object obj = client.doPayment(mapper.writeValueAsString(info), info);
 //			Object obj = client.bankAccountPayment(info);
-			Object obj = client.compositePayment(info, "BANK");
+			Object obj = client.compositePayment(info);
 			
 			return obj;
 		} catch (Exception e) {
