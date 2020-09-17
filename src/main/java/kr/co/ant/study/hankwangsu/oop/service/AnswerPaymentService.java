@@ -50,5 +50,29 @@ public class AnswerPaymentService {
 	}
 	
 	
+	/**
+	 * 한 메소드에서 PaymentType에 따라 여러가지 결제수단 처리
+	 * 아래 로직을 Factory Pattern을 참고 해서
+	 * Factory Class를 만듭시다.
+	 * @param infoVO
+	 * @throws Exception
+	 */
+	public void compositePayment(PaymentInfoVO infoVO)throws Exception {
+		
+		String paymentType = infoVO.getPaymentType();
+		
+		if("CARD".equals(paymentType)) {
+			AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, new FixedLengthValidator());
+			
+			ANTPaymentResponse response = facade.doPayment(cardPayment);
+		}else if("MOBILE".equals(paymentType)) {
+			AnswerMobilePayment mobilePayment = new AnswerMobilePayment(infoVO, new FixedLengthValidator());
+			
+			ANTPaymentResponse response = facade.doPayment(mobilePayment);
+		}else if("BANK".equals(paymentType)) {
+			//은행 ~~
+		}
+	}
+	
 
 }
