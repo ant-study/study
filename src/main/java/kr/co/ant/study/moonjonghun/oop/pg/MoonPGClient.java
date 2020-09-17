@@ -15,9 +15,9 @@ public class MoonPGClient {
 	@Autowired
 	ObjectMapper mapper;
 	
-	public String doPayment(String json) {
+	public String doPayment(String json, String type) {
 		//pg결제 프로세스
-//		String mapper.readValue(json, Object.class);
+//		String s = mapper.writeValueAsString( mapper.readValue(json, Object.class));
 		
 		return null;
 	};

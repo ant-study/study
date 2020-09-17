@@ -50,7 +50,7 @@ public class MoonPaymentFacadeServiceImpl implements MoonPaymentFacadeService{
 			String jsonData = toJson(paymentInfo);
 			
 			//JSON데이터를 PGClient를 통해 전달 결제수행
-			String result = pg.doPayment(jsonData);
+			String result = pg.doPayment(jsonData, paymentInfo.getPaymentType());
 			
 			//결과 데이터를 VO로 전환
 			MoonReceiptVO receipt = mapper.readValue(result, MoonReceiptVO.class);
