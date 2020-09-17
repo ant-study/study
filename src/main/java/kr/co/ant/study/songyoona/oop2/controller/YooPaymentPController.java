@@ -31,21 +31,24 @@ public class YooPaymentPController {
     @ResponseBody
     @RequestMapping("/yoos/pay/card")
     public String paymentCard(PaymentInfo info) throws Exception{
-        service.paymentCard(info);
+        //service.paymentCard(info);
+        service.compositePayment(info);
         return "ok";
     }
 
     @ResponseBody
     @RequestMapping("/yoos/pay/bank")
     public String paymentBank(PaymentInfo info) throws Exception{
-        service.paymentBank(info);
+        service.compositePayment(info);
+        //service.paymentBank(info);
         return "ok";
     }
 
     @ResponseBody
     @RequestMapping("/yoos/pay/mobile")
     public String paymentMobile(PaymentInfo info) throws Exception{
-        service.paymentMobile(info);
+        service.compositePayment(info);
+        //service.paymentMobile(info);
         return "ok";
     }
 

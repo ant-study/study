@@ -29,7 +29,7 @@ public abstract class YooAbstracPayment implements YooPayment{
         this.validator = validator;
     }
 
-
+    @Override
     public ANTPaymentInfo convertToANTPaymentInfo() throws Exception {
         ANTPaymentInfo antPaymentInfo = new ANTPaymentInfo();
         PropertyUtils.copyProperties(antPaymentInfo, data);
