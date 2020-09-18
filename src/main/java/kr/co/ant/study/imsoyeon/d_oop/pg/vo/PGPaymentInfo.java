@@ -1,6 +1,6 @@
 package kr.co.ant.study.imsoyeon.d_oop.pg.vo;
 
-import org.apache.commons.beanutils.PropertyUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +15,7 @@ public class PGPaymentInfo {
 	private String productName;
 	private String amount;
 	
+	@JsonIgnore
 	private PGPaymentDetailsY paymentDetails;
 	
 }

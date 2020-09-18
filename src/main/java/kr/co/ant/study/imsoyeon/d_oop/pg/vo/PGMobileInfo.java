@@ -11,10 +11,6 @@ import lombok.ToString;
  * PG사에 넘겨줄 모바일 결제수단 데이터 위한 vo
  * */
 public class PGMobileInfo implements PGPaymentDetailsY {
-
-//	private String productId;
-//	private String productName;
-//	private String amount;
 	
 	private String mobileNo;
 	private String userName;
