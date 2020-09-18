@@ -1,4 +1,4 @@
-package kr.co.ant.study.nasunghee;
+package kr.co.ant.study.student.nasunghee;
 
 import java.util.HashMap;
 import java.util.Iterator;

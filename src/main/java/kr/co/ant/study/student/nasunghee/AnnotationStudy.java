@@ -1,4 +1,4 @@
-package kr.co.ant.study.nasunghee;
+package kr.co.ant.study.student.nasunghee;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
