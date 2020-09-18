@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import kr.co.ant.study.AntStudyApplication;
-import kr.co.ant.study.moonjonghun.oop.domain.MoonPaymentType;
+import kr.co.ant.study.student.moonjonghun.oop.domain.MoonPaymentType;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
