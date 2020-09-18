@@ -11,8 +11,8 @@ public enum MoonPaymentType {
 	Bank("BANK", BankPayment.class);
 	
 	private String value;
-	private Class clazz;
-	private MoonPaymentType (String value, Class clazz) {
+	private Class<? extends Payment> clazz;
+	private MoonPaymentType (String value, Class<? extends Payment> clazz) {
 		this.value = value;
 		this.clazz = clazz;
 	}
@@ -21,7 +21,7 @@ public enum MoonPaymentType {
 		return value;
 	} 
 	
-	public Class getClazz() {
+	public Class<? extends Payment> getClazz() {
 		return clazz;
 	}
 	

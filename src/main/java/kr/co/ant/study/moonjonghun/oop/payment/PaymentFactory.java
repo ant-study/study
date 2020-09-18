@@ -13,10 +13,7 @@ import kr.co.ant.study.moonjonghun.oop.validation.Validation;
 
 public class PaymentFactory {
 	
-	/**
-	 * 생성된 payment를 가져오는 메소드
-	 * */
-	public <T extends Payment> Payment getPayment(MoonPaymentVO vo, String type) throws Exception{
+	public Payment getPayment(MoonPaymentVO vo, String type) throws Exception{
 		
 		Validation valid = null;
 		
@@ -30,12 +27,10 @@ public class PaymentFactory {
 		//2. capitalize한다.
 		//3. enum에서 getCalzz하여 거래타입별 class 정보를 가져온다.
 		//4. constructor instance 생성
-		//5. 객체를 생성하고 Payment로 upCasting
-		
 		
 		String sCapType =  StringUtils.capitalize(type.toLowerCase());
-		Class clazz = MoonPaymentType.valueOf(sCapType).getClazz();
-		Constructor<T> paymentConst = clazz.getConstructor(MoonPaymentVO.class, Validation.class);
+		Class<? extends Payment> clazz = MoonPaymentType.valueOf(sCapType).getClazz();
+		Constructor<? extends Payment> paymentConst = clazz.getConstructor(MoonPaymentVO.class, Validation.class);
 		
 		return paymentConst.newInstance(vo, valid);
 		
