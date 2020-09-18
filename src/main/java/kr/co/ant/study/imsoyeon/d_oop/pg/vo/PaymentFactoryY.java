@@ -38,6 +38,7 @@ public class PaymentFactoryY {
 		
 		Class clazz = null;
 		
+//		enum에서 Payment 클래스 찾아오고, map에서 validator 가져오고..?
 		for (PaymentTypeEnum classType : PaymentTypeEnum.values()) {
 			if (classType.name().equals(inputVO.getType())) {
 				clazz = classType.getPayment();

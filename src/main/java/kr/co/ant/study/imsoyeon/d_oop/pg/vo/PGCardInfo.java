@@ -12,10 +12,6 @@ import lombok.ToString;
  * */
 public class PGCardInfo implements PGPaymentDetailsY {
 	
-//	private String productId;
-//	private String productName;
-//	private String amount;
-	
 	private String cardNo;
 	private String cardCode;
 	private String expireDate;
