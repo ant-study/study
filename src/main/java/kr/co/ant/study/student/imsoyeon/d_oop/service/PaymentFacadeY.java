@@ -56,10 +56,10 @@ public class PaymentFacadeY {
 		로그 찍고 throw new Exception("message")하든지
 		에러별로 throw new XXException("message")하든지
 		 * */		
-		if (response.isSuccess()) {			
+		if (response.isSuccess()) {	
 			return response;
 			
-		} else {
+		} else {	//HttpClientException 등??
 			log.error("ERROR CODE ::: {} !!! WHY ::: {}", response.getStatusCode(), response.getError().getWhere()+" "+response.getError().getMessage());
 			throw new Exception("ERROR");
 		}		

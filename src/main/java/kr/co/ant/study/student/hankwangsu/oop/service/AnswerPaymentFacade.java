@@ -16,7 +16,15 @@ import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPayInfo;
 import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentInfo;
 import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentResponse;
 import lombok.extern.slf4j.Slf4j;
-
+/**
+ * Facade Pattern 
+ * 영화를 보려고 팝콘 준비하고, 콜라도 준비하고, 티비에 넷플릭스 연결해두고 영화를 고른다 과정이 있으면,
+ * 저 과정을 한곳에 두고 하나하나 호출하면 → 절차 지향
+ * 서브 클래스 여러개에 나눠서 두고 하나로 묶어서 서브 클래스를 사용하고 싶을 때 Facade Pattern 활용
+ * 	ex) 
+ * 		service에서 facade.doPayment() 호출
+ * 
+ * */
 @Component
 @Slf4j
 public class AnswerPaymentFacade {
