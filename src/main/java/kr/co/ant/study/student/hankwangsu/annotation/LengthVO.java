@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.annotation;
+package kr.co.ant.study.student.hankwangsu.annotation;
 
 import lombok.Getter;
 import lombok.Setter;

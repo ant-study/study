@@ -1,10 +1,10 @@
-package kr.co.ant.study.hankwangsu.oop.payment;
+package kr.co.ant.study.student.hankwangsu.oop.payment;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import kr.co.ant.study.hankwangsu.oop.pg.vo.ANTPaymentInfo;
-import kr.co.ant.study.hankwangsu.oop.validate.ANTValidator;
 import kr.co.ant.study.oop.domain.PaymentInfoVO;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentInfo;
+import kr.co.ant.study.student.hankwangsu.oop.validate.ANTValidator;
 
 public abstract class AbstracPayment implements Payment{
 	

@@ -1,12 +1,12 @@
-package kr.co.ant.study.hankwangsu.oop.controller;
+package kr.co.ant.study.student.hankwangsu.oop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.ant.study.hankwangsu.oop.service.AnswerPaymentService;
 import kr.co.ant.study.oop.domain.PaymentInfoVO;
+import kr.co.ant.study.student.hankwangsu.oop.service.AnswerPaymentService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

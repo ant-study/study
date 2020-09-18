@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.oop.pg;
+package kr.co.ant.study.student.hankwangsu.oop.pg;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

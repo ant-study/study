@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.oop.pg.vo;
+package kr.co.ant.study.student.hankwangsu.oop.pg.vo;
 
 import lombok.Getter;
 import lombok.Setter;

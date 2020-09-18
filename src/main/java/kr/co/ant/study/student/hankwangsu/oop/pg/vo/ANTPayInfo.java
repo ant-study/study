@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.oop.pg.vo;
+package kr.co.ant.study.student.hankwangsu.oop.pg.vo;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;

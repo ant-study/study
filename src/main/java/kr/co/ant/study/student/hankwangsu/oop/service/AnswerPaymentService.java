@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.oop.service;
+package kr.co.ant.study.student.hankwangsu.oop.service;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,15 +6,15 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.co.ant.study.hankwangsu.oop.payment.AnswerCardPayment;
-import kr.co.ant.study.hankwangsu.oop.payment.AnswerMobilePayment;
-import kr.co.ant.study.hankwangsu.oop.pg.vo.ANTPaymentResponse;
-import kr.co.ant.study.hankwangsu.oop.pg.vo.BankAccountInfo;
-import kr.co.ant.study.hankwangsu.oop.validate.FixedLengthValidator;
 import kr.co.ant.study.oop.domain.BankPayInfoVO;
 import kr.co.ant.study.oop.domain.PaymentInfoVO;
 import kr.co.ant.study.oop.pg.ANTBankPaymentInfo;
 import kr.co.ant.study.oop.service.ValidateException;
+import kr.co.ant.study.student.hankwangsu.oop.payment.AnswerCardPayment;
+import kr.co.ant.study.student.hankwangsu.oop.payment.AnswerMobilePayment;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentResponse;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.BankAccountInfo;
+import kr.co.ant.study.student.hankwangsu.oop.validate.FixedLengthValidator;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

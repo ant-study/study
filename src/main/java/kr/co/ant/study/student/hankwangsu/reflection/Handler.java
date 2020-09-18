@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.reflection;
+package kr.co.ant.study.student.hankwangsu.reflection;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

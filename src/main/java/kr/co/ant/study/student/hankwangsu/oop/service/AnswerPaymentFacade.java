@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.oop.service;
+package kr.co.ant.study.student.hankwangsu.oop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,13 +8,13 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import kr.co.ant.study.hankwangsu.oop.payment.Payment;
-import kr.co.ant.study.hankwangsu.oop.pg.AnswerANTPGClient;
-import kr.co.ant.study.hankwangsu.oop.pg.vo.ANTPayInfo;
-import kr.co.ant.study.hankwangsu.oop.pg.vo.ANTPaymentInfo;
-import kr.co.ant.study.hankwangsu.oop.pg.vo.ANTPaymentResponse;
 import kr.co.ant.study.oop.service.PaymentException;
 import kr.co.ant.study.oop.service.ValidateException;
+import kr.co.ant.study.student.hankwangsu.oop.payment.Payment;
+import kr.co.ant.study.student.hankwangsu.oop.pg.AnswerANTPGClient;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPayInfo;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentInfo;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Component

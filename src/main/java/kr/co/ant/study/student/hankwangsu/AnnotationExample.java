@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu;
+package kr.co.ant.study.student.hankwangsu;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

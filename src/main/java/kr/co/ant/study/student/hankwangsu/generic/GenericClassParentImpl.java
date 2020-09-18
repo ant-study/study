@@ -1,4 +1,4 @@
-package kr.co.ant.study.hankwangsu.generic;
+package kr.co.ant.study.student.hankwangsu.generic;
 
 public class GenericClassParentImpl<T extends Parent> implements IGenericClass<T>{
 

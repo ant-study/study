@@ -1,8 +1,8 @@
-package kr.co.ant.study.hankwangsu.oop.payment;
+package kr.co.ant.study.student.hankwangsu.oop.payment;
 
-import kr.co.ant.study.hankwangsu.oop.pg.vo.ANTPaymentInfo;
-import kr.co.ant.study.hankwangsu.oop.pg.vo.ANTPaymentResponse;
 import kr.co.ant.study.oop.service.ValidateException;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentInfo;
+import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentResponse;
 
 /**
  * 결제수단별로 동일한 행위는 여기다가 정의 하자
