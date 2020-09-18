@@ -1,20 +1,24 @@
 package kr.co.ant.study.seomyeongjoo.oop.domain;
 
-public enum PaymentMethod {
-    MOBILE, CARD, BANK;
-//    MOBILE("핸드폰 결제"),
-//    CARD("카드 결제"),
-//    BANK("계좌이체");
+import lombok.Getter;
+import lombok.Setter;
 
-//    private String value;
-//
-//    PaymentMethod(String value) {
-//        this.value = value;
-//    }
-//
-//    public String getValue() {
-//        return value;
-//    }
+
+public enum PaymentMethod {
+    //MOBILE, CARD, BANK;
+    MOBILE(MobileInfo.class),
+    CARD(CardInfo.class),
+    BANK(BankAccountInfo.class);
+
+    private Class paymentMethod;
+
+    PaymentMethod(Class paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Class getPaymentMethod() {
+        return paymentMethod;
+    }
 
 
 }

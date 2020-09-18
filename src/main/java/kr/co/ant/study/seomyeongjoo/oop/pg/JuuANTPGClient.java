@@ -13,9 +13,7 @@ public class JuuANTPGClient {
 	public String doPayment(String json) {
 		try {
 			String s = mapper.writeValueAsString(mapper.readValue(json, Object.class));
-			System.out.println(">>>>>>>>>>>>>>>");
 			System.out.println(s);
-			System.out.println("<<<<<<<<<<<<<<<");
 			return "";
 		}catch(Exception e) {
 			e.printStackTrace();

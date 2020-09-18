@@ -28,9 +28,13 @@ class JuuPaymentControllerTest {
     @Test
     void testTest() throws Exception {
 
-        mock.perform(MockMvcRequestBuilders.post("/testMJ")
+        mock.perform(MockMvcRequestBuilders.post("/mj/card")
                 .param("productId", "P0001")
-                .param("paySubModule.name", "CARD"))
+                .param("paySubModule.name", "CARD")
+                .param("cardInfo.cardNo", "22224444555566666")
+                .param("cardInfo.cardCode", "003")
+                .param("cardInfo.expireDate", "092021")
+                )
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

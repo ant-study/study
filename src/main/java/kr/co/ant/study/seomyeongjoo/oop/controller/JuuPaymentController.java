@@ -1,12 +1,11 @@
 package kr.co.ant.study.seomyeongjoo.oop.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-import kr.co.ant.study.seomyeongjoo.oop.domain.PaySample;
-import kr.co.ant.study.seomyeongjoo.oop.domain.PaySubModule;
+import kr.co.ant.study.seomyeongjoo.oop.domain.PaymentInfo;
 import kr.co.ant.study.seomyeongjoo.oop.pg.JuuANTPGClient;
+import kr.co.ant.study.seomyeongjoo.oop.service.JuuPaymentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @Controller
+@RequestMapping("/mj")
 public class JuuPaymentController {
 
     @Autowired
@@ -23,11 +23,31 @@ public class JuuPaymentController {
     @Autowired
     ObjectMapper mapper;
 
+    @Autowired
+    JuuPaymentService service;
+
     @ResponseBody
-    @RequestMapping("/testMJ")
-    public String test(PaySample info) throws JsonProcessingException {
-        log.info("PaymentInfo ::: {} ::::", info);
-        client.doPayment(mapper.writeValueAsString(info));
+    @RequestMapping("/card")
+    public String cardPayment(PaymentInfo info) throws Exception {
+        log.info("PaymentInfo ::: {} ::::", info.toString());
+        service.cardPay(info);
         return "ok";
     }
+
+    @ResponseBody
+    @RequestMapping("/mobile")
+    public String mobilePayment(PaymentInfo info) throws Exception {
+        log.info("PaymentInfo ::: {} ::::", info.toString());
+        service.mobilePay(info);
+        return "ok";
+    }
+
+    @ResponseBody
+    @RequestMapping("/bank")
+    public String bankAccountPayment(PaymentInfo info) throws Exception {
+        log.info("PaymentInfo ::: {} ::::", info.toString());
+        service.bankPay(info);
+        return "ok";
+    }
+
 }

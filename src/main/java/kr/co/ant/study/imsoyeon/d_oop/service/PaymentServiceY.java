@@ -38,7 +38,8 @@ public class PaymentServiceY {
 	
 	public void compositePayment(RequestPayInfo inputVO) throws Exception {
 		
-		Payment payment = PaymentFactoryY.specifyPayment(inputVO);
+//		factory pattern
+		Payment payment = PaymentFactoryY.createPayment(inputVO);
 		
 		facade.doPayment(payment);
 	}

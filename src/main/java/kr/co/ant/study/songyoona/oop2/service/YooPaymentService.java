@@ -12,17 +12,12 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.ant.study.songyoona.oop2.domain.PaymentInfo;
+import kr.co.ant.study.songyoona.oop2.factory.YooPaymentFactory;
 import kr.co.ant.study.songyoona.oop2.payment.BankAccountPayment;
 import kr.co.ant.study.songyoona.oop2.payment.CardPayment;
 import kr.co.ant.study.songyoona.oop2.payment.MobilePayment;
-import kr.co.ant.study.songyoona.oop2.payment.PaymentTypeEnum;
-import kr.co.ant.study.songyoona.oop2.payment.TotalPayment;
 import kr.co.ant.study.songyoona.oop2.payment.YooPayment;
 import kr.co.ant.study.songyoona.oop2.pg.ANTPaymentResponse;
-import kr.co.ant.study.songyoona.oop2.pg.vo.ANTPayInfo;
-import kr.co.ant.study.songyoona.oop2.pg.vo.BankPayInfo;
-import kr.co.ant.study.songyoona.oop2.pg.vo.CardPayInfo;
-import kr.co.ant.study.songyoona.oop2.pg.vo.MobilePayInfo;
 import kr.co.ant.study.songyoona.oop2.validate.FixedLengthValidator;
 import kr.co.ant.study.songyoona.oop2.validate.MinLengthValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +36,9 @@ public class YooPaymentService {
 
     @Autowired
     YooPaymentFacade facade;
+
+    @Autowired
+    YooPaymentFactory factory;
 
 
     public void paymentCard(PaymentInfo info) throws Exception{
@@ -73,13 +71,19 @@ public class YooPaymentService {
      */
     public void compositePayment(PaymentInfo info) throws Exception {
 
-        YooPayment selectPayment = selectPayInfo(info);
+        //YooPayment selectPayment = selectPayInfo(info);
+        YooPayment selectPayment = factory.selectPayInfo(info);
+
 
         ANTPaymentResponse response = facade.doPayment(selectPayment);
     }
 
+
+
+
+
     /**
-     * PaymentType에 따라 여러가지 결제수단 선택해서 return
+     * PaymentType에 따라 여러가지 결제수단 선택해서 return => CLASS로 빼기
      * @param PaymentInfo
      */
     public YooPayment selectPayInfo(PaymentInfo info) {
@@ -87,9 +91,13 @@ public class YooPaymentService {
         String type = info.getPaymentType();
 
         HashMap<String, Object> payTypes = new HashMap<String , Object>();
-        payTypes.put("CARD", new CardPayment(info, new FixedLengthValidator()));
-        payTypes.put("BANK", new BankAccountPayment(info, new MinLengthValidator()));
-        payTypes.put("MOBILE", new MobilePayment(info, new FixedLengthValidator()));
+        //if(type.equals("CARD"))
+            payTypes.put(type, new CardPayment(info, new FixedLengthValidator()));
+        //else if(type.equals("BANK"))
+            payTypes.put(type, new BankAccountPayment(info, new MinLengthValidator()));
+        //else if(type.equals("MOBILE"))
+            payTypes.put(type, new MobilePayment(info, new FixedLengthValidator()));
+
 
         payInfo = (YooPayment)payTypes.get(type);
         return payInfo;

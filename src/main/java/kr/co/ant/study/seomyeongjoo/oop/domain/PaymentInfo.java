@@ -2,19 +2,22 @@ package kr.co.ant.study.seomyeongjoo.oop.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
 
 @Getter
 @Setter
-public class PaySample {
+@ToString
+public class PaymentInfo {
 
 	private String productId;
-
 	private String productName;
-
 	private long amount;
-
 	private String paymentType;
 
-	private PaySubModule paySubModule;
+	private CardInfo cardInfo;
+	private MobileInfo mobileInfo;
+	private BankAccountInfo bankAccountInfo;
+
 
 }

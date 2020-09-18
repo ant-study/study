@@ -1,13 +1,14 @@
 package kr.co.ant.study.imsoyeon.d_oop.pg.vo;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
 import kr.co.ant.study.imsoyeon.d_oop.domain.RequestPayInfo;
-import kr.co.ant.study.imsoyeon.d_oop.payment.CardPayment;
 import kr.co.ant.study.imsoyeon.d_oop.payment.Payment;
 import kr.co.ant.study.imsoyeon.d_oop.validate.FixLengthValidatorY;
 import kr.co.ant.study.imsoyeon.d_oop.validate.MinLengthValidatorY;
+import kr.co.ant.study.imsoyeon.d_oop.validate.PGValidatorY;
 
 /**
  * 결제를 한다.
@@ -20,27 +21,32 @@ public class PaymentFactoryY {
 	private static Map<String, Object> map = new HashMap<String, Object>();
 	
 	static {
-//		이렇게 하면 안돼. inputInfo가 null로 들어가잖아
-//		map.put("CARD", PaymentTypeY.CARD);
-//		map.put("ACCOUNT", PaymentTypeY.ACCOUNT);
-//		map.put("MOBILE", PaymentTypeY.MOBILE);
+		map.put("CARD", new FixLengthValidatorY());
+		map.put("ACCOUNT", new MinLengthValidatorY());
+		map.put("MOBILE", new FixLengthValidatorY());
 	}
 	
 	/**
 	 * <pre>
 	 * Comment : PGPaymentDetailsY Factory
 	 * </pre>
-	 * @param type
+	 * @param inputVO
 	 * @return
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws Exception
 	 */
-	public static Payment specifyPayment(RequestPayInfo inputVO) throws Exception {
+	public static Payment createPayment(RequestPayInfo inputVO) throws Exception {
 		
-		 map.put("CARD", new CardPayment(inputVO, new FixLengthValidatorY()));
-		 map.put("ACCOUNT", new CardPayment(inputVO, new MinLengthValidatorY()));
-		 map.put("MOBILE", new CardPayment(inputVO, new FixLengthValidatorY()));
-		return (Payment) map.get(inputVO.getType());
+		Class clazz = null;
+		
+		for (PaymentTypeEnum classType : PaymentTypeEnum.values()) {
+			if (classType.name().equals(inputVO.getType())) {
+				clazz = classType.getPayment();
+			}
+		}		
+		Constructor constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
+		
+//		캐스팅 할 수 밖에 없을까 enum에서 제네릭 어렵..
+		return (Payment) constructor.newInstance(inputVO, map.get(inputVO.getType()));
 	}
 
 	/**
