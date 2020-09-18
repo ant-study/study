@@ -3,7 +3,6 @@ import kr.co.ant.study.student.vvooss.tran.vo.BankAccountInfo;
 import kr.co.ant.study.student.vvooss.tran.vo.CardInfo;
 import kr.co.ant.study.student.vvooss.tran.vo.MobileInfo;
 import kr.co.ant.study.student.vvooss.tran.vo.SettleInfo;
-import kr.co.ant.study.vvooss.tran.vo.*;
 
 public enum PaymentType {
 
