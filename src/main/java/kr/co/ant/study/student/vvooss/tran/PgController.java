@@ -1,7 +1,5 @@
 package kr.co.ant.study.student.vvooss.tran;
 
-import kr.co.ant.study.student.vvooss.tran.common.PaymentType;
-import kr.co.ant.study.student.vvooss.tran.vo.PGApiVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +9,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.ant.study.oop.pg.ANTPGClient;
-import kr.co.ant.study.vvooss.tran.vo.*;
+import kr.co.ant.study.student.vvooss.tran.common.PaymentType;
+import kr.co.ant.study.student.vvooss.tran.vo.PGApiVO;
 import kr.co.ant.study.student.vvooss.tran.vo.ReqBodySameple;
-
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
