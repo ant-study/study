@@ -28,7 +28,7 @@ import kr.co.ant.study.student.songyoona.oop2.validate.YooANTValidator;
  * @createDate : 2020. 9. 17.
  */
 @Service
-public class YooPaymentFactory<T> {
+public class YooPaymentFactory {
 
     // validation Map
     private static Map<String, Object> validateMap = new HashMap<String, Object>();
@@ -45,33 +45,33 @@ public class YooPaymentFactory<T> {
 //        paymentMap.put("BANK", new BankAccountPayment(null, null));
 //        paymentMap.put("MOBILE", new MobilePayment(null, null));
 //    }
-    private static Map<String, Class> paymentMap = new HashMap<String, Class>();
+
+    private static Map<String, Class<? extends YooPayment>> paymentMap = new HashMap<String, Class<? extends YooPayment>>();
     static {
         paymentMap.put("CARD", CardPayment.class);
         paymentMap.put("BANK", BankAccountPayment.class);
         paymentMap.put("MOBILE", MobilePayment.class);
     }
+
+
     // payment에 따른 validation get
     public YooANTValidator selectValidate(String type) {
         return (YooANTValidator) validateMap.get(type);
     }
 
+
     // 해당  payment 객체 setting return
-    //public YooPayment selectPayInfo(PaymentInfo info) throws Exception {
-    public <T extends YooPayment> T selectPayInfo(PaymentInfo info) throws Exception {
-        //YooPayment payInfo = null;
-        T payInfo = null;
+    public YooPayment selectPayInfo(PaymentInfo info) throws Exception {
+        YooPayment payInfo = null;
         String type = info.getPaymentType();
 
         // payment 선택
-        //Class clazz = paymentMap.get(type).getClass();
-        Class clazz = paymentMap.get(type);
+        Class<? extends YooPayment> clazz = paymentMap.get(type);
 
         // payment 객체 생성
-        Constructor<T> constructor = clazz.getConstructor(PaymentInfo.class, YooANTValidator.class);
+        Constructor<? extends YooPayment> constructor = clazz.getConstructor(PaymentInfo.class, YooANTValidator.class);
 
         // 해당 payment validate set
-        //payInfo = (YooPayment) constructor.newInstance(info, selectValidate(type));
         payInfo = constructor.newInstance(info, selectValidate(type));
 
         return payInfo;
