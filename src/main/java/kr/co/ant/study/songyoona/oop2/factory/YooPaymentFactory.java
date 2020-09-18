@@ -29,13 +29,15 @@ import kr.co.ant.study.songyoona.oop2.validate.YooANTValidator;
 @Service
 public class YooPaymentFactory {
 
+    // validation Map
     private static Map<String, Object> validateMap = new HashMap<String, Object>();
     static {
         validateMap.put("CARD", new FixedLengthValidator());
-        validateMap.put("ACCOUNT", new MinLengthValidator());
+        validateMap.put("BANK", new MinLengthValidator());
         validateMap.put("MOBILE", new FixedLengthValidator());
     }
 
+    // payment type Map
     private static Map<String, Object> paymentMap = new HashMap<String, Object>();
     static {
         paymentMap.put("CARD", new CardPayment(null, null));
@@ -43,11 +45,12 @@ public class YooPaymentFactory {
         paymentMap.put("MOBILE", new MobilePayment(null, null));
     }
 
-
+    // payment에 따른 validation get
     public YooANTValidator selectValidate(String type) {
         return (YooANTValidator) validateMap.get(type);
     }
 
+    // 해당  payment 객체 setting return
     public YooPayment selectPayInfo(PaymentInfo info) throws Exception {
         YooPayment payInfo = null;
         String type = info.getPaymentType();
