@@ -24,10 +24,11 @@ import kr.co.ant.study.student.songyoona.oop2.validate.YooANTValidator;
 /**
  * @description :
  * @author : yooS
+ * @param <T>
  * @createDate : 2020. 9. 17.
  */
 @Service
-public class YooPaymentFactory {
+public class YooPaymentFactory<T> {
 
     // validation Map
     private static Map<String, Object> validateMap = new HashMap<String, Object>();
@@ -56,10 +57,10 @@ public class YooPaymentFactory {
     }
 
     // 해당  payment 객체 setting return
-    public YooPayment selectPayInfo(PaymentInfo info) throws Exception {
-    //public <T> T selectPayInfo(PaymentInfo info) throws Exception {
-        YooPayment payInfo = null;
-        //T payInfo = null;
+    //public YooPayment selectPayInfo(PaymentInfo info) throws Exception {
+    public <T extends YooPayment> T selectPayInfo(PaymentInfo info) throws Exception {
+        //YooPayment payInfo = null;
+        T payInfo = null;
         String type = info.getPaymentType();
 
         // payment 선택
@@ -67,11 +68,11 @@ public class YooPaymentFactory {
         Class clazz = paymentMap.get(type);
 
         // payment 객체 생성
-        Constructor constructor = clazz.getConstructor(PaymentInfo.class, YooANTValidator.class);
+        Constructor<T> constructor = clazz.getConstructor(PaymentInfo.class, YooANTValidator.class);
 
         // 해당 payment validate set
-        payInfo = (YooPayment) constructor.newInstance(info, selectValidate(type));
-        //payInfo = constructor.newInstance(info, selectValidate(type));
+        //payInfo = (YooPayment) constructor.newInstance(info, selectValidate(type));
+        payInfo = constructor.newInstance(info, selectValidate(type));
 
         return payInfo;
     }
