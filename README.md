@@ -138,4 +138,13 @@
 1. Lamda
     - 간략 설명 자료 : kr.co.ant.study.java8.functional.Lamda.java 
     - 문제 : kr.co.ant.study.java8.functional.LamdaQuestion.java
-    
+    - 이제 어려운 문제
+        - 대부분 Validator Interface를 만들어 놨죠?
+        - Funtional 클래스를 사용하는 Validator를 구현한다음 기존 Validator를 교체 합시다.
+        - FixedValidate, MinLengthValidate => functional 클래스를 사용한 Validate 하나로 처리 가능
+        ** hint : BIPredicate Function 사용
+        ```java
+        예제)
+        AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, new FixedLengthValidator());
+         ==> AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, 요기다가 구현한 클래스 교체);
+        ```
