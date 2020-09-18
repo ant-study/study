@@ -12,13 +12,13 @@ public enum PaymentTypeEnum {
 	ACCOUNT(AccountPayment.class),
 	MOBILE(MobilePayment.class);
 	
-	private Class<?> payment;
+	private Class<? extends Payment> payment;
 	
-	private PaymentTypeEnum(Class<?> payment) {
+	private PaymentTypeEnum(Class<? extends Payment> payment) {
 		this.payment = payment;
 	}
 	
-	public Class<?> getPayment() {
+	public Class<? extends Payment> getPayment() {
 		return payment;
 	}
 }

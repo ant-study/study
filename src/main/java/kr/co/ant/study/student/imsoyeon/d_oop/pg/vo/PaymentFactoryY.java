@@ -34,20 +34,21 @@ public class PaymentFactoryY {
 	 * @return
 	 * @throws Exception
 	 */
-	public static Payment createPayment(RequestPayInfo inputVO) throws Exception {
+	public static Payment createPayment(RequestPayInfo inputVO) throws Exception {		
 		
-		Class clazz = null;
-		
-//		enum에서 Payment 클래스 찾아오고, map에서 validator 가져오고..?
+		/*
 		for (PaymentTypeEnum classType : PaymentTypeEnum.values()) {
 			if (classType.name().equals(inputVO.getType())) {
 				clazz = classType.getPayment();
 			}
-		}		
-		Constructor constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
+		}
+		 * */
 		
-//		캐스팅 할 수 밖에 없을까 enum에서 제네릭 어렵..
-		return (Payment) constructor.newInstance(inputVO, map.get(inputVO.getType()));
+//		<? extends 인터페이스> 
+		Class<? extends Payment> clazz = PaymentTypeEnum.valueOf(inputVO.getType()).getPayment();
+		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
+		
+		return constructor.newInstance(inputVO, map.get(inputVO.getType()));
 	}
 
 	/**

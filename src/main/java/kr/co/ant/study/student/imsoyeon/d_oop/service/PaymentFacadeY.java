@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kr.co.ant.study.student.imsoyeon.d_oop.payment.Payment;
 import kr.co.ant.study.student.imsoyeon.d_oop.pg.ANTPGClientY;
+import kr.co.ant.study.student.imsoyeon.d_oop.pg.response.ResponseErrorTestY;
+import kr.co.ant.study.student.imsoyeon.d_oop.pg.response.PGPaymentResponseSampleY;
 import kr.co.ant.study.student.imsoyeon.d_oop.pg.vo.PGPaymentDetailsY;
 import kr.co.ant.study.student.imsoyeon.d_oop.pg.vo.PGPaymentInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +31,7 @@ public class PaymentFacadeY {
 	 * 공통으로 처리하는 작업은 내가 다 함
 	 * @param payment
 	 */
-	public void doPayment(Payment payment) throws Exception {
+	public PGPaymentResponseSampleY doPayment(Payment payment) throws Exception {
 		
 		payment.validate();
 		
@@ -42,14 +44,25 @@ public class PaymentFacadeY {
 		PaymentFacadeY에서 inputVO가지고 컨버트하려면, 여기에 또 inputVO 가져와야해 
 		Payment 호출 용 메서드를 하나 만들면 될것같음		
 		 */
-		PGPaymentInfo vo = payment.convertToPaymentVO();		
+		PGPaymentInfo vo = payment.convertToPaymentVO();
 		String json = toJson(vo);
 		
-//		details card 두개가 생겨..????
-		String response = client.doPayment(json);
+		String result = client.doPayment(json);		
 		
-//		5. manager response
+		PGPaymentResponseSampleY response = mapper.readValue(result, PGPaymentResponseSampleY.class);
 		
+		/* 테스트
+		response 처리를 하고 싶은데 try-catch문 쓰고, reponse json값에 따라서 
+		로그 찍고 throw new Exception("message")하든지
+		에러별로 throw new XXException("message")하든지
+		 * */		
+		if (response.isSuccess()) {			
+			return response;
+			
+		} else {
+			log.error("ERROR CODE ::: {} !!! WHY ::: {}", response.getStatusCode(), response.getError().getWhere()+" "+response.getError().getMessage());
+			throw new Exception("ERROR");
+		}		
 	}
 	
 	public String toJson(PGPaymentInfo paymentInfo) throws Exception {
@@ -63,4 +76,5 @@ public class PaymentFacadeY {
 		
 		return mainNode.toString();
 	}
+
 }

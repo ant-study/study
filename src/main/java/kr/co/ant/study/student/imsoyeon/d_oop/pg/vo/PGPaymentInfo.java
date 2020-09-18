@@ -15,6 +15,11 @@ public class PGPaymentInfo {
 	private String productName;
 	private String amount;
 	
+	/*
+	 * JSON serialize / deserialize 시 
+	 * response 객체에 특정 필드틑 추가하고 싶지 않은 경우 
+	 * @JsonIgnore로 미포함시킬 수 있음
+	 * */
 	@JsonIgnore
 	private PGPaymentDetailsY paymentDetails;
 	
