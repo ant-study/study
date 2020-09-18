@@ -1,4 +1,4 @@
-package kr.co.ant.study.vvooss;
+package kr.co.ant.study.student.vvooss;
 
 import java.util.HashMap;
 import java.util.Iterator;
