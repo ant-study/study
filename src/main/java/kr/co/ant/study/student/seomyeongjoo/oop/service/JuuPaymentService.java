@@ -59,9 +59,8 @@ public class JuuPaymentService {
 //    }
 
     public boolean validateCheck(String str, int limit){
-        Function<String, Integer> parseInt = (s) -> Integer.parseInt(s);
-        BiPredicate<Integer, Integer> validateCheck = (i, j) -> i != j;
-        int t = parseInt.apply(str);
+        int t = str.length();
+        BiPredicate<Integer, Integer> validateCheck = (i, j) -> i == j;
         return validateCheck.test(t, limit);
     }
 
