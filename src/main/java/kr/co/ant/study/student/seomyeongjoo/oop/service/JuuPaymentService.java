@@ -10,6 +10,10 @@ import kr.co.ant.study.student.seomyeongjoo.oop.util.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.IntUnaryOperator;
+
 @Service
 public class JuuPaymentService {
 
@@ -23,10 +27,7 @@ public class JuuPaymentService {
 
         CardInfo cardInfo = info.getCardInfo();
 
-        cardInfo.setName("카드");
-        cardInfo.setSize(16);
-
-        if(this.validate(cardInfo)){
+        if(validateCheck(cardInfo.getCardNo(), 16)){
             client.doPayment(mapper.writeValueAsString(info));
         }else{
             throw new Exception("Fail");
@@ -36,10 +37,7 @@ public class JuuPaymentService {
     public void mobilePay(PaymentInfo info) throws Exception{
         MobileInfo mobileInfo = info.getMobileInfo();
 
-        mobileInfo.setName("휴대");
-        mobileInfo.setSize(10);
-
-        if(this.validate(mobileInfo)){
+        if(validateCheck(mobileInfo.getMobileNo(), 10)){
             client.doPayment(mapper.writeValueAsString(info));
         }else{
             throw new Exception("Fail");
@@ -49,17 +47,21 @@ public class JuuPaymentService {
     public void bankPay(PaymentInfo info) throws Exception{
         BankAccountInfo bankAccountInfo = info.getBankAccountInfo();
 
-        bankAccountInfo.setName("계좌");
-        bankAccountInfo.setSize(12);
-
-        if(this.validate(bankAccountInfo)){
+        if(validateCheck(bankAccountInfo.getAccountNo(), 12)){
             client.doPayment(mapper.writeValueAsString(info));
         }else{
             throw new Exception("Fail");
         }
     }
 
-    private <T extends Validate>boolean validate(T t){
-        return t.validate();
+//    private <T extends Validate>boolean validate(T t){
+//        return t.validate();
+//    }
+
+    public boolean validateCheck(String str, int limit){
+        int t = str.length();
+        BiPredicate<Integer, Integer> validateCheck = (i, j) -> i == j;
+        return validateCheck.test(t, limit);
     }
+
 }
