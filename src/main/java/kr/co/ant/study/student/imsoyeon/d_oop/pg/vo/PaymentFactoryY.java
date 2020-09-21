@@ -3,12 +3,12 @@ package kr.co.ant.study.student.imsoyeon.d_oop.pg.vo;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiPredicate;
 
 import kr.co.ant.study.student.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.student.imsoyeon.d_oop.payment.Payment;
-import kr.co.ant.study.student.imsoyeon.d_oop.validate.FixLengthValidatorY;
-import kr.co.ant.study.student.imsoyeon.d_oop.validate.MinLengthValidatorY;
-import kr.co.ant.study.student.imsoyeon.d_oop.validate.PGValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.BIPredicateValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.BiPredicateValidatorYImpl;
 
 /**
  * 결제를 한다.
@@ -21,9 +21,18 @@ public class PaymentFactoryY {
 	private static Map<String, Object> map = new HashMap<String, Object>();
 	
 	static {
-		map.put("CARD", new FixLengthValidatorY());
-		map.put("ACCOUNT", new MinLengthValidatorY());
-		map.put("MOBILE", new FixLengthValidatorY());
+//		1.d_oop Test
+//		map.put("CARD", new FixLengthValidatorY());
+//		map.put("ACCOUNT", new MinLengthValidatorY());
+//		map.put("MOBILE", new FixLengthValidatorY());
+		
+//		2.f_functional Test
+		BiPredicate<String, Integer> fixFunc = (v, l) -> v.length() != l;
+		BiPredicate<String, Integer> minFunc = (v, l) -> v.length() < l;
+		
+		map.put("CARD", new BiPredicateValidatorYImpl(fixFunc));
+		map.put("ACCOUNT", new BiPredicateValidatorYImpl(minFunc));
+		map.put("MOBILE", new BiPredicateValidatorYImpl(fixFunc));
 	}
 	
 	/**
@@ -44,9 +53,13 @@ public class PaymentFactoryY {
 		}
 		 * */
 		
-//		<? extends 인터페이스> 
+//		enum class 안에서 <? extends 인터페이스> 
 		Class<? extends Payment> clazz = PaymentTypeEnum.valueOf(inputVO.getType()).getPayment();
-		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
+//		1.d_oop Test
+//		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
+		
+//		2.f_functional Test
+		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, BIPredicateValidatorY.class);
 		
 		return constructor.newInstance(inputVO, map.get(inputVO.getType()));
 	}

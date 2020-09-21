@@ -47,7 +47,7 @@ public class PaymentFacadeY {
 		PGPaymentInfo vo = payment.convertToPaymentVO();
 		String json = toJson(vo);
 		
-		String result = client.doPayment(json);		
+		String result = client.doPayment(json);
 		
 		PGPaymentResponseSampleY response = mapper.readValue(result, PGPaymentResponseSampleY.class);
 		

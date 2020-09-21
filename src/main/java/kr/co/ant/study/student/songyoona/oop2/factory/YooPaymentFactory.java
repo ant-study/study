@@ -15,8 +15,8 @@ import kr.co.ant.study.student.songyoona.oop2.payment.BankAccountPayment;
 import kr.co.ant.study.student.songyoona.oop2.payment.CardPayment;
 import kr.co.ant.study.student.songyoona.oop2.payment.MobilePayment;
 import kr.co.ant.study.student.songyoona.oop2.payment.YooPayment;
-import kr.co.ant.study.student.songyoona.oop2.validate.FixedLengthValidator;
-import kr.co.ant.study.student.songyoona.oop2.validate.MinLengthValidator;
+import kr.co.ant.study.student.songyoona.oop2.validate.FixedLengthLamdaValidator;
+import kr.co.ant.study.student.songyoona.oop2.validate.MinLengthLamdaValidator;
 import kr.co.ant.study.student.songyoona.oop2.validate.YooANTValidator;
 
 
@@ -33,9 +33,14 @@ public class YooPaymentFactory {
     // validation Map
     private static Map<String, Object> validateMap = new HashMap<String, Object>();
     static {
-        validateMap.put("CARD", new FixedLengthValidator());
-        validateMap.put("BANK", new MinLengthValidator());
-        validateMap.put("MOBILE", new FixedLengthValidator());
+//        validateMap.put("CARD", new FixedLengthValidator());
+//        validateMap.put("BANK", new MinLengthValidator());
+//        validateMap.put("MOBILE", new FixedLengthValidator());
+
+        // lamda
+        validateMap.put("CARD", new FixedLengthLamdaValidator());
+        validateMap.put("BANK", new MinLengthLamdaValidator());
+        validateMap.put("MOBILE", new FixedLengthLamdaValidator());
     }
 
     // payment type Map
@@ -73,7 +78,7 @@ public class YooPaymentFactory {
 
         // 해당 payment validate set
         payInfo = constructor.newInstance(info, selectValidate(type));
-
+        // 람다validate 한개로..?
         return payInfo;
     }
 }
