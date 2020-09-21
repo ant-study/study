@@ -7,9 +7,12 @@ package kr.co.ant.study.student.songyoona.oop2.factory;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiPredicate;
 
 import org.springframework.stereotype.Service;
 
+import kr.co.ant.study.student.songyoona.lamda.ex2.FValidator;
+import kr.co.ant.study.student.songyoona.lamda.ex2.RamdaValidator;
 import kr.co.ant.study.student.songyoona.oop2.domain.PaymentInfo;
 import kr.co.ant.study.student.songyoona.oop2.payment.BankAccountPayment;
 import kr.co.ant.study.student.songyoona.oop2.payment.CardPayment;
@@ -32,15 +35,21 @@ public class YooPaymentFactory {
 
     // validation Map
     private static Map<String, Object> validateMap = new HashMap<String, Object>();
+
+    // lamda 함수 셋팅
+    public static BiPredicate<Integer, Integer> fixed = (l, t) -> l == t;
+    public static BiPredicate<Integer, Integer> min = (ll, tt) -> ll >= tt;
+
     static {
+        // 해당 validator 적용방식
 //        validateMap.put("CARD", new FixedLengthValidator());
 //        validateMap.put("BANK", new MinLengthValidator());
 //        validateMap.put("MOBILE", new FixedLengthValidator());
 
-        // lamda
-        validateMap.put("CARD", new FixedLengthLamdaValidator());
-        validateMap.put("BANK", new MinLengthLamdaValidator());
-        validateMap.put("MOBILE", new FixedLengthLamdaValidator());
+        // lamda 방식
+        validateMap.put("CARD", new FValidator(fixed));
+        validateMap.put("BANK", new FValidator(min));
+        validateMap.put("MOBILE", new FValidator(fixed));
     }
 
     // payment type Map
@@ -78,7 +87,28 @@ public class YooPaymentFactory {
 
         // 해당 payment validate set
         payInfo = constructor.newInstance(info, selectValidate(type));
-        // 람다validate 한개로..?
+
         return payInfo;
     }
+
+
+
+
+
+    // 람다식 유효성체크 방식
+//    public YooPayment selectPayInfo(PaymentInfo info, FValidator val) throws Exception {
+//        YooPayment payInfo = null;
+//        String type = info.getPaymentType();
+//
+//        // payment 선택
+//        Class<? extends YooPayment> clazz = paymentMap.get(type);
+//
+//        // payment 객체 생성
+//        Constructor<? extends YooPayment> constructor = clazz.getConstructor(PaymentInfo.class, YooANTValidator.class);
+//
+//        // 해당 payment validate set
+//        payInfo = constructor.newInstance(info, val);
+//        // 람다validate 한개로..?
+//        return payInfo;
+//    }
 }

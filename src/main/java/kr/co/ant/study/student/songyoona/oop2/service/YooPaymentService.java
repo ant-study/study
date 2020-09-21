@@ -72,6 +72,8 @@ public class YooPaymentService {
     public void compositePayment(PaymentInfo info) throws Exception {
 
         //YooPayment selectPayment = selectPayInfo(info);
+
+        // Factory pattern 적용
         YooPayment selectPayment = factory.selectPayInfo(info);
 
 

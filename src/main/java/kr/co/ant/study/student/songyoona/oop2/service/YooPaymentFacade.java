@@ -25,6 +25,8 @@ public class YooPaymentFacade {
 
     @Autowired
     YooANTPGClient client;
+
+
 	/**
 	 * 공통작업 처리
 	 * 공통으로 처리하는 작업은 내가 다 함
