@@ -3,13 +3,12 @@ package kr.co.ant.study.student.imsoyeon.d_oop.pg.vo;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiPredicate;
 
 import kr.co.ant.study.student.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.student.imsoyeon.d_oop.payment.Payment;
-import kr.co.ant.study.student.imsoyeon.d_oop.validate.PGValidatorY;
 import kr.co.ant.study.student.imsoyeon.f_functional.second.BIPredicateValidatorY;
-import kr.co.ant.study.student.imsoyeon.f_functional.second.FixedBiPredicateValidatorY;
-import kr.co.ant.study.student.imsoyeon.f_functional.second.MinBIPredicateValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.BiPredicateValidatorYImpl;
 
 /**
  * 결제를 한다.
@@ -28,9 +27,12 @@ public class PaymentFactoryY {
 //		map.put("MOBILE", new FixLengthValidatorY());
 		
 //		2.f_functional Test
-		map.put("CARD", new FixedBiPredicateValidatorY());
-		map.put("ACCOUNT", new MinBIPredicateValidatorY());
-		map.put("MOBILE", new FixedBiPredicateValidatorY());
+		BiPredicate<String, Integer> fixFunc = (v, l) -> v.length() != l;
+		BiPredicate<String, Integer> minFunc = (v, l) -> v.length() < l;
+		
+		map.put("CARD", new BiPredicateValidatorYImpl(fixFunc));
+		map.put("ACCOUNT", new BiPredicateValidatorYImpl(minFunc));
+		map.put("MOBILE", new BiPredicateValidatorYImpl(fixFunc));
 	}
 	
 	/**

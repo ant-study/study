@@ -1,5 +1,6 @@
 package kr.co.ant.study.student.imsoyeon.d_oop.pg;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,15 +22,25 @@ public class ANTPGClientY {
 			System.out.println(s);
 			
 //			response test
-			return mapper.writeValueAsString(responseTest());
+			return mapper.writeValueAsString(responseTest(mapper.readValue(json, Object.class)));
 		}catch(Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-	}	
+	}
+	
+	public PGPaymentResponseSampleY responseTest(Object obj) throws Exception {
+		PGPaymentResponseSampleY sample = new PGPaymentResponseSampleY();
+		sample.setSuccess(true);
+		/*
+		 * body 
+		 * 
+		 * */
+		return sample;
+	}
 	
 //	테스트용
-	public PGPaymentResponseSampleY responseTest() {
+	public PGPaymentResponseSampleY responseErrorTest() {
 		PGPaymentResponseSampleY sample = new PGPaymentResponseSampleY();
 		sample.setStatusCode("5XX");
 		sample.setError(new ResponseErrorTestY("api server 어딘가에", "문제가 있음"));

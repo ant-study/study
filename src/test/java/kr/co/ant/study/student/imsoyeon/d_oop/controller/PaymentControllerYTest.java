@@ -27,7 +27,7 @@ class PaymentControllerYTest {
 				.param("productName", "컴퓨터")
 				.param("amount", "1000000")
 				.param("type", "CARD")
-				.param("cardInfo.cardNo", "7710101010101000454545")
+				.param("cardInfo.cardNo", "1010101010100045")
 				.param("cardInfo.cardCode", "008")
 				.param("cardInfo.expireDate", "210915")				
 				)
@@ -43,9 +43,9 @@ class PaymentControllerYTest {
 					.param("productName", "컴퓨터")
 					.param("amount", "1000000")
 					.param("type", "ACCOUNT")
-					.param("accountNo", "454845456597455")
-					.param("bankCode", "777")
-					.param("accountPw", "1234")				
+					.param("accountInfo.accountNo", "454845456597455")
+					.param("accountInfo.bankCode", "777")
+					.param("accountInfo.accountPw", "1234")				
 					)
 			.andExpect(MockMvcResultMatchers.status().isOk());
 			
@@ -62,9 +62,9 @@ class PaymentControllerYTest {
 					.param("productName", "컴퓨터")
 					.param("amount", "1000000")
 					.param("type", "MOBILE")
-					.param("mobileNo", "01012121545")
-					.param("userName", "아무개")
-					.param("birthday", "19001225")					
+					.param("mobileInfo.mobileNo", "01012121545")
+					.param("mobileInfo.userName", "아무개")
+					.param("mobileInfo.birthday", "19001225")					
 					)
 			.andExpect(MockMvcResultMatchers.status().isOk());
 			
