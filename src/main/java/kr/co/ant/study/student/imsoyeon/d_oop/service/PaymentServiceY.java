@@ -25,11 +25,11 @@ public class PaymentServiceY {
 	public void doCardPay(RequestPayInfo inputVO) throws Exception {
 		
 //		1.OOP Test
-//		CardPayment card = new CardPayment(inputVO, new FixLengthValidatorY());
+		CardPayment card = new CardPayment(inputVO, new FixLengthValidatorY());
 		
 //		2.Lambda Test
 //		value랑 length(자리수) 넣어서 비교하면 true false 뱉어내는 게 필요
-		CardPayment card = new CardPayment(inputVO, new FixedBiPredicateValidatorY());
+//		CardPayment card = new CardPayment(inputVO, new FixedBiPredicateValidatorY());
 		
 		facade.doPayment(card);
 	}

@@ -6,9 +6,10 @@ import java.util.Map;
 
 import kr.co.ant.study.student.imsoyeon.d_oop.domain.RequestPayInfo;
 import kr.co.ant.study.student.imsoyeon.d_oop.payment.Payment;
-import kr.co.ant.study.student.imsoyeon.d_oop.validate.FixLengthValidatorY;
-import kr.co.ant.study.student.imsoyeon.d_oop.validate.MinLengthValidatorY;
 import kr.co.ant.study.student.imsoyeon.d_oop.validate.PGValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.BIPredicateValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.FixedBiPredicateValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.MinBIPredicateValidatorY;
 
 /**
  * 결제를 한다.
@@ -21,9 +22,15 @@ public class PaymentFactoryY {
 	private static Map<String, Object> map = new HashMap<String, Object>();
 	
 	static {
-		map.put("CARD", new FixLengthValidatorY());
-		map.put("ACCOUNT", new MinLengthValidatorY());
-		map.put("MOBILE", new FixLengthValidatorY());
+//		1.OOP Test
+//		map.put("CARD", new FixLengthValidatorY());
+//		map.put("ACCOUNT", new MinLengthValidatorY());
+//		map.put("MOBILE", new FixLengthValidatorY());
+		
+//		2.Lambda Test
+		map.put("CARD", new FixedBiPredicateValidatorY());
+		map.put("ACCOUNT", new MinBIPredicateValidatorY());
+		map.put("MOBILE", new FixedBiPredicateValidatorY());
 	}
 	
 	/**
@@ -46,7 +53,11 @@ public class PaymentFactoryY {
 		
 //		<? extends 인터페이스> 
 		Class<? extends Payment> clazz = PaymentTypeEnum.valueOf(inputVO.getType()).getPayment();
-		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
+//		1.OOP Test
+//		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
+		
+//		2.Lambda Test
+		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, BIPredicateValidatorY.class);
 		
 		return constructor.newInstance(inputVO, map.get(inputVO.getType()));
 	}
