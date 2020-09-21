@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.co.ant.study.student.imsoyeon.d_oop.domain.RequestPayInfo;
-import kr.co.ant.study.student.imsoyeon.d_oop.pg.ANTPGClientY;
 import kr.co.ant.study.student.imsoyeon.d_oop.pg.vo.PGPaymentInfo;
 import kr.co.ant.study.student.imsoyeon.d_oop.validate.PGValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.BIPredicateValidatorY;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,6 +22,7 @@ public abstract class AbstractPayment implements Payment {
 	
 	private RequestPayInfo inputVO;
 	private PGValidatorY validator;
+	private BIPredicateValidatorY bpValidator;
 	
 	@Autowired
 	ObjectMapper mapper;
@@ -30,6 +31,12 @@ public abstract class AbstractPayment implements Payment {
 		super();
 		this.inputVO = inputVO;
 		this.validator = validator;
+	}
+	
+	public AbstractPayment(RequestPayInfo inputVO, BIPredicateValidatorY bpValidator) {
+		super();
+		this.inputVO = inputVO;
+		this.bpValidator = bpValidator;
 	}
 
 	@Override

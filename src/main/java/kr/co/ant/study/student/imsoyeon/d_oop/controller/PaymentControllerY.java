@@ -20,8 +20,8 @@ public class PaymentControllerY {
 	@RequestMapping(value = "/payCard")
 	public String payCard(RequestPayInfo request) throws Exception {
 		
-//		service.doCardPay(request);
-		service.compositePayment(request);
+		service.doCardPay(request);
+//		service.compositePayment(request);
 		
 		return "ok";
 	}

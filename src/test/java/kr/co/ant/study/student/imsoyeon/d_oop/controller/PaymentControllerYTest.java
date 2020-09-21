@@ -27,7 +27,7 @@ class PaymentControllerYTest {
 				.param("productName", "컴퓨터")
 				.param("amount", "1000000")
 				.param("type", "CARD")
-				.param("cardInfo.cardNo", "7710101010101000")
+				.param("cardInfo.cardNo", "7710101010101000454545")
 				.param("cardInfo.cardCode", "008")
 				.param("cardInfo.expireDate", "210915")				
 				)

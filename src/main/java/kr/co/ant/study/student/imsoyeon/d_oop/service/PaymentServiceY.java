@@ -8,6 +8,7 @@ import kr.co.ant.study.student.imsoyeon.d_oop.payment.CardPayment;
 import kr.co.ant.study.student.imsoyeon.d_oop.payment.Payment;
 import kr.co.ant.study.student.imsoyeon.d_oop.pg.vo.PaymentFactoryY;
 import kr.co.ant.study.student.imsoyeon.d_oop.validate.FixLengthValidatorY;
+import kr.co.ant.study.student.imsoyeon.f_functional.second.FixedBiPredicateValidatorY;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,7 +23,13 @@ public class PaymentServiceY {
 	private PaymentFacadeY facade;
 	
 	public void doCardPay(RequestPayInfo inputVO) throws Exception {
-		CardPayment card = new CardPayment(inputVO, new FixLengthValidatorY());
+		
+//		1.OOP Test
+//		CardPayment card = new CardPayment(inputVO, new FixLengthValidatorY());
+		
+//		2.Lambda Test
+//		value랑 length(자리수) 넣어서 비교하면 true false 뱉어내는 게 필요
+		CardPayment card = new CardPayment(inputVO, new FixedBiPredicateValidatorY());
 		
 		facade.doPayment(card);
 	}
