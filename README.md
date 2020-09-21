@@ -142,7 +142,9 @@
         - 대부분 Validator Interface를 만들어 놨죠?
         - Funtional 클래스를 사용하는 Validator를 구현한다음 기존 Validator를 교체 합시다.
         - FixedValidate, MinLengthValidate => functional 클래스를 사용한 Validate 하나로 처리 가능
-        ** hint : BIPredicate Function 사용
+            - hint
+                - BIPredicate Function 사용
+                - 기존 Validator는 Validator별로 로직이 안에 들어가있는데 함수형 Validator는 함수를 받아서 그 함수를 실행
         ```java
         예제)
         AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, new FixedLengthValidator());
