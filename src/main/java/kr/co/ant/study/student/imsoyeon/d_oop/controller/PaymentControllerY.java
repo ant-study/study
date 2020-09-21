@@ -30,7 +30,8 @@ public class PaymentControllerY {
 	@RequestMapping(value = "/payAccount")
 	public String payAccount(RequestPayInfo request) throws Exception {
 		
-		service.doAccountPay(request);
+//		service.doAccountPay(request);
+		service.compositePayment(request);
 		
 		return "ok";
 	}
@@ -39,7 +40,8 @@ public class PaymentControllerY {
 	@RequestMapping(value = "/payMobile")
 	public String payMobile(RequestPayInfo request) throws Exception {
 		
-		service.doMobilePay(request);
+//		service.doMobilePay(request);
+		service.compositePayment(request);
 		
 		return "ok";
 	}

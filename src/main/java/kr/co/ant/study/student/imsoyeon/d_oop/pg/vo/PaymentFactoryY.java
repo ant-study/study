@@ -53,12 +53,12 @@ public class PaymentFactoryY {
 		}
 		 * */
 		
-//		<? extends 인터페이스> 
+//		enum class 안에서 <? extends 인터페이스> 
 		Class<? extends Payment> clazz = PaymentTypeEnum.valueOf(inputVO.getType()).getPayment();
-//		1.OOP Test
+//		1.d_oop Test
 //		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, PGValidatorY.class);
 		
-//		2.Lambda Test
+//		2.f_functional Test
 		Constructor<? extends Payment> constructor = clazz.getConstructor(RequestPayInfo.class, BIPredicateValidatorY.class);
 		
 		return constructor.newInstance(inputVO, map.get(inputVO.getType()));

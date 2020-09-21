@@ -20,19 +20,23 @@ class PaymentControllerYTest {
 	MockMvc mock;
 
 	@Test
-	void testPayCard() throws Exception{
+	void testPayCard() {
 //		mock.perform(post("/yRequestApiTest"))	→ import 필요
-		mock.perform(MockMvcRequestBuilders.post("/payCard")
-				.param("productId", "P001")
-				.param("productName", "컴퓨터")
-				.param("amount", "1000000")
-				.param("type", "CARD")
-				.param("cardInfo.cardNo", "1010101010100045")
-				.param("cardInfo.cardCode", "008")
-				.param("cardInfo.expireDate", "210915")				
-				)
+		try {
+			mock.perform(MockMvcRequestBuilders.post("/payCard")
+					.param("productId", "P001")
+					.param("productName", "컴퓨터")
+					.param("amount", "1000000")
+					.param("type", "CARD")
+					.param("cardInfo.cardNo", "1010101010100045")
+					.param("cardInfo.cardCode", "008")
+					.param("cardInfo.expireDate", "210915")				
+					)
 //		.andExpect(status().isOK());	→ import 필요
-		.andExpect(MockMvcResultMatchers.status().isOk());
+			.andExpect(MockMvcResultMatchers.status().isOk());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test

@@ -33,7 +33,7 @@ public class AccountPayment extends AbstractPayment {
 	public PGPaymentInfo convertToPaymentVO() throws Exception {
 //		common data
 		PGPaymentInfo payment = super.convertToPaymentVO();		
-//		card data
+//		account data
 		PGAccountInfo account = new PGAccountInfo();
 		PropertyUtils.copyProperties(account, super.getInputVO().getAccountInfo());
 		
