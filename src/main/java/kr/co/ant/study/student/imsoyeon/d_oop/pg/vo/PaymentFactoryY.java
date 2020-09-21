@@ -22,12 +22,12 @@ public class PaymentFactoryY {
 	private static Map<String, Object> map = new HashMap<String, Object>();
 	
 	static {
-//		1.OOP Test
+//		1.d_oop Test
 //		map.put("CARD", new FixLengthValidatorY());
 //		map.put("ACCOUNT", new MinLengthValidatorY());
 //		map.put("MOBILE", new FixLengthValidatorY());
 		
-//		2.Lambda Test
+//		2.f_functional Test
 		map.put("CARD", new FixedBiPredicateValidatorY());
 		map.put("ACCOUNT", new MinBIPredicateValidatorY());
 		map.put("MOBILE", new FixedBiPredicateValidatorY());

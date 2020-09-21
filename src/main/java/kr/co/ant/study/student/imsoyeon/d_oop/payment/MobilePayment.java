@@ -6,18 +6,17 @@ import kr.co.ant.study.student.imsoyeon.f_functional.second.BIPredicateValidator
 
 public class MobilePayment extends AbstractPayment  {	// 
 
-	
+//	1.d_oop Test
 	public MobilePayment(RequestPayInfo inputVO, PGValidatorY validator) {
 		super(inputVO, validator);
 		// TODO Auto-generated constructor stub
 	}
 
+//	2.f_functional Test
 	public MobilePayment(RequestPayInfo inputVO, BIPredicateValidatorY bpValidator) {
 		super(inputVO, bpValidator);
 		// TODO Auto-generated constructor stub
 	}
-
-	private PGValidatorY validator;
 
 	@Override
 	public void validate() throws Exception {

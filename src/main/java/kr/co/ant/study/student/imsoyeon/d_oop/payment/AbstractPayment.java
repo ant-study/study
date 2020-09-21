@@ -27,12 +27,14 @@ public abstract class AbstractPayment implements Payment {
 	@Autowired
 	ObjectMapper mapper;
 
+//	1.d_oop Test
 	public AbstractPayment(RequestPayInfo inputVO, PGValidatorY validator) {
 		super();
 		this.inputVO = inputVO;
 		this.validator = validator;
 	}
 	
+//	2.f_functional Test
 	public AbstractPayment(RequestPayInfo inputVO, BIPredicateValidatorY bpValidator) {
 		super();
 		this.inputVO = inputVO;

@@ -14,10 +14,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CardPayment extends AbstractPayment {
+public class CardPayment extends AbstractPayment {	
 	
-	
-//	1.OOP Test
+//	1.d_oop Test
 	public CardPayment(RequestPayInfo inputVO, PGValidatorY validator) {
 		/*
 		부모 클래스 field값 세팅해주고 싶지?
@@ -28,9 +27,7 @@ public class CardPayment extends AbstractPayment {
 		super(inputVO, validator);
 	}
 	
-//	2.Lambda Test
-
-
+//	2.f_functional Test
 	public CardPayment(RequestPayInfo inputVO, BIPredicateValidatorY bpValidator) {
 		super(inputVO, bpValidator);
 	}
@@ -38,7 +35,11 @@ public class CardPayment extends AbstractPayment {
 	@Override
 	public void validate() throws Exception {
 		String cardNo = super.getInputVO().getCardInfo().getCardNo();
+		
+//		1.d_oop Test
 //		super.getValidator().validate(cardNo, 16);
+		
+//		2.f_functional Test
 		super.getBpValidator().validate(cardNo, 16);
 	}
 

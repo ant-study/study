@@ -24,10 +24,10 @@ public class PaymentServiceY {
 	
 	public void doCardPay(RequestPayInfo inputVO) throws Exception {
 		
-//		1.OOP Test
+//		1.d_oop Test
 		CardPayment card = new CardPayment(inputVO, new FixLengthValidatorY());
 		
-//		2.Lambda Test
+//		2.f_functional Test
 //		value랑 length(자리수) 넣어서 비교하면 true false 뱉어내는 게 필요
 //		CardPayment card = new CardPayment(inputVO, new FixedBiPredicateValidatorY());
 		
