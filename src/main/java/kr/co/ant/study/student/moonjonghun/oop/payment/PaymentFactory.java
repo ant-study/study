@@ -18,21 +18,10 @@ public class PaymentFactory {
 		
 		BiPredicate<String, Integer> func = null;
 		
-		Integer validLength = 0;
-		String compareStr = "";
-		
 		if("MOBILE".equals(type.toUpperCase())) {
 			func = (payData, length) -> {return payData.length() > length;};
-			compareStr += vo.getMobilePayInfo().getMobileNo();
-			validLength = 10;
-		} else if("CARD".equals(type.toUpperCase())) {
-			func = (payData, length) -> {return payData.length() == length;};
-			compareStr += vo.getCardPayInfo().getCardNo();
-			validLength = 16;
 		} else {
 			func = (payData, length) -> {return payData.length() == length;};
-			compareStr += vo.getAccountPayInfo().getAccountNo();
-			validLength = 20;
 		}
 		
 		
@@ -46,7 +35,7 @@ public class PaymentFactory {
 		Class<? extends Payment> clazz = MoonPaymentType.valueOf(sCapType).getClazz();
 		Constructor<? extends Payment> paymentConst = clazz.getConstructor(MoonPaymentVO.class, Validation.class);
 		
-		return paymentConst.newInstance(vo, new CompositeValidation(func).validate(compareStr, validLength));
+		return paymentConst.newInstance(vo, new CompositeValidation(func));
 		
 	}
 	

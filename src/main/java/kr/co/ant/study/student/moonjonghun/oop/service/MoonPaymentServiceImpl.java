@@ -52,6 +52,7 @@ public class MoonPaymentServiceImpl implements MoonPaymentService{
 		//팩토리 생성에는 
 		PaymentFactory factory = new PaymentFactory();
 		Payment payment = factory.getPayment(vo, vo.getPaymentType());
+		log.debug("선택된 Payment는 {} 입니다.", payment.getClass());
 		MoonReceiptVO paymentResponse = facadeService.doPayment(payment);
 		return paymentResponse;
 	}
