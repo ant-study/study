@@ -12,14 +12,11 @@ import java.util.function.BiPredicate;
 import org.springframework.stereotype.Service;
 
 import kr.co.ant.study.student.songyoona.lamda.ex2.FValidator;
-import kr.co.ant.study.student.songyoona.lamda.ex2.RamdaValidator;
 import kr.co.ant.study.student.songyoona.oop2.domain.PaymentInfo;
 import kr.co.ant.study.student.songyoona.oop2.payment.BankAccountPayment;
 import kr.co.ant.study.student.songyoona.oop2.payment.CardPayment;
 import kr.co.ant.study.student.songyoona.oop2.payment.MobilePayment;
 import kr.co.ant.study.student.songyoona.oop2.payment.YooPayment;
-import kr.co.ant.study.student.songyoona.oop2.validate.FixedLengthLamdaValidator;
-import kr.co.ant.study.student.songyoona.oop2.validate.MinLengthLamdaValidator;
 import kr.co.ant.study.student.songyoona.oop2.validate.YooANTValidator;
 
 
