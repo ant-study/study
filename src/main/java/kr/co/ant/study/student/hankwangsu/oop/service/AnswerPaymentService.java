@@ -14,6 +14,7 @@ import kr.co.ant.study.student.hankwangsu.oop.payment.AnswerCardPayment;
 import kr.co.ant.study.student.hankwangsu.oop.payment.AnswerMobilePayment;
 import kr.co.ant.study.student.hankwangsu.oop.pg.vo.ANTPaymentResponse;
 import kr.co.ant.study.student.hankwangsu.oop.pg.vo.BankAccountInfo;
+import kr.co.ant.study.student.hankwangsu.oop.validate.FuntionalValidator;
 import kr.co.ant.study.student.hankwangsu.oop.validate.FixedLengthValidator;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +28,11 @@ public class AnswerPaymentService {
 	@Autowired
 	AnswerPaymentFacade facade;
 	
+	FuntionalValidator fixedCheck = new FuntionalValidator((i, ii) -> i == ii);
+	
 	public void paymentCard(PaymentInfoVO infoVO) throws Exception{
 		
-		AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, new FixedLengthValidator());
+		AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, fixedCheck);
 		
 		ANTPaymentResponse response = facade.doPayment(cardPayment);
 		
@@ -37,7 +40,7 @@ public class AnswerPaymentService {
 	
 	public void paymentMobile(PaymentInfoVO infoVO) throws Exception{
 		
-		AnswerMobilePayment mobilePayment = new AnswerMobilePayment(infoVO, new FixedLengthValidator());
+		AnswerMobilePayment mobilePayment = new AnswerMobilePayment(infoVO, fixedCheck);
 		
 		ANTPaymentResponse response = facade.doPayment(mobilePayment);
 		
