@@ -4,19 +4,14 @@ import java.util.function.BiPredicate;
 
 public class CompositeValidation implements Validation{
 	
-	protected String type;
+	protected BiPredicate<String, Integer> func;
 	
-	public CompositeValidation(String type) {
-		this.type = type;
+	public CompositeValidation(BiPredicate<String, Integer> func) {
+		this.func = func;
 	};
 	
 	@Override
 	public boolean validate(String s, int length) {
-		BiPredicate<String, String> typeChk = (typ, data) -> typ.equals(data);
-		if(typeChk.test(type, "MOBILE")) {
-			return s.length() > length;
-		} else {
-			return s.length() == length;
-		}
+		return func.test(s, length);
 	}
 }
