@@ -150,3 +150,10 @@
         AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, new FixedLengthValidator());
          ==> AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, 요기다가 구현한 클래스 교체);
         ```
+2. Stream
+    - 설명 : kr.co.ant.study.java8.stream.BasicStream.java, StreamMapAndFlatMapAndReduce.java
+    - 그외 따로 공부 요망
+---
+### JPA
+1. JDBC 기초
+    -작성중
