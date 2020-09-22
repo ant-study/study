@@ -150,6 +150,8 @@
         AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, new FixedLengthValidator());
          ==> AnswerCardPayment cardPayment = new AnswerCardPayment(infoVO, 요기다가 구현한 클래스 교체);
         ```
+3. Funtional
+    - java.util.function 패키지내 어떤 Funtion들이 있는지 참고 하세요
 2. Stream
     - 설명 : kr.co.ant.study.java8.stream.BasicStream.java, StreamMapAndFlatMapAndReduce.java
     - 그외 따로 공부 요망
