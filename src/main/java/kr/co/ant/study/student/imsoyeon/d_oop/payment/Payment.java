@@ -17,14 +17,6 @@ public interface Payment {
 	 strategy pattern 참고
 	 */
 	
-	/**
-	 * <pre>
-	 * Comment : 전처리 메서드 호출
-	 * </pre>
-	 * @throws Exception
-	 */
-	public void beforeAPI() throws Exception;
-	
 //	1) 유효성 검사 : 자릿수 (카드 16 폰 11 계좌 15)
 	/**
 	 * <pre>
@@ -53,15 +45,6 @@ public interface Payment {
 	 * @throws Exception
 	 */
 	public PGPaymentInfo convertToPaymentVO() throws Exception;
-	
-	/**
-	 * <pre>
-	 * Comment : PG사 API 호출
-	 * </pre>
-	 * @return
-	 * @throws Exception
-	 */
-	public void requestPGAPI(PGPaymentInfo payment) throws Exception;
 	
 //	3) 결제 후 오류인지 아닌지 판단? 위에서 하면 되지않아?
 	

@@ -42,11 +42,6 @@ public abstract class AbstractPayment implements Payment {
 	}
 
 	@Override
-	public void beforeAPI() throws Exception {
-				
-	}	
-
-	@Override
 	public void logging() throws Exception {
 		log.info("Request VO : {}", inputVO);
 	}
@@ -56,13 +51,6 @@ public abstract class AbstractPayment implements Payment {
 		PGPaymentInfo paymentVO = new PGPaymentInfo();
 		PropertyUtils.copyProperties(paymentVO, inputVO);
 		return paymentVO;
-	}
-
-	@Override
-	public void requestPGAPI(PGPaymentInfo payment) throws Exception {
-//		String json = mapper.writeValueAsString(payment);
-//		ANTPGClientY client = new ANTPGClientY();
-//		client.doPayment(json);
 	}
 	
 }
