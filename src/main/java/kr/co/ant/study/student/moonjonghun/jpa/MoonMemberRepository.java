@@ -13,7 +13,7 @@ public class MoonMemberRepository {
 	@Autowired
 	private EntityManager em;
 	
-	public void save(MoonMember member) {
+	public <T> void save(T member) {
 		em.persist(member);
 		em.flush();
 	}

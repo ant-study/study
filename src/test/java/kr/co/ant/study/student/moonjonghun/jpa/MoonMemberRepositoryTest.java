@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
+import kr.co.ant.study.student.moonjonghun.jpa.DAO.MoonInit;
 import kr.co.ant.study.student.moonjonghun.jpa.DAO.MoonMember;
 
 @EntityScan(basePackages = "kr.co.ant.study.student.moonjonghun.jpa")
@@ -28,10 +29,24 @@ class MoonMemberRepositoryTest {
 	@Autowired
 	private EntityManager manager;
 	
+//	@Test
+//	void test() {
+//		MoonMember member= new MoonMember("moon", "문종훈");
+//		repository.save(member);
+//	}
+	
 	@Test
-	void test() {
-		MoonMember member= new MoonMember("moon", "문종훈");
-		repository.save(member);
+	void testInit() {
+		MoonInit init = new MoonInit();
+		
+		init.setTenantId("E68");
+		init.setEnplcCd("G001");
+		init.setStoreCd("V1");
+		init.setItemCd("민트마카롱");
+		init.setStockAmt(1.0001);
+		init.setStockQty(1.00001);
+		
+		repository.save(init);
 	}
 
 }
