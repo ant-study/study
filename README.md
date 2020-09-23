@@ -157,5 +157,50 @@
     - 그외 따로 공부 요망
 ---
 ### JPA
-1. JDBC 기초
-    -작성중
+*** PPT => [jpa1-150921075157-lva1-app6892.pdf](uploads/7d5d2cee96635411a36877e77615c57c/jpa1-150921075157-lva1-app6892.pdf)
+1. 준비
+    1. src/main/resources 폴더에 application-자기이니셜.yml 파일생성
+        ```yml
+        #자기 DB 접속정보 지정
+        spring:
+          datasource:
+            url: jdbc:h2:tcp://localhost:9092/~/test
+            username: 
+            password: 
+        ```
+    2. Repository 소스 생성
+        ```java
+        @Repository
+        public class MemberRepository {
+        
+        	@Autowired
+        	private EntityManager em;
+        	
+        	
+        	public void save(Member member) {
+        		em.persist(member);
+        	}
+        }
+        
+        ```
+    3. Test Code 생성
+        ```java
+        @DataJpaTest //JPA 관련 설정 로딩
+        @AutoConfigureTestDatabase(replace = Replace.NONE) //Test Database 사용안함
+        @Import(MemberRepository.class) //Repository Annotation은 Jpa 관련 설정이 아니라 DataJpaTest시에 Bean으로 등록 되지 않기때문에 Import로 강제 등록
+        @ActiveProfiles("hks") //자신이 설정한 application-이니셜.yml을 로드 하기 위해 Profile 설정
+        @Rollback(false) //기본 Rollback으로 되어 있음 Rollback true이면 commit시 생성하는 쿼리가 실행되지 않기 때문에 공부할때는 귀찮아도 false로 해서 테스트
+        
+        class MemberRepositoryTest {
+        
+        	@Autowired
+        	private MemberRepository repository;
+        	
+        	@Autowired
+        	private EntityManager manager;
+    	}
+        ```
+2. JDBC 기초와 EntityManager 설명
+3. 테이블 맵핑관계를 Entity로 설정
+4. JPQL
+5. QeuryDSL
