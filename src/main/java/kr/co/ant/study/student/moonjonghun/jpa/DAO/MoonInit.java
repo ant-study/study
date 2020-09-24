@@ -20,34 +20,34 @@ public class MoonInit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "init_id", nullable = false, length = 19, columnDefinition = "BIGINT unsigned", insertable = true)
+	@Column(name = "init_id", nullable = false, columnDefinition = "BIGINT(19) unsigned", insertable = true)
 	private long initId;
 	
-	@Column(name = "tenant_id", nullable = false, length = 27, columnDefinition = "VARCHAR")
+	@Column(name = "tenant_id", nullable = false, columnDefinition = "VARCHAR(27)")
 	private String tenantId;
 	
-	@Column(name = "enplc_cd", nullable = false, length = 4, columnDefinition = "VARCHAR")
+	@Column(name = "enplc_cd", nullable = false,  columnDefinition = "VARCHAR(4)")
 	private String enplcCd;
 	
-	@Column(name = "store_cd", nullable = false, length= 2, columnDefinition = "VARCHAR")
+	@Column(name = "store_cd", nullable = false, columnDefinition = "VARCHAR(2)")
 	private String storeCd;
 	
-	@Column(name = "item_cd", nullable = false, length = 30, columnDefinition = "VARCHAR")
+	@Column(name = "item_cd", nullable = false, columnDefinition = "VARCHAR(30)")
 	private String itemCd;
 	
-	@Column(name = "stock_qty", nullable = false, length = 20, scale = 5, precision = 5, columnDefinition = "DECIMAL default '0.00000'")
+	@Column(name = "stock_qty", nullable = false, scale = 5, precision = 5, columnDefinition = "DECIMAL(20) default '0.00000'")
 	private double stockQty;
 	
-	@Column(name = "stock_amt", nullable = false, length = 25, scale = 5, precision = 5, columnDefinition = "DECIMAL default '0.00000'")
+	@Column(name = "stock_amt", nullable = false, scale = 5, precision = 5, columnDefinition = "DECIMAL(25) default '0.00000'")
 	private double stockAmt;
 	
-	@Column(name = "sys_reg_id", nullable = false, length = 27, columnDefinition = "VARCHAR")
+	@Column(name = "sys_reg_id", nullable = true, columnDefinition = "VARCHAR(27)")
 	private String sysRegId;
 	
 	
 	private LocalDateTime sysRegDate;
 	
-	@Column(name = "sys_upd_id", nullable = false, length = 27, columnDefinition = "VARCHAR")
+	@Column(name = "sys_upd_id", nullable = true, columnDefinition = "VARCHAR(27)")
 	private String sysUpdId;
 	
 	

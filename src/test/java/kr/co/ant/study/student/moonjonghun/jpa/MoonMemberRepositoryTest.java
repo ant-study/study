@@ -13,7 +13,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import kr.co.ant.study.student.moonjonghun.jpa.DAO.MoonInit;
-import kr.co.ant.study.student.moonjonghun.jpa.DAO.MoonMember;
 
 @EntityScan(basePackages = "kr.co.ant.study.student.moonjonghun.jpa")
 @DataJpaTest
