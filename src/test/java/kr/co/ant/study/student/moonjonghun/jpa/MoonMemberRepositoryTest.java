@@ -46,7 +46,24 @@ class MoonMemberRepositoryTest {
 		init.setStockAmt(1.0001);
 		init.setStockQty(1.00001);
 		
+		// ###트리거의 로직을 구현해보자###
+		// init이 insert된 이후에 반복문을 돌면서 
+		// hst table에 insert하자
+		
+		MoonInitHst initHst = new MoonInitHst();
+		initHst.setSeq(1);
+		initHst.setEventDscd("U");
+		initHst.setTenantId("E68");
+		initHst.setEnplcCd("G001");
+		initHst.setStoreCd("V1");
+		initHst.setItemCd("민트마카롱");
+		initHst.setStockQty(1.00001);
+		initHst.setStockAmt(1.0001);
+		initHst.setSysRegId("assssss");
+		
+		init.addMoonInitHst(initHst);
 		repository.save(init);
+		
 		
 //		MoonInitHst hst = new MoonInitHst();
 		

@@ -1,6 +1,7 @@
 package kr.co.ant.study.student.moonjonghun.jpa.DAO;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -9,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -23,20 +24,16 @@ import lombok.Setter;
 @SequenceGenerator(name = "saltb_init01_hst_seq_gen", sequenceName = "saltb_init01_hst_seq", initialValue = 1, allocationSize = 1)
 public class MoonInitHst {
 	
-//	protected MoonInitHst() {};
 	
-	//연관관계 1 : N관계 
-	@OneToMany
-	@JoinColumn(name = "init_id")
-	private List<MoonInit> moonInitList;
+	//연관관계 1 : N관계 외래키 설정
+	@ManyToOne
+	@JoinColumn(name = "init_id" , nullable = false)
+	private MoonInit saltbInit01;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "saltb_init01_hst_seq_gen")
 	@Column(name = "init_hst_id", columnDefinition = "BIGINT(25) unsigned" , nullable = false)
 	private long initHstId;
-	
-	@Column(name = "init_id", columnDefinition = "BIGINT(19) unsigned" , nullable = false, updatable = false)
-	private long initId;
 	
 	@Column(name = "seq", columnDefinition = "INT(19) unsigned" , nullable = false)
 	private int seq;
@@ -65,7 +62,6 @@ public class MoonInitHst {
 	@Column(name = "sys_reg_id", columnDefinition = "VARCHAR(27)" , nullable = false)
 	private String sysRegId;
 	
-//	@Column(name = "sys_reg_date", columnDefinition = "DEFAULT CURRENT_TIMESTAMP" , nullable = false)
 	private LocalDateTime sysRegDate;
 	
 	@Column(name = "sys_upd_id", columnDefinition = "VARCHAR(27)" , nullable = true)
