@@ -26,6 +26,8 @@ public class MoonInitHst {
 	
 	
 	//연관관계 1 : N관계 외래키 설정
+	//자식Entity인 경우에 ManyToOne으로 부모 Entity에 접근
+	//JoinColumn으로 특별히 어느 컬럼과 연결할것인지 설정
 	@ManyToOne
 	@JoinColumn(name = "init_id" , nullable = false)
 	private MoonInit saltbInit01;
