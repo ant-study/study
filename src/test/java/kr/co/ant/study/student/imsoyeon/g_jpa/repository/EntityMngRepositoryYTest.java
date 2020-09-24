@@ -36,7 +36,7 @@ class EntityMngRepositoryYTest {
 	@Autowired
 	private EntityManager em;
 	
-//	@Test
+	@Test
 	@Rollback(false)
 	void manageEntity01() {
 		try {
@@ -56,7 +56,7 @@ class EntityMngRepositoryYTest {
 		}
 	}
 	
-	@Test
+//	@Test
 	@Rollback(false)
 	void manageEntity02() {		
 		try {

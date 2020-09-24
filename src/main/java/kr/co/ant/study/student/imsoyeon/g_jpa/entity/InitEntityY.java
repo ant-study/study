@@ -28,7 +28,7 @@ import lombok.ToString;
 @DynamicUpdate	//	value가 변경된 컬럼만 update쳐라
 @Getter @Setter @ToString
 public class InitEntityY {
-
+	
 	@Id	@GeneratedValue(strategy = GenerationType.IDENTITY) @Column(length = 19)
 	private Long initId;
 	

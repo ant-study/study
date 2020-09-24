@@ -25,16 +25,16 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class InitHstEntityY {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(length = 25)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(length = 25)	//@@
 	private Long initHstId;
 	
 	@Column(nullable = false, length = 19)
 	private Long initId;
 	
-	@GeneratedValue(strategy = GenerationType.SEQUENCE) @Column(nullable = false, length = 19)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE) @Column(nullable = false, length = 19)	//@@
 	private int seq;
 	
-	@Column(nullable = false, length = 1)
+	@Column(nullable = false, length = 1)		//@@
 	private String eventDscd;
 	
 	@Column(nullable = false, length = 27)
