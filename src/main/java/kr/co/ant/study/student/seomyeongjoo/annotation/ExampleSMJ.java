@@ -1,4 +1,4 @@
-package kr.co.ant.study.student.seomyeongjoo;
+package kr.co.ant.study.student.seomyeongjoo.annotation;
 
 import kr.co.ant.study.reflect.ReflectQuestion;
 
