@@ -4,8 +4,6 @@
  */
 package kr.co.ant.study.student.songyoona.jpa;
 
-import java.util.UUID;
-
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -42,16 +40,16 @@ class YooMemberRepositoryTest {
     @Autowired
     private YooMemberRepository repo;
 
-    @Test
-    @Rollback(false)
-    void testPersist() {
-        YooMember m = new YooMember();
-        //m.setMemberId("tt8");
-        m.setName("테스트8");
-        m.setStockQty(50080);
-        m.setAddrYn("seoul");
-        repo.save(m);
-    }
+//    @Test
+//    @Rollback(false)
+//    void testPersist() {
+//        YooMember m = new YooMember();
+//        //m.setMemberId("tt8");
+//        m.setName("테스트8");
+//        m.setStockQty(50080);
+//        m.setAddrYn("seoul");
+//        manager.persist(m);
+//    }
 
     @Test
     @Rollback(false)
@@ -64,16 +62,9 @@ class YooMemberRepositoryTest {
         m.setStockQty(700000);
         m.setStockAmt(150000);
         m.setSysRegId("yoo");
-        manager.persist(m);
-    }
+        //repo.save(m);
 
-    @Test
-    @Rollback(false)
-    void testPersist3() {
         YooSaltbInit01Hst h = new YooSaltbInit01Hst();
-        YooSaltbInit01 init = new YooSaltbInit01();
-
-        h.setInitId(22L);
         h.setSeq(1);
         h.setEventDscd("I");
         h.setTenantId("tt2");
@@ -83,6 +74,36 @@ class YooMemberRepositoryTest {
         h.setStockQty(700000);
         h.setStockAmt(150000);
         h.setSysRegId("yoo");
-        manager.persist(h);
+//        h.setTenantId(m.getTenantId());
+//        h.setEnplcCd(m.getEnplcCd());
+//        h.setStoreCd(m.getStoreCd());
+//        h.setItemCd(m.getItemCd());
+//        h.setStockQty(m.getStockQty());
+//        h.setStockAmt(m.getStockAmt());
+//        h.setSysRegId(m.getSysRegId());
+
+        m.addYooInitHst(h);
+        repo.save(m);
+
+
     }
+
+//    @Test
+//    @Rollback(false)
+//    void testPersist3() {
+//        YooSaltbInit01Hst h = new YooSaltbInit01Hst();
+//        YooSaltbInit01 init = new YooSaltbInit01();
+//
+//        //h.setInitId(22L);
+//        h.setSeq(1);
+//        h.setEventDscd("I");
+//        h.setTenantId("tt2");
+//        h.setEnplcCd("ee2");
+//        h.setStoreCd("st");
+//        h.setItemCd("테스트2");
+//        h.setStockQty(700000);
+//        h.setStockAmt(150000);
+//        h.setSysRegId("yoo");
+//        manager.persist(h);
+//    }
 }

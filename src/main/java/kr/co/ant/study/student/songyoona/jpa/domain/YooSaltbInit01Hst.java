@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,8 +33,9 @@ import lombok.Setter;
 @Entity
 @Table(name="yoo_saltb_init01_hst", uniqueConstraints={@UniqueConstraint(columnNames={"INIT_ID","seq","EVENT_DSCD"})})//
 @DynamicUpdate  //  value가 변경된 컬럼만 update쳐라
+@DiscriminatorValue("hst")
 @Getter @Setter
-public class YooSaltbInit01Hst {
+public class YooSaltbInit01Hst{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(nullable = false, length = 25, columnDefinition="BIGINT unsigned")
     private Long initHstId;
@@ -42,10 +44,11 @@ public class YooSaltbInit01Hst {
     //@ManyToMany(mappedBy = "initId")
     //@Column(name = "init_id", nullable = false, length = 19, columnDefinition="BIGINT unsigned")
 
-//    @ManyToOne @JoinColumn(name = "init_id", nullable=false)
-//    private YooSaltbInit01 YooSaltbInit01;
-    @Column(name = "INIT_ID", nullable = false, length = 19, columnDefinition="BIGINT unsigned")
-    private Long initId;
+    // 자식이니까 many이고 부모는 one
+    @ManyToOne @JoinColumn(name = "init_id", nullable=false)
+    private YooSaltbInit01 yooSaltbInit01;
+//    @Column(name = "INIT_ID", nullable = false, length = 19, columnDefinition="BIGINT unsigned")
+//    private Long initId;
 
     @Column(nullable = false, length = 19, columnDefinition="int unsigned")
     private int seq;
