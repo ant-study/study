@@ -2,7 +2,7 @@
  * Author : yooS
  * Create Date : 2020. 9. 11.
  */
-package kr.co.ant.study.songyoona.oop;
+package kr.co.ant.study.student.songyoona.oop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
