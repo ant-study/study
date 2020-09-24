@@ -20,7 +20,7 @@ import lombok.ToString;
 
 /*
  * Unique 컬럼 2개 이상 설정하기
- * 		@Table(~, uniqueConstraints = {@UniqueConstraint(columnNames = {"tenantId","enplcCd","storeCd","itemCd"})})
+ * 		@Table(~, uniqueConstraints = {@UniqueConstraint(columnNames = {"tenantId","enplcCd", ..})})
  *  	** @Column( ~, unique=true)로는 하나만 가능하대
  * */
 @Entity
@@ -56,7 +56,7 @@ public class InitEntityY {
 	@Column(nullable = false)
 	@CreationTimestamp
 	private LocalDateTime sysRegDate;
-	
+	 
 	@Column(nullable = true, length = 27)
 	private String sysUpdId;
 	
