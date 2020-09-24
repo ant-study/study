@@ -13,6 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import kr.co.ant.study.student.moonjonghun.jpa.DAO.MoonInit;
+import kr.co.ant.study.student.moonjonghun.jpa.DAO.MoonInitHst;
 
 @EntityScan(basePackages = "kr.co.ant.study.student.moonjonghun.jpa")
 @DataJpaTest
@@ -45,7 +46,40 @@ class MoonMemberRepositoryTest {
 		init.setStockAmt(1.0001);
 		init.setStockQty(1.00001);
 		
+		// ###트리거의 로직을 구현해보자###
+		// init이 insert된 이후에 반복문을 돌면서 
+		// hst table에 insert하자
+		
+		MoonInitHst initHst = new MoonInitHst();
+		initHst.setSeq(1);
+		initHst.setEventDscd("U");
+		initHst.setTenantId("E68");
+		initHst.setEnplcCd("G001");
+		initHst.setStoreCd("V1");
+		initHst.setItemCd("민트마카롱");
+		initHst.setStockQty(1.00001);
+		initHst.setStockAmt(1.0001);
+		initHst.setSysRegId("assssss");
+		
+		init.addMoonInitHst(initHst);
 		repository.save(init);
+		
+		
+//		MoonInitHst hst = new MoonInitHst();
+		
+//		if(init.getInitId() <= 0 ) {
+		//init_id를 가져와서 hst에 조회를 한다음 값이 없으면 setSeq(1)
+		//조회는 어떻게 하지... 엔티티매니저님 도와주세요...
+//		if(true) {
+//			hst.setSeq(1);
+//		}else{
+//			//init
+//		};
+		
+		
+		
 	}
+	
+	
 
 }

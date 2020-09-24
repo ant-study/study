@@ -15,11 +15,13 @@ public class MoonMemberRepository {
 	
 	public <T> void save(T member) {
 		em.persist(member);
+//		em.getTransaction().commit();
 		em.flush();
 	}
 	
 	public void update(MoonMember member) {
 		em.merge(member);
+//		em.
 	}
 	
 }

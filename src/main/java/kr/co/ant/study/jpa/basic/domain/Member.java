@@ -1,6 +1,8 @@
 package kr.co.ant.study.jpa.basic.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,8 +14,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Member {
-	
-	@Id
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String memberId;
 	private String name;
 	private String addrYn;
