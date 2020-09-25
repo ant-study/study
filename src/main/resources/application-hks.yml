@@ -4,7 +4,6 @@ spring:
     username: 
     password: 
   jpa:
-    properties:      hibernate.ejb.interceptor: kr.co.ant.study.jpa.basic.AuditDirtyCheckingInterceptor
     generate-ddl: true
     hibernate:
       ddl-auto: update
