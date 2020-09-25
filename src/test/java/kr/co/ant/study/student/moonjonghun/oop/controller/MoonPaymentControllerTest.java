@@ -1,4 +1,4 @@
-package kr.co.ant.study.moonjonghun.oop.controller;
+package kr.co.ant.study.student.moonjonghun.oop.controller;
 
 import static org.junit.jupiter.api.Assertions.fail;
 

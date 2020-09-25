@@ -185,6 +185,9 @@
         ```
     3. Test Code 생성
         ```java
+        //동일한 Entity명이 있는경우 에러나기 때문에 본인의 package 경로로만 entity를 scan하게 설정 한다.
+        @EntityScan(basePackages = "kr.co.ant.student.hankwangsu.jpa")
+        
         @DataJpaTest //JPA 관련 설정 로딩
         @AutoConfigureTestDatabase(replace = Replace.NONE) //Test Database 사용안함
         @Import(MemberRepository.class) //Repository Annotation은 Jpa 관련 설정이 아니라 DataJpaTest시에 Bean으로 등록 되지 않기때문에 Import로 강제 등록
