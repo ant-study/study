@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,12 +15,16 @@ import org.springframework.test.context.ActiveProfiles;
 import kr.co.ant.study.jpa.basic.domain.Member;
 
 @DataJpaTest
+@EntityScan(basePackages = "kr.co.ant.study.jpa")
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Import(MemberRepository.class)
 @ActiveProfiles("hks")
 @Rollback(false)
-class MemberRepositoryTest {
+class EntityManagerTest {
 
+	@Autowired
+	private MemberRepository repository;
+	
 	@Autowired
 	private EntityManager manager;
 	
@@ -31,7 +36,7 @@ class MemberRepositoryTest {
 	@Rollback(false)
 	void testPersist() {
 		Member m = new Member();
-		m.setMemberId("tt");
+		m.setMemberId("tt34");
 		m.setName("테스트");
 		manager.persist(m);
 	}
@@ -113,6 +118,8 @@ class MemberRepositoryTest {
 	@Test
 	void testFind(){
 		Member  m = manager.find(Member.class, "test1");
+		
+		m.setName("rr33r");
 	}
 
 }
