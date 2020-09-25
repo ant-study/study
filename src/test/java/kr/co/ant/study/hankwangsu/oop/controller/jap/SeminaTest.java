@@ -17,6 +17,7 @@ import kr.co.ant.study.student.hankwangsu.jpa.compiste.embedded.Team;
 import kr.co.ant.study.student.hankwangsu.jpa.compiste.embedded.key.EmployeeKey;
 import kr.co.ant.study.student.hankwangsu.jpa.compiste.embedded.key.TeamKey;
 import kr.co.ant.study.student.hankwangsu.jpa.compiste.idclass.ICompany;
+import kr.co.ant.study.student.hankwangsu.jpa.compiste.idclass.IEmployee;
 import kr.co.ant.study.student.hankwangsu.jpa.compiste.idclass.ITeam;
 import kr.co.ant.study.student.hankwangsu.jpa.compiste.idclass.key.ITeamKey;
 import kr.co.ant.study.student.hankwangsu.jpa.many.Cource;
@@ -80,16 +81,25 @@ class SeminaTest {
 		Employee e = new Employee();
 		e.setEmployeeId(empKey);
 		e.setTeam(t);
+		
+		EmployeeKey empKey2 = new EmployeeKey(3L);
+		Employee e2 = new Employee();
+		e2.setEmployeeId(empKey2);
+		e2.setTeam(t);
+		
 		manager.persist(e);
+		manager.persist(e2);
 		manager.flush();
 		manager.clear();
 		
-		Employee result = manager.find(Employee.class, empKey);
-		log.info("Employee ::: {}", result);
-		
-		
+		Employee result2 = manager.find(Employee.class, empKey);
+		log.info("Employee Result 2::: {}", result2);
 		Team teamResult = manager.find(Team.class, key);
 		log.info("teamResult ::: {}", teamResult);
+		Employee result = teamResult.getEmp().get(0);
+		log.info("Employee Result 1 ::: {}", result);
+		
+		log.info("Employee Result 1,2 equals ::: {}", result.equals(result2));
 		
 	}
 	
@@ -99,24 +109,16 @@ class SeminaTest {
 		manager.persist(c);
 		
 		ITeam t = new ITeam();
-		t.setTeamId(11L);
-		t.setCompanyId(c.getCompanyId());
+		t.setTeamId(13L);
 		t.setCompany(c);
 		manager.persist(t);
 		
-		/*EmployeeKey empKey = new EmployeeKey(2L);
-		Employee e = new Employee();
-		e.setEmployeeId(empKey);
+		IEmployee e = new IEmployee();
+		e.setCompanyId(c.getCompanyId());
+		e.setTeamId(t.getTeamId());
+		e.setEmployeeId(45L);
+		e.setTeam(t);
 		manager.persist(e);
-		manager.flush();
-		manager.clear();
-		
-		Employee result = manager.find(Employee.class, empKey);
-		log.info("Employee ::: {}", result);*/
-		
-		
-		/*Team teamResult = manager.find(Team.class, key);
-		log.info("teamResult ::: {}", teamResult);*/
 		
 	}
 	

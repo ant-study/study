@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity @Table
-@Getter @Setter @ToString
+@Getter @Setter
 public class Employee {
 
 	@EmbeddedId
