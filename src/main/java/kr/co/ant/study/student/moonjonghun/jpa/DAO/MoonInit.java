@@ -60,6 +60,11 @@ public class MoonInit {
 	@Column(name = "sys_upd_id", nullable = true, columnDefinition = "VARCHAR(27)")
 	private String sysUpdId;
 	
+	//연관관계 1 : N관계 외래키 설정
+	// 부모 Entity인 경우에 OneToMany로 자식 Entity list를 나열 , mappedBy 속성으로 자식Entity에 FK로 참조된 부모객체명을 쓴다.
+	// cascade : 부모 Entity의 persist status가 변경되었을때 연결된 자식 Entity의 status의 수정 방향설정
+	// orphanRemoval : 연결된 자식객체가 null이 되었을 경우 삭제할 것인지 여부
+	// fatch : 부모 Entity를 조회하였을때 딸려있는 자식 Entity를 함께 조회할것인지 
 	@OneToMany(mappedBy = "saltbInit01", cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE})
 	private List<MoonInitHst> moonInitHistories; 
 
