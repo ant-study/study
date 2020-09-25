@@ -15,10 +15,7 @@ public class EntityMngRepositoryY {
 	private EntityManager em;
 	
 	public void save(InitEntityY init01) {
-		em.persist(init01);
-	}
-	
-	public void save(InitHstEntityY init01) {
+		
 		em.persist(init01);
 	}
 }
