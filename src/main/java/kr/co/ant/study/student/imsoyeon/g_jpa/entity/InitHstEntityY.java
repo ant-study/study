@@ -2,13 +2,14 @@ package kr.co.ant.study.student.imsoyeon.g_jpa.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -24,14 +25,18 @@ import lombok.ToString;
 @DynamicUpdate	//	value가 변경된 컬럼만 update쳐라
 @Getter @Setter @ToString
 public class InitHstEntityY {
+	
+	@ManyToOne	//targetEntity = InitEntityY.class, fetch = FetchType.LAZY
+	@JoinColumn(name = "initId", nullable = false, insertable = false, updatable = false)	//
+	private InitEntityY initEntityY;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(length = 25)	//@@
 	private Long initHstId;
 	
-	@Column(nullable = false, length = 19)
-	private Long initId;
+//	@Column(nullable = false, length = 19)
+//	private Long initId;
 	
-	@GeneratedValue(strategy = GenerationType.SEQUENCE) @Column(nullable = false, length = 19)	//@@
+	@Column(nullable = false, length = 19)	//@@
 	private int seq;
 	
 	@Column(nullable = false, length = 1)		//@@
@@ -66,5 +71,6 @@ public class InitHstEntityY {
 	private String sysUpdId;	
 	
 	@Column(nullable = true)
-	private LocalDateTime sysUpdDate;
+	private LocalDateTime sysUpdDate;	
+	
 }

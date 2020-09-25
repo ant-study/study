@@ -1,9 +1,6 @@
 package kr.co.ant.study.student.imsoyeon.g_jpa.repository;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import kr.co.ant.study.student.imsoyeon.g_jpa.entity.InitEntityY;
 import kr.co.ant.study.student.imsoyeon.g_jpa.entity.InitHstEntityY;
-import kr.co.ant.study.student.imsoyeon.g_jpa.entity.MemberY;
-import kr.co.ant.study.student.imsoyeon.g_jpa.repository.EntityMngRepositoryY;
 import lombok.extern.slf4j.Slf4j;
 
 @EntityScan(basePackages = "kr.co.ant.study.student.imsoyeon.g_jpa")
@@ -33,13 +28,11 @@ class EntityMngRepositoryYTest {
 	@Autowired
 	private EntityMngRepositoryY repository;
 	
-	@Autowired
-	private EntityManager em;
-	
 	@Test
 	@Rollback(false)
 	void manageEntity01() {
 		try {
+//			init01
 			InitEntityY init01 = new InitEntityY();
 			init01.setTenantId("T078");
 			init01.setEnplcCd("E001");
@@ -49,6 +42,23 @@ class EntityMngRepositoryYTest {
 			init01.setStockAmt(new BigDecimal(10000.00000));
 			init01.setSysRegId("U077");
 			
+//			hst
+			InitHstEntityY hst = new InitHstEntityY();
+//			hst.setInitId();
+			hst.setEventDscd("I");
+			hst.setSeq(1);
+			hst.setTenantId(init01.getTenantId());
+			hst.setEnplcCd(init01.getEnplcCd());
+			hst.setStoreCd(init01.getStoreCd());
+			hst.setItemCd(init01.getItemCd());
+			hst.setStockQty(init01.getStockQty());
+			hst.setStockAmt(init01.getStockAmt());
+			hst.setSysRegId(init01.getSysRegId());
+			hst.setSysRegDate(init01.getSysRegDate());
+			hst.setSysUpdId(init01.getSysUpdId());
+			hst.setSysUpdDate(init01.getSysUpdDate());
+			
+			 init01.addHistory(hst);
 			repository.save(init01);
 			
 		} catch (Exception e) {
@@ -57,39 +67,17 @@ class EntityMngRepositoryYTest {
 	}
 	
 //	@Test
-	@Rollback(false)
-	void manageEntity02() {		
-		try {
-			InitHstEntityY hst = new InitHstEntityY();
-			hst.setInitId(1L);
-			hst.setEventDscd("I");
-			hst.setTenantId("T078");
-			hst.setEnplcCd("E001");
-			hst.setStoreCd("S1");
-			hst.setItemCd("IT001");
-			hst.setStockQty(new BigDecimal(10.00000));
-			hst.setStockAmt(new BigDecimal(10000.00000));
-			hst.setSysRegId("U077");
-			
-			repository.save(hst);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-//	@Test
-	@Rollback(false)
-	void testMng() {
-		try {
-			MemberY mem = new MemberY();
-			mem.setMemberId("이름");
-			mem.setName("spdlsdasd");
-			em.persist(mem);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	@Rollback(false)
+//	void testMng() {
+//		try {
+//			MemberY mem = new MemberY();
+//			mem.setMemberId("이름");
+//			mem.setName("spdlsdasd");
+//			em.persist(mem);
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 }
