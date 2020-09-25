@@ -16,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode @ToString
 public class EmployeeKey implements Serializable{
 	
-	//Employee Entity의 Team 연관관계에서 Team의 mapsId로 지정한 속성명으로 맵핑된다.
+	//Employee Entity의 Team 연관관계에서 Team의 Id가 mapsId로 지정한 속성명으로 맵핑된다.
 	private TeamKey teamKey;
 	
 	private Long employeeId;
