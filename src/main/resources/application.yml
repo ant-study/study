@@ -21,9 +21,5 @@ spring:
         use_sql_comments: true
     hibernate:
       ddl-auto: none
-logging:
-  level:
-    org.hibernate.type: trace
-      
       
             

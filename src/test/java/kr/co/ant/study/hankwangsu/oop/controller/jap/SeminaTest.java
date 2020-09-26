@@ -1,5 +1,7 @@
 package kr.co.ant.study.hankwangsu.oop.controller.jap;
 
+import java.util.UUID;
+
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -63,6 +65,23 @@ class SeminaTest {
 		c.addStudent(s);
 		manager.persist(s);
 		manager.persist(c);
+	}
+	
+	/**
+	 * ManyToMany 관계에서는 Set을 사용하자
+	 */
+	@Test
+	void Student에서_Cource_삭제() {
+		Student s = manager.find(Student.class, 1L);
+		Cource c = new Cource();
+		s.addCource(c);
+		manager.persist(s);
+		manager.persist(c);
+		manager.flush();
+		s.removeCource(c);
+		
+		
+		
 	}
 	
 	@Test

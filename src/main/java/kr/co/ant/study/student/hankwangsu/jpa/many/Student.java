@@ -1,10 +1,8 @@
 package kr.co.ant.study.student.hankwangsu.jpa.many;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,8 +20,7 @@ import lombok.Setter;
 public class Student {
 	
 	@Id	@GeneratedValue
-	@Column(length = 255, columnDefinition = "VARCHAR")
-	private UUID id;
+	private Long id;
 	
 	
 	@ManyToMany
@@ -31,10 +28,17 @@ public class Student {
 		,joinColumns = @JoinColumn(name="student_id")
 		,inverseJoinColumns = @JoinColumn(name="cource_id")
 			)
-	private List<Cource> cources = new ArrayList<Cource>();
+	private Set<Cource> cources = new HashSet<Cource>();
 	
 	
 	public void addCource(Cource c) {
+		c.addStudent(this);
 		cources.add(c);
 	}
+	
+	public void removeCource(Cource c) {
+		cources.remove(c);
+	}
+	
+	
 }
