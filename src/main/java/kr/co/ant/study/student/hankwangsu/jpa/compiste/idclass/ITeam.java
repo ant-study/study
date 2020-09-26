@@ -19,10 +19,6 @@ import lombok.Setter;
 @Getter @Setter
 @IdClass(ITeamKey.class)
 public class ITeam {
-
-	/*
-	 * @Id private Long companyId;
-	 */
 	
 	@Id
 	private Long teamId;
