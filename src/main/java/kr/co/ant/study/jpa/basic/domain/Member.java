@@ -19,9 +19,24 @@ public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String memberId;
-	private String name;
+    
+    private String name;
 	private String addrYn;
 	private Integer age;
+	
+	/*@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "mainAddress", column = @Column(name="home_address")),
+		@AttributeOverride(name="detail_address", column = @Column(name="home_detail_address"))
+	})
+	private Address homeAddress;
+	
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name = "mainAddress", column = @Column(name="work_address")),
+		@AttributeOverride(name="detail_address", column = @Column(name="work_detail_address"))
+	})
+	private Address workplaceAddress;*/
 	
 	@PreUpdate
 	public void updateable() {

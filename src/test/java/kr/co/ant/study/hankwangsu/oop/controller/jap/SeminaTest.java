@@ -3,6 +3,7 @@ package kr.co.ant.study.hankwangsu.oop.controller.jap;
 import java.util.UUID;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.ant.study.student.hankwangsu.jpa.compiste.embedded.Company;
 import kr.co.ant.study.student.hankwangsu.jpa.compiste.embedded.Employee;
@@ -43,6 +47,7 @@ class SeminaTest {
 	 * insert into cource_like (student_id, cource_id) values (?, ?)
 	 */
 	@Test
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
 	void Student에_저장() {
 		Student s = new Student();
 		Cource c = new Cource();
@@ -79,9 +84,6 @@ class SeminaTest {
 		manager.persist(c);
 		manager.flush();
 		s.removeCource(c);
-		
-		
-		
 	}
 	
 	@Test

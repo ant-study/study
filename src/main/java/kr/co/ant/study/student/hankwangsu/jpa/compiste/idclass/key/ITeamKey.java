@@ -15,7 +15,7 @@ import lombok.ToString;
 public class ITeamKey implements Serializable{
 
 	private Long company;
-//	@Column(name="team_id")
+
 	private Long teamId;
 	
 }

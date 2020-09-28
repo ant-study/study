@@ -1,5 +1,7 @@
 package kr.co.ant.study.jpa.jpql.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
@@ -15,18 +17,24 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.ant.study.jpa.basic.MemberRepository;
+import kr.co.ant.study.jpa.jpql.BaseStockService;
+import kr.co.ant.study.jpa.jpql.repository.BaseStockRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @DataJpaTest
 @EntityScan(basePackages = "kr.co.ant.study.jpa")
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@Import(MemberRepository.class)
+@Import({BaseStockService.class, BaseStockRepository.class})
 @ActiveProfiles("hks")
 @Rollback(false)
 @Slf4j
 class BaseStockTest {
+	
+	@Autowired
+	private BaseStockService service;
 	
 	@Autowired
 	private EntityManager manager;
@@ -78,6 +86,7 @@ class BaseStockTest {
 	
 	@Test
 	void 조인_jpql() {
+		//연관관계로 조인시에는 자동으로 on이 추가되어 join된다.
 		String sql = "select s "
 				+ "from BaseStock s "
 				+ "join s.baseStockHistories h "
@@ -87,6 +96,7 @@ class BaseStockTest {
 			.getSingleResult();
 		log.info("Result :: {}", stock.getInitId());
 		
+		//연관관계이지만 각 Entity로 조인시에는 on에 join 조건을 걸어야 한다.
 		String sql2 = "select s "
 				+ "from BaseStock s "
 				+ "join BaseStockHistory h "
@@ -97,8 +107,12 @@ class BaseStockTest {
 			.getSingleResult();
 		log.info("Result :: {}", stock2.getInitId());
 	}
+	
+	
+	
 	@Test
-	void 페치조인_jpql() {
+	void 조인_수량이10개_이하인것_조회_jpql() {
+		
 		String sql = "select s "
 				+ "from BaseStock s "
 				+ "join s.baseStockHistories h "
@@ -108,7 +122,13 @@ class BaseStockTest {
 			.setParameter("id", 1L)
 			.getSingleResult();
 		log.info("그냥 조인 결과 :: {}", stock.getBaseStockHistories().size());
-		manager.clear();
+		assertThat(stock.getBaseStockHistories().size()).isEqualTo(20);
+	}
+	
+	
+	@Test
+	void 페치조인_수량이10개_이하인것_조회_jpql() {
+		
 		String sql2 = "select s "
 				+ "from BaseStock s "
 				+ "join fetch s.baseStockHistories h "
@@ -118,6 +138,29 @@ class BaseStockTest {
 			.setParameter("id", 1L)
 			.getSingleResult();
 		log.info("페치 조인 결과 :: {}", stock2.getBaseStockHistories().size());
+		assertThat(stock2.getBaseStockHistories().size()).isEqualTo(9);
 	}
+	
+	@Test
+	void 그냥조인과페치조인을_동일Transaction에서_실행_jpql() {
+		조인_수량이10개_이하인것_조회_jpql();
+		페치조인_수량이10개_이하인것_조회_jpql();
+	}
+	
+	/**
+	 * 문제
+	 * 테스트코드 수정없이 Service, Repository 수정으로 테스트가 통과되도록 해보세요
+	 * 단. 쿼리수정은 안됨
+	 */
+	@Test
+	void 캐쉬_1차_jpql() {
+		BaseStock stock = service.findTest(1L);
+		assertThat(stock.getBaseStockHistories().size()).isEqualTo(20);
+		
+		BaseStock stock2 = service.findFetchTest(1L);
+		assertThat(stock2.getBaseStockHistories().size()).isEqualTo(9);
+	}
+	
+	
 
 }

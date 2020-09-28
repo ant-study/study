@@ -1,20 +1,38 @@
 package kr.co.ant.study.jpa.jpql.repository;
 
-import java.math.BigDecimal;
+import javax.persistence.EntityManager;
 
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import kr.co.ant.study.jpa.jpql.domain.BaseStock;
 
-public interface BaseStockRepository extends JpaRepository<BaseStock, Long>{
-	
-	@Query(value = "select s from BaseStock s where s.initId = :initId")
-	public BaseStock jqplQuery(Long initId);
-	
-	@EntityGraph(attributePaths = {"baseStockHistories"}, type = EntityGraphType.FETCH)
-	public BaseStock findByInitIdAndBaseStockHistoriesStockQtyLessThan(Long id, BigDecimal stockQty);
+@Repository
+public class BaseStockRepository {
 
+	@Autowired
+	private EntityManager em;
+	
+	
+	public BaseStock findTest(Long id) {
+		String sql = "select s "
+				+ "from BaseStock s "
+				+ "join s.baseStockHistories h "
+				+ "where s.initId = :id "
+				+ "and h.stockQty < 10 ";
+		return em.createQuery(sql, BaseStock.class)
+			.setParameter("id", 1L)
+			.getSingleResult();
+	}
+	
+	public BaseStock findFetchTest(Long id) {
+		String sql2 = "select s "
+				+ "from BaseStock s "
+				+ "join fetch s.baseStockHistories h "
+				+ "where s.initId = :id "
+				+ "and h.stockQty < 10 ";
+		return em.createQuery(sql2, BaseStock.class)
+			.setParameter("id", 1L)
+			.getSingleResult();
+	}
 }

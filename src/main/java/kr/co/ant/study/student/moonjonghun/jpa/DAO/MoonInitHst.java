@@ -1,8 +1,6 @@
 package kr.co.ant.study.student.moonjonghun.jpa.DAO;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,17 +13,20 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
 @Table(name = "saltb_init01_hst", uniqueConstraints = {@UniqueConstraint(name = "init_id", columnNames = {"init_id","seq","event_dscd"})})
+@DynamicUpdate
 @SequenceGenerator(name = "saltb_init01_hst_seq_gen", sequenceName = "saltb_init01_hst_seq", initialValue = 1, allocationSize = 1)
 public class MoonInitHst {
 	
 	
-	//연관관계 1 : N관계 외래키 설정
+	//연관관계 1 : N관계 외래키(FK) 설정
 	//자식Entity인 경우에 ManyToOne으로 부모 Entity에 접근
 	//JoinColumn으로 특별히 어느 컬럼과 연결할것인지 설정
 	@ManyToOne

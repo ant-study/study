@@ -2,8 +2,8 @@ spring:
   datasource:
     url: jdbc:h2:tcp://localhost:9092/~/test
     username: test
-    password: ""
+    password: 
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
