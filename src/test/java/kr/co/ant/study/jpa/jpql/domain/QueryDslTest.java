@@ -1,6 +1,7 @@
 package kr.co.ant.study.jpa.jpql.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
+import kr.co.ant.study.jpa.jpql.dto.BaseStockDTO;
 import kr.co.ant.study.jpa.jpql.repository.BaseStockQueryDslRepository;
-import kr.co.ant.study.jpa.jpql.repository.BaseStockRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @DataJpaTest
@@ -34,5 +35,18 @@ class QueryDslTest {
 		BaseStock stock = repository.fetchJoinWithQueryDsl(1L, BigDecimal.valueOf(10L));
 		log.info("Length :: {} ", stock.getBaseStockHistories().size());
 	}
+	
+	@Test
+	void Projection_부모만_jpql() {
+		BaseStockDTO stock = repository.projectionForSingle(1L, BigDecimal.valueOf(10L));
+		log.info("Length :: {} ", stock.getBaseStockHistories().size());
+	}
+	
+	@Test
+	void Projection_부모자식_jpql() {
+		BaseStockDTO stock = repository.projectionForChild(1L, BigDecimal.valueOf(10L));
+		log.info("Length :: {} ", stock.getBaseStockHistories().size());
+	}
+	
 
 }

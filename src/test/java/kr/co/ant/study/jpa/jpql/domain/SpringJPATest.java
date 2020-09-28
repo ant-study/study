@@ -13,7 +13,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import kr.co.ant.study.jpa.basic.MemberRepository;
-import kr.co.ant.study.jpa.jpql.repository.BaseStockRepository;
+import kr.co.ant.study.jpa.jpql.repository.BaseStockSpringRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @DataJpaTest
@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 class SpringJPATest {
 	
 	@Autowired
-	BaseStockRepository repository;
+	BaseStockSpringRepository repository;
 	
 	@Test
 	void 기본조회_jpql() {
