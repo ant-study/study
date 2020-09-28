@@ -4,8 +4,6 @@
  */
 package kr.co.ant.study.student.songyoona.jpa;
 
-import java.sql.ResultSet;
-
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -18,11 +16,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
-import kr.co.ant.study.jpa.basic.MemberRepository;
-import kr.co.ant.study.jpa.basic.domain.Member;
-import kr.co.ant.study.student.songyoona.jpa.domain.YooMember;
 import kr.co.ant.study.student.songyoona.jpa.domain.YooSaltbInit01;
-import kr.co.ant.study.student.songyoona.jpa.domain.YooSaltbInit01Hst;
 
 /**
  * @description :
@@ -66,20 +60,6 @@ class YooMemberRepositoryTest {
         m.setItemCd("테스트1");
         m.setStockQty(700000);
         m.setStockAmt(150000);
-        //m.setSysRegId("yoo");
-        //repo.save(m);
-
-//        YooSaltbInit01Hst h = new YooSaltbInit01Hst();
-//        h.setSeq(1);
-//        h.setEventDscd("I");
-//        h.setTenantId("tt2");
-//        h.setEnplcCd("ee2");
-//        h.setStoreCd("st");
-//        h.setItemCd("테스트2");
-//        h.setStockQty(700000);
-//        h.setStockAmt(150000);
-//        h.setSysRegId("yoo");
-        //m.addYooInitHst(h);
 
         repo.save(m);
 
@@ -88,7 +68,8 @@ class YooMemberRepositoryTest {
 
         // update
         m.setItemCd("테스트2");
-        //repo.update(m);
+        em.flush();
+
 
         // delete
 //        YooSaltbInit01 si = repo.find(YooSaltbInit01.class, "id");

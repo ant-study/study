@@ -4,14 +4,13 @@
  */
 package kr.co.ant.study.student.songyoona.jpa.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,12 +23,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import kr.co.ant.study.jpa.jpql.domain.BaseStockHistory;
-import kr.co.ant.study.student.songyoona.jpa.DataDtoListener;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j // 테이블 안에 부모자식 있을경우 쓰는듯 @Inheritance(strategy = InheritanceType.JOINED)@DiscriminatorColumn(name = "child")
-public class YooSaltbInit01 {
+public class YooSaltbInit01 extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,25 +68,26 @@ public class YooSaltbInit01 {
     @Column(name = "stock_amt", nullable = false, columnDefinition = "decimal(25,5) default '0.00000'")
     private long stockAmt;
 
-    @Column(name = "sys_reg_id", nullable = false, length = 27)
-    private String sysRegId;
-
-    @DateTimeFormat
-    @CreationTimestamp
-    @Column(name = "sys_reg_date", nullable = false) // , columnDefinition="default CURRENT_TIMESTAMP"
-    private LocalDateTime sysRegDate;
-
-    @Column(name = "sys_upd_id", length = 27)
-    private String sysUpdId;
-
-    @Column(name = "sys_upd_date")
-    private LocalDateTime sysUpdDate;
+//    @Column(name = "sys_reg_id", nullable = false, length = 27)
+//    private String sysRegId;
+//
+//    @DateTimeFormat
+//    @CreationTimestamp
+//    @Column(name = "sys_reg_date", nullable = false) // , columnDefinition="default CURRENT_TIMESTAMP"
+//    private LocalDateTime sysRegDate;
+//
+//    @Column(name = "sys_upd_id", length = 27)
+//    private String sysUpdId;
+//
+//    @Column(name = "sys_upd_date")
+//    private LocalDateTime sysUpdDate;
 
     @Transient // 필드를 매핑하고 싶지 않을때 : 데이터베이스에 저장하지도 않고 조회하지도 않는다.
     private int seq;
 
     // cascade:영속성 전이(영속성 객체에 수행하는 행동이 자식까지 전파) / orphanRemoval = true: 부모가 삭제될 경우 자동으로 자식도 삭제
-    @OneToMany(mappedBy = "initId", cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE, CascadeType.MERGE }, orphanRemoval = true) // , cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+    @OneToMany(mappedBy = "initId", cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE, CascadeType.MERGE }
+                , orphanRemoval = true, fetch = FetchType.LAZY)
     private List<YooSaltbInit01Hst> yooInitHistories;
 
     // 자식 entity를 담아둠.
@@ -104,7 +100,6 @@ public class YooSaltbInit01 {
         hist.setInitId(this);
         yooInitHistories.add(hist);
 
-
         // 두번째 방식
 //        this.yooInitHistories.add(hist);
 //        if(hist.getInitId() != this) {  // 무한루프에 빠지지 않도록 체크.
@@ -112,28 +107,7 @@ public class YooSaltbInit01 {
 //        }
     }
 
-    // event에 따른..
-//    public void addYooInitHst(String eventName) {
-//        YooSaltbInit01Hst history = new YooSaltbInit01Hst();
-//        history.setYooSaltbInit01(this, eventName);
-//        yooInitHistories.add(history);
-//    }
 
-    /*
-     * @PostLoad: 해당 엔티티를 새로 불러오거나 refresh 한 이후.
-     *
-     * @PrePersist: 해당 엔티티를 저장하기 이전
-     *
-     * @PostPersist: 해당 엔티티를 저장한 이후
-     *
-     * @PreUpdate: 해당 엔티티를 업데이트 하기 이전
-     *
-     * @PostUpdate: 해당 엔티티를 업데이트 한 이후
-     *
-     * @PreRemove: 해당 엔티티를 삭제하기 이전
-     *
-     * @PostRemove: 해당 엔티티를 삭제한 이후
-     */
 
     /**
      * insert 되기전 (persist 되기전) 실행된다. ex)default 설정할때 유용
@@ -141,7 +115,8 @@ public class YooSaltbInit01 {
     @PrePersist
     public void prePersist() {
         log.info("insert 이전  ***** prePersist 한다!!!");
-        this.sysRegId = this.sysRegId == null ? "Yoo" : this.sysRegId;
+//        this.sysRegId = this.sysRegId == null ? "Yoo" : this.sysRegId;
+        super.sysRegId = super.sysRegId == null ? "Yoo" : super.sysRegId;
     }
 
     /**
@@ -149,7 +124,7 @@ public class YooSaltbInit01 {
      */
     @PostPersist
     public void initHst() {
-        log.info("insert 이후  ***** postPersist 한다!!!");
+        log.info("Init01 insert 이후  ***** postPersist 한다!!!");
 
         YooSaltbInit01Hst h = new YooSaltbInit01Hst();
         h.setSeq(1);
@@ -171,30 +146,67 @@ public class YooSaltbInit01 {
     public void preUpdate() {
         log.info("Init01 PreUpdate 한다!!!");
         seq = yooInitHistories.get(0).getSeq();
+
+
     }
 
     /**
      * 해당 엔티티를 업데이트 한 이후
      */
     @PostUpdate
-    public void updateHst() {
-        log.info("Init01Hst PostUpdate 한다!!!");
+    public void updateInit() {
+        log.info("Init01 PostUpdate 한다!!!");
+        //this.yooInitHistories.get(0).setEventDscd("D");
 
         YooSaltbInit01Hst h = new YooSaltbInit01Hst();
+        h.setSeq(seq);
+        h.setEventDscd("D");
+        h.setInitId(yooInitHistories.get(0).getInitId());
+        h.setTenantId(yooInitHistories.get(0).getTenantId());
+        h.setEnplcCd(yooInitHistories.get(0).getEnplcCd());
+        h.setStoreCd(yooInitHistories.get(0).getStoreCd());
+        h.setItemCd(yooInitHistories.get(0).getItemCd());
+        h.setStockQty(yooInitHistories.get(0).getStockQty());
+        h.setStockAmt(yooInitHistories.get(0).getStockAmt());
+        yooInitHistories.add(h);
+
+        h = new YooSaltbInit01Hst();
         h.setSeq(seq+1);
-        h.setEventDscd("U");
+        h.setEventDscd("I");
+        h.setInitId(yooInitHistories.get(0).getInitId());
         h.setTenantId(this.tenantId);
         h.setEnplcCd(this.enplcCd);
         h.setStoreCd(this.storeCd);
         h.setItemCd(this.itemCd);
         h.setStockQty(this.stockQty);
         h.setStockAmt(this.stockAmt);
-        h.setSysRegId(this.sysRegId);
-        this.addYooInitHst(h);
+        yooInitHistories.add(h);
 
         log.info("Init01 insert 이후  ***** postPersist set 완료!!!");
+        //return h;
     }
 
+    // event에 따른..
+//  public void addYooInitHst(String eventName) {
+//      YooSaltbInit01Hst history = new YooSaltbInit01Hst();
+//      history.setYooSaltbInit01(this, eventName);
+//      yooInitHistories.add(history);
+//  }
 
+  /*
+   * @PostLoad: 해당 엔티티를 새로 불러오거나 refresh 한 이후.
+   *
+   * @PrePersist: 해당 엔티티를 저장하기 이전
+   *
+   * @PostPersist: 해당 엔티티를 저장한 이후
+   *
+   * @PreUpdate: 해당 엔티티를 업데이트 하기 이전
+   *
+   * @PostUpdate: 해당 엔티티를 업데이트 한 이후
+   *
+   * @PreRemove: 해당 엔티티를 삭제하기 이전
+   *
+   * @PostRemove: 해당 엔티티를 삭제한 이후
+   */
 
 }

@@ -44,8 +44,8 @@ public class YooMemberRepository {
         em.merge(t);
     }
 
-    public <T> void remove(T t) {
-        //em.delete(t);
+    public <T> void remove(YooSaltbInit01 t) {
+        em.remove(t);
     }
 
     public <T> void select(T t) {
