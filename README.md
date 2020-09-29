@@ -207,3 +207,4 @@
 3. 테이블 맵핑관계를 Entity로 설정
 4. JPQL
 5. QeuryDSL
+6. [jpa.pptx](uploads/89c7cc9db6563419ca57602401aff8b6/jpa.pptx)
