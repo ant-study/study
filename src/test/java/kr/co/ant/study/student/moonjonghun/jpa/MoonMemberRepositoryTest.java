@@ -53,8 +53,8 @@ class MoonMemberRepositoryTest {
 		init.setEnplcCd("G001");
 		init.setStoreCd("V1");
 		init.setItemCd("민트마카롱");
-		init.setStockAmt(1.0001);
-		init.setStockQty(1.00001);
+		init.setStockAmt(1.0003);
+		init.setStockQty(1.00003);
 		init.setSysRegId("assssss");
 		init.setSysUpdId("assssss");
 		
@@ -63,16 +63,16 @@ class MoonMemberRepositoryTest {
 		// hst table에 insert하자
 		
 		MoonInitHst initHst = new MoonInitHst();
-//		initHst.setSeq(2);
-		initHst.setEventDscd("U");
-		initHst.setTenantId("E68");
-		initHst.setEnplcCd("G001");
-		initHst.setStoreCd("V1");
-		initHst.setItemCd("민트마카롱");
-		initHst.setStockQty(1.00001);
-		initHst.setStockAmt(1.0001);
-		initHst.setSysRegId("assssss");
-		initHst.setSysUpdId("assssss");
+		initHst.setSeq(1);
+		initHst.setEventDscd("I");
+		initHst.setTenantId(init.getTenantId());
+		initHst.setEnplcCd(init.getEnplcCd());
+		initHst.setStoreCd(init.getStoreCd());
+		initHst.setItemCd(init.getItemCd());
+		initHst.setStockQty(init.getStockQty());
+		initHst.setStockAmt(init.getStockAmt());
+		initHst.setSysRegId(init.getSysRegId());
+		initHst.setSysUpdId(init.getSysUpdId());
 		
 		// 여기서 initHst 객체는 부모객체정보가 비어있는 상태이다
 		init.addMoonInitHst(initHst);
@@ -92,22 +92,61 @@ class MoonMemberRepositoryTest {
 	 * @apiNote : main data를 remove 하고 audit data : EVENT_DSCD ('D') insert 
 	 * */
 //	@Test
-	@Transactional(readOnly = true)
+	@Transactional
 	public void removeTest() {
-//		MoonInitHst initHst = new MoonInitHst();
 		try {
-			//조회할때 new 하면 안되는건가?
-			//아니야 상관없어 jpa가 구분할 수 있도록 별칭이 주어진것 뿐이야
-			
-			//연계 테이블의 값을 삭제하기 위해서는 subtable 의 값을 먼저 삭제하고
-			//main테이블의 값을 삭제해야한다. 
-			//table에 제약조건 객체가 묶여있다면 이를 null로 만들어줘야 삭제가 가능하다.
-			//그럼 subtable의 데이터는 동일성이 유지되는가
-			
 			MoonInit init = new MoonInit();
 			init.setInitId(1L);
-			MoonInit data= (MoonInit) repository.removeToUpperData(init, 1L);
-			data.getMoonInitHistories();
+			MoonInit data= (MoonInit) repository.select(init, init.getInitId());
+			List<MoonInitHst> hstList = data.getMoonInitHistories();
+			
+			//max seq 구하기
+			Iterator<MoonInitHst> iter = hstList.iterator();
+			int maxSeq = 0;
+			while(iter.hasNext()) {
+				MoonInitHst hst = (MoonInitHst) iter.next();
+				if(hst.getSeq() >= maxSeq) {
+					maxSeq = hst.getSeq();
+				};
+				
+			}
+			
+			//HST 정보를 셋팅 해두고 data를 삭제후 HST를 insert
+			MoonInitHst dHst = new MoonInitHst();
+			dHst.setTenantId(data.getTenantId());
+			dHst.setEnplcCd(data.getEnplcCd());
+			dHst.setSeq(maxSeq+1);
+			dHst.setEventDscd("D");
+			dHst.setStoreCd(data.getStoreCd());
+			dHst.setItemCd(data.getItemCd());
+			dHst.setStockAmt(data.getStockAmt());
+			dHst.setStockQty(data.getStockQty());
+			
+			dHst.setSaltbInit01(data);
+			dHst.setSysRegId(data.getSysRegId());
+			dHst.setSysUpdId(data.getSysUpdId());
+
+			//############1차시도...#####################
+			//자식쪽에 event_dscd 가 'D' 인 history insert
+			repository.save(dHst);
+			
+//			//부모Entity에서 자식 Entity 연관관계 끊기
+//			data.setMoonInitHistories(null);
+//			
+//			//부모 Entity 상태 저장 persist context에 아직 올라가있는상태임
+//			repository.save(data);
+//			manager.flush();
+//			
+//			//삭제
+//			repository.removeData(data);
+			
+			//############2차시도...#####################
+			//연관관계의 주인이 자식쪽에 있기때문에 자식쪽에서 부모를 삭제해주어야한다.
+			repository.removeData(dHst.getSaltbInit01());
+			//이것도 FK때문에 안된다.
+			
+			
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -120,11 +159,13 @@ class MoonMemberRepositoryTest {
 	 * @author : moonjonghun
 	 * @apiNote : main data를 update 하고 audit data : EVENT_DSCD ('D','I') insert 
 	 * */
-	@Test
+//	@Test
 	public void updateTest() {
 		MoonInit init = new MoonInit();
 		init.setInitId(1L);
 		//조회되었으니 persist계층에서 managed.
+
+		//AS-IS Data
 		MoonInit data = (MoonInit) repository.select(init, init.getInitId());
 		List<MoonInitHst> hstList = data.getMoonInitHistories();
 		
@@ -137,46 +178,38 @@ class MoonMemberRepositoryTest {
 			};
 			
 		}
+
+		MoonInitHst dHst = new MoonInitHst();
 		
-//		MoonInitHst dHst = new MoonInitHst();
+		dHst.setEventDscd("D");
+		dHst.setSeq(maxSeq + 1 );
+		dHst.setTenantId(data.getTenantId());
+		dHst.setEnplcCd(data.getEnplcCd());
+		dHst.setStoreCd(data.getStoreCd());
+		dHst.setItemCd(data.getItemCd());
+		dHst.setStockAmt(data.getStockAmt());
+		dHst.setStockQty(data.getStockQty());
+		dHst.setSysRegId(data.getSysRegId());
+		dHst.setSysUpdId(data.getSysUpdId());
+		dHst.setSaltbInit01(null);
+
+		data.addMoonInitHst(dHst);
 		
-//		dHst.setEventDscd("D");
-//		dHst.setSeq(maxSeq + 1 );
-//		dHst.setTenantId(data.getTenantId());
-//		dHst.setEnplcCd(data.getEnplcCd());
-//		dHst.setStoreCd(data.getStoreCd());
-//		dHst.setItemCd(data.getItemCd());
-//		dHst.setStockAmt(data.getStockAmt());
-//		dHst.setStockQty(data.getStockQty());
-//		dHst.setSysRegId(data.getSysRegId());
-//		dHst.setSysUpdId(data.getSysUpdId());
-//		dHst.setSaltbInit01(null);
-//		hstList.add(dHst);
-//		data.addMoonInitHst(dHst);
+		MoonInitHst iHst = new MoonInitHst();
 		
-//		MoonInitHst iHst = new MoonInitHst();
-		
-//		iHst.setEventDscd("I");
-//		iHst.setSeq(maxSeq + 2 );
-//		iHst.setTenantId(data.getTenantId());
-//		iHst.setEnplcCd(data.getEnplcCd());
-//		iHst.setStoreCd(data.getStoreCd());
-//		iHst.setItemCd(data.getItemCd());
-//		iHst.setStockAmt(data.getStockAmt());
-//		iHst.setStockQty(data.getStockQty());
-//		iHst.setSysRegId(data.getSysRegId());
-//		iHst.setSysUpdId(data.getSysUpdId());
-//		iHst.setSaltbInit01(null);
-//		hstList.add(iHst);
-//		data.addMoonInitHst(iHst);
-		try {
-			repository.update(data);
-//			manager.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-//		repository.update(init);
-		
+		iHst.setEventDscd("I");
+		iHst.setSeq(maxSeq + 2 );
+		iHst.setTenantId(data.getTenantId());
+		iHst.setEnplcCd(data.getEnplcCd());
+		iHst.setStoreCd(data.getStoreCd());
+		iHst.setItemCd(data.getItemCd());
+		iHst.setStockAmt(data.getStockAmt());
+		iHst.setStockQty(data.getStockQty());
+		iHst.setSysRegId(data.getSysRegId());
+		iHst.setSysUpdId(data.getSysUpdId());
+		iHst.setSaltbInit01(null);
+
+		data.addMoonInitHst(iHst);
 	}
 	
 }

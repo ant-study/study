@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
@@ -19,19 +20,23 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
 @Table(name = "saltb_init01", uniqueConstraints = {@UniqueConstraint(name = "ux01_init", columnNames = {"tenant_id", "enplc_cd", "store_cd", "item_cd"})})
-@SequenceGenerator(name = "saltb_init01_seq_gen", sequenceName = "saltb_init01_seq", initialValue = 1, allocationSize = 1)
+//@SequenceGenerator(name = "saltb_init01_seq_gen", sequenceName = "saltb_init01_seq", initialValue = 1, allocationSize = 1)
 public class MoonInit {
 	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "saltb_init01_seq_gen")
-	@Column(name = "init_id", nullable = false, columnDefinition = "BIGINT(19) unsigned", insertable = false, updatable = false)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "saltb_init01_seq_gen")
+	@GenericGenerator(name="autoIncrementInit", strategy = "org.hibernate.id.IncrementGenerator")
+	@GeneratedValue(generator = "autoIncrementInit")
+	@Column(name = "init_id", nullable = false, columnDefinition = "BIGINT(19) unsigned")
 	private long initId;
 	
 	@Column(name = "tenant_id", nullable = false, columnDefinition = "VARCHAR(27)")
@@ -66,7 +71,7 @@ public class MoonInit {
 	// cascade : 부모 Entity의 persist status가 변경되었을때 연결된 자식 Entity의 status의 수정 방향설정
 	// orphanRemoval : 연결된 자식객체가 null이 되었을 경우 삭제할 것인지 여부
 	// fatch : 부모 Entity를 조회하였을때 딸려있는 자식 Entity를 함께 조회할것인지 
-	@OneToMany(mappedBy = "saltbInit01", cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE}, orphanRemoval = true)
+	@OneToMany(mappedBy = "saltbInit01", cascade = {CascadeType.PERSIST})
 	private List<MoonInitHst> moonInitHistories; 
 
 	private LocalDateTime sysUpdDate;
@@ -84,7 +89,8 @@ public class MoonInit {
 		//저장전 이벤트
 		audit("I");
 	}
-
+	
+	@Transient
 	private void delAudit() {
 		//업데이트는 두번 수행한다.
 		audit("D");
@@ -103,8 +109,10 @@ public class MoonInit {
 		audit("D");
 	}
 	
+	@Transient
 	private void audit(String oper) {
 		//MoonInitHst 객체를 추가한다.
+//		moonInitHistories.
 	}
 	
 	//###############################################################################
