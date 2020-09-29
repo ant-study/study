@@ -82,9 +82,6 @@ public class YooSaltbInit01 extends BaseEntity{
 //    @Column(name = "sys_upd_date")
 //    private LocalDateTime sysUpdDate;
 
-    @Transient // 필드를 매핑하고 싶지 않을때 : 데이터베이스에 저장하지도 않고 조회하지도 않는다.
-    private int seq;
-
     // cascade:영속성 전이(영속성 객체에 수행하는 행동이 자식까지 전파) / orphanRemoval = true: 부모가 삭제될 경우 자동으로 자식도 삭제
     @OneToMany(mappedBy = "initId", cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REMOVE, CascadeType.MERGE }
                 , orphanRemoval = true, fetch = FetchType.LAZY)
@@ -96,7 +93,6 @@ public class YooSaltbInit01 extends BaseEntity{
             yooInitHistories = new ArrayList<YooSaltbInit01Hst>();
         }
         //yooInitHistories = new ArrayList<YooSaltbInit01Hst>();
-
         hist.setInitId(this);
         yooInitHistories.add(hist);
 
@@ -106,6 +102,11 @@ public class YooSaltbInit01 extends BaseEntity{
 //            hist.setYooSaltbInit01(this);
 //        }
     }
+
+    @Transient // 필드를 매핑하고 싶지 않을때 : 데이터베이스에 저장하지도 않고 조회하지도 않는다.
+    private int seq;
+    @Transient // 필드를 매핑하고 싶지 않을때 : 데이터베이스에 저장하지도 않고 조회하지도 않는다.
+    private int index;
 
 
 
@@ -120,7 +121,9 @@ public class YooSaltbInit01 extends BaseEntity{
     }
 
     /**
-     * insert trigger 교체 엔티티 관리자 지속 작업이 실제로 실행되거나 계단식으로 실행 된 후에 실행됩니다. 이 호출은 데이터베이스 INSERT가 실행 된 후에 호출됩니다. manager persist 에 의해 실행되고 불립니다. SQL INSERT 이후에 대응될 수 있습니다. 해당 엔티티를 저장한 이후
+     * insert trigger 교체 엔티티 관리자 지속 작업이 실제로 실행되거나 계단식으로 실행 된 후에 실행됩니다.
+     * 이 호출은 데이터베이스 INSERT가 실행 된 후에 호출됩니다. manager persist 에 의해 실행되고 불립니다.
+     * SQL INSERT 이후에 대응될 수 있습니다. 해당 엔티티를 저장한 이후
      */
     @PostPersist
     public void initHst() {
@@ -145,7 +148,9 @@ public class YooSaltbInit01 extends BaseEntity{
     @PreUpdate
     public void preUpdate() {
         log.info("Init01 PreUpdate 한다!!!");
-        seq = yooInitHistories.get(0).getSeq();
+        int size = yooInitHistories.size();
+        index = size-1;
+        seq = yooInitHistories.get(index).getSeq()+1;
 
 
     }
@@ -161,19 +166,19 @@ public class YooSaltbInit01 extends BaseEntity{
         YooSaltbInit01Hst h = new YooSaltbInit01Hst();
         h.setSeq(seq);
         h.setEventDscd("D");
-        h.setInitId(yooInitHistories.get(0).getInitId());
-        h.setTenantId(yooInitHistories.get(0).getTenantId());
-        h.setEnplcCd(yooInitHistories.get(0).getEnplcCd());
-        h.setStoreCd(yooInitHistories.get(0).getStoreCd());
-        h.setItemCd(yooInitHistories.get(0).getItemCd());
-        h.setStockQty(yooInitHistories.get(0).getStockQty());
-        h.setStockAmt(yooInitHistories.get(0).getStockAmt());
+        h.setInitId(yooInitHistories.get(index).getInitId());
+        h.setTenantId(yooInitHistories.get(index).getTenantId());
+        h.setEnplcCd(yooInitHistories.get(index).getEnplcCd());
+        h.setStoreCd(yooInitHistories.get(index).getStoreCd());
+        h.setItemCd(yooInitHistories.get(index).getItemCd());
+        h.setStockQty(yooInitHistories.get(index).getStockQty());
+        h.setStockAmt(yooInitHistories.get(index).getStockAmt());
         yooInitHistories.add(h);
 
         h = new YooSaltbInit01Hst();
         h.setSeq(seq+1);
         h.setEventDscd("I");
-        h.setInitId(yooInitHistories.get(0).getInitId());
+        h.setInitId(yooInitHistories.get(index).getInitId());
         h.setTenantId(this.tenantId);
         h.setEnplcCd(this.enplcCd);
         h.setStoreCd(this.storeCd);

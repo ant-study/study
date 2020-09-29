@@ -96,7 +96,7 @@ public class YooSaltbInit01Hst extends BaseEntity{
     @PrePersist
     public void prePersist() {
         log.info("insert 이전  ***** prePersist 한다!!!");
-
+        this.sysRegId = this.sysRegId == null ? "YooH" : this.sysRegId;
     }
 
     @PreUpdate

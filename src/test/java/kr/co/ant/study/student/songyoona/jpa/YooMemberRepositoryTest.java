@@ -4,6 +4,8 @@
  */
 package kr.co.ant.study.student.songyoona.jpa;
 
+import java.sql.ResultSet;
+
 import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
+import kr.co.ant.study.jpa.basic.MemberRepository;
+import kr.co.ant.study.jpa.basic.domain.Member;
+import kr.co.ant.study.student.seomyeongjoo.jpa.domain.Init01;
+import kr.co.ant.study.student.seomyeongjoo.jpa.domain.Init01History;
+import kr.co.ant.study.student.songyoona.jpa.domain.YooMember;
 import kr.co.ant.study.student.songyoona.jpa.domain.YooSaltbInit01;
+import kr.co.ant.study.student.songyoona.jpa.domain.YooSaltbInit01Hst;
 
 /**
  * @description :
@@ -54,8 +62,8 @@ class YooMemberRepositoryTest {
     @Rollback(false)
     void insertInit01() {
         YooSaltbInit01 m = new YooSaltbInit01();
-        m.setTenantId("tt2");
-        m.setEnplcCd("ee2");
+        m.setTenantId("tt");
+        m.setEnplcCd("ee");
         m.setStoreCd("st");
         m.setItemCd("테스트1");
         m.setStockQty(700000);
@@ -69,13 +77,24 @@ class YooMemberRepositoryTest {
         // update
         m.setItemCd("테스트2");
         em.flush();
-
+        m.setItemCd("테스트3");
+        em.flush();
 
         // delete
 //        YooSaltbInit01 si = repo.find(YooSaltbInit01.class, "id");
 //        repo.remove(si);
     }
+    @Test
+    void delete(){
+        YooSaltbInit01 init01 = repo.select(1);
+        YooSaltbInit01Hst hst = new YooSaltbInit01Hst();
+//        hst.setEventDscd("D");
+//        //hst.setInit01(init01);
+//        hst.setInitId(init01.getIdx());
+//        init01.addInit01Hst(hst);
+        repo.remove(init01);
 
+    }
 //    @Test
 //    @Rollback(false)
 //    void testPersist3() {

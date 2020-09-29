@@ -48,8 +48,8 @@ public class YooMemberRepository {
         em.remove(t);
     }
 
-    public <T> void select(T t) {
-        em.find(YooSaltbInit01.class, t);
+    public <T> YooSaltbInit01 select(T t) {
+        return em.find(YooSaltbInit01.class, t);
     }
 //    public void save(YooMember member) {
 //        em.persist(member);
