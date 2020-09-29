@@ -27,10 +27,10 @@ import lombok.ToString;
 public class InitHstEntityY {
 	
 	@ManyToOne	//targetEntity = InitEntityY.class, fetch = FetchType.LAZY
-	@JoinColumn(name = "initId", nullable = false, insertable = false, updatable = false)	//
+	@JoinColumn(name = "initId", nullable = false)	//, insertable = false, updatable = false
 	private InitEntityY initEntityY;
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(length = 25)	//@@
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(nullable = false, length = 25)	//@@
 	private Long initHstId;
 	
 //	@Column(nullable = false, length = 19)

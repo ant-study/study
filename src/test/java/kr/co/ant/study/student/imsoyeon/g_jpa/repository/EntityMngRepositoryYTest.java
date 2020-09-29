@@ -54,9 +54,9 @@ class EntityMngRepositoryYTest {
 			hst.setStockQty(init01.getStockQty());
 			hst.setStockAmt(init01.getStockAmt());
 			hst.setSysRegId(init01.getSysRegId());
-			hst.setSysRegDate(init01.getSysRegDate());
-			hst.setSysUpdId(init01.getSysUpdId());
-			hst.setSysUpdDate(init01.getSysUpdDate());
+//			hst.setSysRegDate(init01.getSysRegDate());
+//			hst.setSysUpdId(init01.getSysUpdId());
+//			hst.setSysUpdDate(init01.getSysUpdDate());
 			
 			 init01.addHistory(hst);
 			repository.save(init01);
