@@ -5,22 +5,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreRemove;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
+import kr.co.ant.study.jpa.jpql.listner.BaseStockListner;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,9 +27,10 @@ import lombok.ToString;
 @Table(name = "saltb_init01_y", uniqueConstraints = {@UniqueConstraint(columnNames = {"tenantId","enplcCd","storeCd","itemCd"})})
 @DynamicUpdate
 @Getter @Setter @ToString
+@EntityListeners(BaseStockListner.class)
 public class BaseStock {
 	
-	@OneToMany(mappedBy = "baseStock", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})	//, fetch = FetchType.LAZY
+	@OneToMany(mappedBy = "baseStock")	//, fetch = FetchType.LAZY
 	private List<BaseStockHistory> baseStockHistories = new ArrayList<BaseStockHistory>();;
 	
 	@Id	@GeneratedValue(strategy = GenerationType.IDENTITY) @Column(nullable = false, length = 19)
@@ -68,30 +67,12 @@ public class BaseStock {
 	@Column(nullable = true)
 	private LocalDateTime sysUpdDate;
 	
-	//업무상 트리거형식으로 갈꺼면 History를 외부에서 추가 하지 못하는게 맞는것 같음
-	
-	@PrePersist
-	public void onPersiste() {
-		//addHistory("I");
+	public void addHistory(BaseStockHistory h) {
+		baseStockHistories.add(h);
 	}
 	
-	/**
-	 * 수정삭제 자식 persis가 안된다
-	 * 다른방법 고민
-	 */
-	@PreUpdate
-	public void onUpdate() {
-		//addHistory("U");
+	public void removeHistory(BaseStockHistory h) {
+		baseStockHistories.remove(h);
 	}
 	
-	@PreRemove
-	public void onDelete() {
-		//addHistory("D");
-	}
-	
-	public void addHistory(String eventName) {
-		BaseStockHistory history = new BaseStockHistory();
-		history.setBaseStockHistory(this, eventName);
-		baseStockHistories.add(history);
-	}
 }

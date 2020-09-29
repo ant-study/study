@@ -4,11 +4,10 @@ spring:
     username: 
     password: 
   jpa:
-    generate-ddl: true
+    generate-ddl: false
     hibernate:
       ddl-auto: none
 logging:
   level:
     org.hibernate: info
     org.hibernate.type.descriptor.sql: trace
-     

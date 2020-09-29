@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table
+@Table()
 @Getter @Setter
 public class Student {
 	

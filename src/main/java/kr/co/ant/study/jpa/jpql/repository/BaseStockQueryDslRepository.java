@@ -16,7 +16,7 @@ import kr.co.ant.study.jpa.jpql.dto.BaseStockDTO;
 import kr.co.ant.study.jpa.jpql.dto.BaseStockHistoryDTO;
 
 @Repository
-public class BaseStockQueryDslRepository extends QuerydslRepositorySupport{
+public class BaseStockQueryDslRepository extends QuerydslRepositorySupport implements Base1StockRepository{
 
 	public BaseStockQueryDslRepository() {
 		super(BaseStock.class);
@@ -29,7 +29,7 @@ public class BaseStockQueryDslRepository extends QuerydslRepositorySupport{
 		QBaseStockHistory history = QBaseStockHistory.baseStockHistory;
 		
 		return from(stock)
-			.join(stock.baseStockHistories, history)
+			.join(stock.baseStockHistories)
 			.fetchJoin()
 			.where(stock.initId.eq(id)
 					.and(history.stockQty.lt(qty)))

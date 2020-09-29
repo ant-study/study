@@ -1,7 +1,6 @@
 package kr.co.ant.study.jpa.jpql.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import kr.co.ant.study.jpa.jpql.dto.BaseStockDTO;
 import kr.co.ant.study.jpa.jpql.repository.BaseStockQueryDslRepository;
+import kr.co.ant.study.jpa.jpql.repository.BaseStockSpringRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @DataJpaTest
@@ -28,6 +28,8 @@ class QueryDslTest {
 	
 	@Autowired
 	BaseStockQueryDslRepository repository;
+	
+	BaseStockSpringRepository rep;
 	
 	
 	@Test

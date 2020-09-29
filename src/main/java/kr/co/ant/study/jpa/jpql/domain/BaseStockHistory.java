@@ -17,6 +17,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.EqualsAndHashCode;
+import lombok.EqualsAndHashCode.Include;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,13 +26,15 @@ import lombok.ToString;
 @Table(name = "saltb_init01_hst_y")
 @DynamicUpdate	//	value가 변경된 컬럼만 update쳐라
 @Getter @ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BaseStockHistory {
 	
-	@ManyToOne	//targetEntity = InitEntityY.class, fetch = FetchType.LAZY
-	@JoinColumn(name = "init_id", nullable = true, updatable = false)	//
+	@ManyToOne
+	@JoinColumn(name = "init_id", nullable = true)	//
 	private BaseStock baseStock;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(length = 25)	//@@
+	@EqualsAndHashCode.Include
 	private Long initHstId;
 	
 	@Column(nullable = false, length = 19)	//@@
@@ -83,5 +87,32 @@ public class BaseStockHistory {
 		this.sysRegId = baseStock.getSysRegId();
 		this.sysUpdId = baseStock.getSysUpdId();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BaseStockHistory other = (BaseStockHistory) obj;
+		if (initHstId == null) {
+			if (other.initHstId != null)
+				return false;
+		} else if (!initHstId.equals(other.initHstId))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((initHstId == null) ? 0 : initHstId.hashCode());
+		return result;
+	}
+	
+	
 	
 }

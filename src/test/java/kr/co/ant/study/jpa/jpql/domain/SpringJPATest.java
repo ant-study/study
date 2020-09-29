@@ -38,6 +38,7 @@ class SpringJPATest {
 	void 페치조인_jpql() {
 		BaseStock stock = repository.findByInitIdAndBaseStockHistoriesStockQtyLessThan(1L, BigDecimal.valueOf(10L));
 		log.info("Length :: {} ", stock.getBaseStockHistories().size());
+		repository.jqplQuery(1L);
 	}
 
 }

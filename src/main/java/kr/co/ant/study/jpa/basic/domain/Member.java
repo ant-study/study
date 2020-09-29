@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-@Entity
-@Table(name="t_member")
+//@Entity
+//@Table(name="t_member")
 @Slf4j @Getter @Setter
 public class Member {
 

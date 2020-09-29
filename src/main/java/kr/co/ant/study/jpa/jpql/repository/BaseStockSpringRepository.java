@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import kr.co.ant.study.jpa.jpql.domain.BaseStock;
 
-public interface BaseStockSpringRepository extends JpaRepository<BaseStock, Long>{
+public interface BaseStockSpringRepository extends JpaRepository<BaseStock, Long>, Base1StockRepository{
 	
 	@Query(value = "select s from BaseStock s where s.initId = :initId")
 	public BaseStock jqplQuery(Long initId);
