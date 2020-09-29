@@ -208,3 +208,4 @@
 4. JPQL
 5. QeuryDSL
 6. [jpa.pptx](uploads/89c7cc9db6563419ca57602401aff8b6/jpa.pptx)
+7. [PPT 내 URL 링크 정리](https://git.ant-soft.co.kr/ant/study/wikis/JPA-%EC%B0%B8%EA%B3%A0-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%AA%A9%EB%A1%9D)
