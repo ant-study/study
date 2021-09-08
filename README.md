@@ -1,5 +1,11 @@
 # Study Project
 
+* [Java Reflection](#java_reflection)
+* [Generic ](#_generic)
+* [OOP ](#_oop)
+* [Java 8](#java8)
+* [JPA](#_jpa)
+* [Bean Validation](#validation) 
 ### 준비
 
  - 본인 Package 생성
@@ -9,7 +15,7 @@
     - kr.co.ant.study.{공부할 패키지}
         - ex) kr.co.ant.study.reflect
 ---
-### Java Reflection
+### <a name="java_reflection" />Java Reflection
  
 1. Object의 Field, Method 제어 (2020-09-02)
     - kr.co.ant.study.reflect.ReflectQuestion 클래스를 상속 받아서 아래 메소드 구현
@@ -35,14 +41,14 @@
     - 마지막이니 구글링해도 모르겠거나 궁금한건 저한테 바로 물어보세요
     - 언제까입니까? (휴가인데 숙제라니?)(송정우)
 ---
-### Generic
+### <a name="_generic" />Generic
 
 1. 기초
     - kr.co.ant.study.generic.Convertor 클래스를 자기 패키지로 복사해서 구현
     - toVO 메소드는 Map을 JavaBean으로 변환하는 메소드다
     - 현재 Convertor 클래스는 Generic을 1도 안써서 형변환이 덕지덕지 붙어있음 toVO, main 메소드를 Generic을 사용하여 형변환 없이 구현
 ---
-### OOP
+### <a name="_oop" />OOP
 1. 결제 처리 업무를 객체지향 적으로 만들어 보자
     - 기본 Package 경로 kr.co.ant.study.oop
     - Test 방법
@@ -134,7 +140,7 @@
     - OOP 세미나 자료
         - [oop.pptx](uploads/d850bc0cf50f6513b82f21d420773197/oop.pptx)        
 ---
-### JAVA 8
+### <a name="java8" />JAVA 8
 1. Lamda
     - 간략 설명 자료 : kr.co.ant.study.java8.functional.Lamda.java 
     - 문제 : kr.co.ant.study.java8.functional.LamdaQuestion.java
@@ -156,7 +162,7 @@
     - 설명 : kr.co.ant.study.java8.stream.BasicStream.java, StreamMapAndFlatMapAndReduce.java
     - 그외 따로 공부 요망
 ---
-### JPA
+### <a name="_jpa" />JPA
 *** PPT => [jpa1-150921075157-lva1-app6892.pdf](uploads/7d5d2cee96635411a36877e77615c57c/jpa1-150921075157-lva1-app6892.pdf)
 1. 준비
     1. src/main/resources 폴더에 application-자기이니셜.yml 파일생성
@@ -209,3 +215,6 @@
 5. QeuryDSL
 6. [jpa.pptx](uploads/89c7cc9db6563419ca57602401aff8b6/jpa.pptx)
 7. [PPT 내 URL 링크 정리](https://git.ant-soft.co.kr/ant/study/wikis/JPA-%EC%B0%B8%EA%B3%A0-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%AA%A9%EB%A1%9D)
+---
+### <a name="validation" />Bean Validation
+[개인 정리 Validation Notion Link](https://amplified-approval-246.notion.site/Validate-bc01e254ddb04ea2bf38c086e96dbab0)
