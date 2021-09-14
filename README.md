@@ -217,4 +217,4 @@
 7. [PPT 내 URL 링크 정리](https://git.ant-soft.co.kr/ant/study/wikis/JPA-%EC%B0%B8%EA%B3%A0-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%AA%A9%EB%A1%9D)
 ---
 ### <a name="validation" />Bean Validation
-[개인 정리 Validation Notion Link](https://amplified-approval-246.notion.site/Validate-bc01e254ddb04ea2bf38c086e96dbab0)
+[개인 정리 Validation Notion Link](https://hankk.notion.site/Validate-bc01e254ddb04ea2bf38c086e96dbab0)
