@@ -7,7 +7,7 @@
 * [JPA](#_jpa)
 * [Bean Validation](#validation) 
 * [JWT](#_jwt)
-* [#AOP](#_aop)
+* [AOP](#_aop)
 ### 준비
 
  - 본인 Package 생성
@@ -228,3 +228,5 @@
 ---
 ### <a name="_aop" /> AOP
 [AOP Notion Link](https://hankk.notion.site/AOP-b0862d0e60f0429f9b5946af73e18994)
+
+[Source Link](basic/src/main/java/kr/co/ant/study/aop)
