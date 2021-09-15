@@ -25,9 +25,11 @@ repositories {
 dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'commons-beanutils:commons-beanutils:1.9.4'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.6.2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     implementation 'com.querydsl:querydsl-jpa:4.3.1'
 
     runtimeOnly 'com.h2database:h2:1.4.200'
@@ -49,7 +51,6 @@ dependencies {
 
 
 
-
 }
 
 group = 'kr.co.ant'
@@ -60,4 +61,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+test {
+    useJUnitPlatform()
 }

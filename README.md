@@ -6,6 +6,8 @@
 * [Java 8](#java8)
 * [JPA](#_jpa)
 * [Bean Validation](#validation) 
+* [JWT](#_jwt)
+* [#AOP](#_aop)
 ### 준비
 
  - 본인 Package 생성
@@ -217,4 +219,12 @@
 7. [PPT 내 URL 링크 정리](https://git.ant-soft.co.kr/ant/study/wikis/JPA-%EC%B0%B8%EA%B3%A0-%EC%82%AC%EC%9D%B4%ED%8A%B8-%EB%AA%A9%EB%A1%9D)
 ---
 ### <a name="validation" />Bean Validation
-[개인 정리 Validation Notion Link](https://hankk.notion.site/Validate-bc01e254ddb04ea2bf38c086e96dbab0)
+[Validation Notion Link](https://hankk.notion.site/Validate-bc01e254ddb04ea2bf38c086e96dbab0)
+
+---
+### <a name="_jwt" /> JWT
+[JWT Notion Link](https://hankk.notion.site/JWT-e1c3157d69974f39915699bd11bd81b5)
+
+---
+### <a name="_aop" /> AOP
+[AOP Notion Link](https://hankk.notion.site/AOP-b0862d0e60f0429f9b5946af73e18994)
