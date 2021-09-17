@@ -230,3 +230,9 @@
 [AOP Notion Link](https://hankk.notion.site/AOP-b0862d0e60f0429f9b5946af73e18994)
 
 [Source Link](basic/src/main/java/kr/co/ant/study/aop)
+
+---
+### <a name="_security" /> Spring Security
+[Spring Security Notion Link](https://syrongk.notion.site/Spring-Security-3b3236a9ba184b9f89c65f17cb113eb2)
+
+[Source Link](https://github.com/sYrongK/security-study)
